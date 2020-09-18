@@ -1,6 +1,7 @@
 import React from 'react';
 
-const QuestionTypes = ( {handleInput} ) =>{
+const QuestionTypes = ( {handleInput, selected} ) =>{
+    const highlightColor = "blue";
     const questionTypeOptions = [
         {
             optionType : "MCQ",
@@ -19,20 +20,18 @@ const QuestionTypes = ( {handleInput} ) =>{
         }
     ]
     return(
-        <>
         <div className="ui middle aligned selection large list">
-            {questionTypeOptions.map((option) =>
+            {questionTypeOptions.map((option) => 
                 <div className="item" 
                      key={option.optionType}
                      onClick={()=>handleInput("question_type", option.optionType)}>
-                    <i className={option.optionImage}></i>
+                    <i className={`${option.optionImage} ${(option.optionType === selected)? highlightColor: ""}`}></i>
                     <div className="content">
-                        <div className="header">{option.optionText}</div>
+                        <div className={`ui basic label ${(option.optionType === selected)? highlightColor: ""}`}>{option.optionText}</div>
                     </div>
                 </div>
             )}
         </div>
-        </>
     )
 };
 

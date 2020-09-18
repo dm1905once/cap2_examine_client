@@ -35,11 +35,11 @@ const Question = () =>{
     }, [questionFields.question_type] );
 
     return (
-        <div className="ui grid">
+        <div className="ui centered grid">
             <div className="row">
                 <div className="four wide column">
                     <h3>Question Type</h3>
-                    <QuestionTypes handleInput={handleQuestionText} />
+                    <QuestionTypes handleInput={handleQuestionText} selected={questionFields.question_type} />
                 </div>
                 <div className="ten wide column">
                     <h3>Question</h3>
@@ -53,8 +53,9 @@ const Question = () =>{
                 </div>
             </div>
             <div className="row">
-                <div className="ten wide column">
-                    {showQuestionOptions}
+                <div className="fourteen wide column">
+                    {/* {showQuestionOptions} */}
+                    <QuestionMCQ />
                 </div>
             </div>
 
