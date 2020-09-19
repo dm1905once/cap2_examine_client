@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
+import uniqid from 'uniqid';
 
 const QuestionMCQ = ()=> {
 
-    const [ choiceList, setChoiceList ] = useState([
-        {
-            "choiceId": "asdfhklj",
-            "choice": "ddd"
-        },
-        {
-            "choiceId": "poihdfgl",
-            "choice": "eee"
-        },
-        {
-            "choiceId": "asdfdfgl",
-            "choice": "ggg"
-        }
-    ]);
+    const [ choiceList, setChoiceList ] = useState([]);
+    const [ newChoice, setNewChoice ] = useState('');
+    const [ rightChoiceId, setRightChoiceId ] = useState('');
 
-    const [ rightChoiceId, setRightChoiceId ] = useState(null);
+    const addChoice = () =>{
+        setChoiceList([...choiceList, {
+            choiceId: uniqid.process(),
+            choice: newChoice
+        }]);
+        setNewChoice('');
+    }
+
+    const removeChoice = choiceId =>{
+        setChoiceList(choiceList.filter(choice=> choice.choiceId !== choiceId ))
+    }
 
     const displayChoiceRow = (choice) =>{
         if (choice.choiceId === rightChoiceId) {
@@ -26,8 +26,10 @@ const QuestionMCQ = ()=> {
                     <td><i className="check large green icon"></i></td>
                     <td>{choice.choice}</td>
                     <td className="right aligned">
-                        <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                            <i className="close red icon"></i>
+                        <div className="ui circular basic white icon button" 
+                            data-tooltip="Remove choice"
+                            onClick={()=>removeChoice(choice.choiceId)}
+                        ><i className="close red icon"></i>
                         </div>
                     </td>
                 </tr>
@@ -42,8 +44,10 @@ const QuestionMCQ = ()=> {
                     </td>
                     <td>{choice.choice}</td>
                     <td className="right aligned">
-                        <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                            <i className="close red icon"></i>
+                        <div className="ui circular basic white icon button" 
+                                data-tooltip="Remove choice"
+                                onClick={()=>removeChoice(choice.choiceId)}
+                        ><i className="close red icon"></i>
                         </div>
                     </td>
                 </tr>
@@ -58,17 +62,17 @@ const QuestionMCQ = ()=> {
                 <div className="six wide column">
                     <h4>Add choices</h4>
                     <div className="ui fluid large icon input">
-                        <input type="text" placeholder="Enter one choice at a time"/>
-                        <button className="ui icon basic button" data-tooltip="Add choice">
+                        <input type="text" 
+                                placeholder="Enter one choice at a time"
+                                value={newChoice}
+                                onChange={(e)=>setNewChoice(e.target.value)}/>
+                        <button className="ui icon basic button" 
+                                data-tooltip="Add choice"
+                                onClick={addChoice}
+                                >
                             <i className="arrow circle right big blue link icon"></i>
                         </button>
                     </div>
-                    {/* <div className="field">
-                        <div className="ui checkbox">
-                            <input type="checkbox" tabIndex="0"/>
-                            <label>Check if this is the right choice</label>
-                        </div>
-                    </div> */}
                 </div>
 
                 <div className="two wide column"></div>
@@ -86,80 +90,8 @@ const QuestionMCQ = ()=> {
                         </thead>
                         <tbody>
                             {choiceList.map(choiceItem =>displayChoiceRow(choiceItem))}
-                            
-
-
-{/*                             
-                            <tr className="negative">
-                                <td className="">
-                                    <div class="ui fitted checkbox">
-                                        <input type="checkbox"/> <label></label>
-                                    </div>
-                                </td>
-                                <td>Initial commit</td>
-                                    <td className="right aligned">
-                                        <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                                            <i className="close red icon"></i>
-                                        </div>
-                                    </td>
-                            </tr>
-                            <tr className="negative">
-                                <td className="">
-                                    <div class="ui fitted checkbox">
-                                        <input type="checkbox"/> <label></label>
-                                    </div>
-                                </td>
-                                <td>Initial commit</td>
-                                    <td className="right aligned">
-                                        <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                                            <i className="close red icon"></i>
-                                        </div>
-                                    </td>
-                            </tr> */}
                         </tbody>
                     </table>
-
-{/*                    
-                    <div className="ui middle aligned divided list">
-                        {choiceList.map(choiceItem =>{
-                            return (
-                                <div className="item" key={choiceItem.choiceId} >
-                                    <div className="right floated content">                    
-                                        <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                                            <i className="close red icon"></i>
-                                        </div>
-                                    </div>
-                                    <div className="ui left floated compact segment">
-                                        <div className="ui fitted checkbox">
-                                            <input type="checkbox"/>
-                                        </div>
-                                    </div>
-                                    <div className="content" data-key={choiceItem.choiceId}>{choiceItem.choice}</div>
-                                </div>
-                            )
-                        })}
- 
-                        <div className="item">
-                            <div className="right floated content">                    
-                                <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                                    <i className="close red icon"></i>
-                                </div>
-                            </div>
-                            <div className="content">Algo</div>
-                        </div>
-                        <div className="item">
-                            <div className="right floated content">
-                                <div className="ui circular basic white icon button" data-tooltip="Remove choice">
-                                    <i className="close red icon"></i>
-                                </div>
-                            </div>
-                            <div className="content">
-                                <i className="check large green icon"></i>
-                            </div>
-                        </div> */}
-                    {/* </div> */}
-
-
                 </div>
                 <div className="one wide column"></div>
             </div>
