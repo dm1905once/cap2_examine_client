@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import uniqid from 'uniqid';
+import { QuestionDetailsContext } from '../context';
 
 const QuestionMCQ = ( {submitOptions} )=> {
 
     const [ choiceList, setChoiceList ] = useState([]);
     const [ newChoice, setNewChoice ] = useState('');
     const [ rightChoiceId, setRightChoiceId ] = useState('');
+    const submitDetails = useContext(QuestionDetailsContext);
 
       /*  To be sent to State...
     
@@ -50,7 +52,7 @@ const QuestionMCQ = ( {submitOptions} )=> {
             valid_answer: rightChoiceId
         }
 
-        submitOptions(questionOptions);
+        submitDetails(questionOptions);
     }
 
     return (

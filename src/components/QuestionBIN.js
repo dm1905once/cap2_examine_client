@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import uniqid from 'uniqid';
+import { QuestionDetailsContext } from '../context';
 
 const binaryOptions = {
         "TRUE_FALSE" : [
@@ -17,11 +18,12 @@ const binaryOptions = {
     };
 
 
-const QuestionBIN = ( {submitOptions} )=> {
+const QuestionBIN = ()=> {
 
     const [ choiceList, setChoiceList ] = useState([]);
     const [ rightChoiceId, setRightChoiceId ] = useState(null);
     const [ selectedType, setSelectedType ] = useState('TRUE_FALSE');
+    const submitDetails = useContext(QuestionDetailsContext);
 
 
     /*  To be sent to State...
@@ -55,12 +57,27 @@ const QuestionBIN = ( {submitOptions} )=> {
         }
     }
 
+    const handleSaveOptions = () =>{
+        // TODO Validate input
+        const questionOptions = {
+            options: [choiceList],
+            valid_answer: rightChoiceId
+        }
+
+        submitDetails(questionOptions);
+    }
+
 
     return (
         <div className="ui relaxed grid">
             <div className="row centered">
                 <div className="fourteen wide column">
-                    <p className="ui blue large label">Binary question (True/False)</p>
+                    <p className="ui blue basic large label">Binary question (True/False)</p>
+                    <button onClick={handleSaveOptions}
+                        className="ui primary right floated right labeled icon button">
+                        Save and continue
+                        <i className="arrow circle right icon"></i>
+                    </button>
                 </div>
             </div>
             <div className="row">

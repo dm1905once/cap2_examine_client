@@ -3,6 +3,7 @@ import QuestionTypes from './QuestionTypes';
 import QuestionMCQ from './QuestionMCQ';
 import QuestionBIN from './QuestionBIN';
 import QuestionFIB from './QuestionFIB';
+import { QuestionDetailsContext } from '../context';
 
 const Question = () =>{
 
@@ -25,22 +26,24 @@ const Question = () =>{
     //     console.log(questionFields);
     // }, [questionFields] );
 
+    
+
 
     useEffect(()=>{
         switch (questionFields.question_type) {
-            case "MCQ": setShowQuestionOptions(<QuestionMCQ submitOptions={receiveOptions} />) ; return;
-            case "BIN": setShowQuestionOptions(<QuestionBIN submitOptions={receiveOptions} />) ; return;
-            case "FIB": setShowQuestionOptions(<QuestionFIB submitOptions={receiveOptions} />) ; return;
+            case "MCQ": setShowQuestionOptions(<QuestionMCQ />) ; return;
+            case "BIN": setShowQuestionOptions(<QuestionBIN />) ; return;
+            case "FIB": setShowQuestionOptions(<QuestionFIB />) ; return;
             default: setShowQuestionOptions(null)
         }
     }, [questionFields.question_type] );
 
 
-    const receiveOptions = (options) =>{
-        validateAndSubmitQuestion(options);
-    }
+    // const receiveOptions = (options) =>{
+    //     validateAndSubmitQuestion(options);
+    // }
 
-    const validateAndSubmitQuestion = (options) =>{
+    const submitQuestion = (options) =>{
         // TODO Validate top question fields 
         const question = {
             question_id: "algo",
@@ -72,8 +75,10 @@ const Question = () =>{
             </div>
             <div className="row">
                 <div className="fourteen wide column">
-                    {showQuestionOptions}
-                    {/* <QuestionMCQ /> */}
+                    <QuestionDetailsContext.Provider value={submitQuestion}>
+                        {showQuestionOptions}
+                        {/* <QuestionMCQ /> */}
+                    </QuestionDetailsContext.Provider>
                 </div>
             </div>
 
