@@ -10,16 +10,6 @@ const QuestionMCQ = ( {submitOptions} )=> {
     const [ validationErrors, setValidationErrors ] = useState([]);
     const submitDetails = useContext(QuestionDetailsContext);
 
-      /*  To be sent to State...
-    
-    choiceList returns this:
-    0: {choiceId: "kfake82a", choice: "uno"}
-    1: {choiceId: "kfakeadu", choice: "dos"}
-
-    rightChoiceId returns:
-    "kfake82a"
-    */
-
     const addChoice = () =>{
         setValidationErrors([]);
 

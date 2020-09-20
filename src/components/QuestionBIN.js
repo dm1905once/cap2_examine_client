@@ -27,17 +27,6 @@ const QuestionBIN = ()=> {
     const submitDetails = useContext(QuestionDetailsContext);
 
 
-    /*  To be sent to State...
-    
-    choiceList returns this:
-    0: {choiceId: "kfajv190", choice: "Yes"}
-    1: {choiceId: "kfajv191", choice: "No"}
-
-    rightChoiceId returns:
-    "kfajv191"
-    */
-
-
     useEffect(() =>{
         setChoiceList(binaryOptions[selectedType]);
         setRightChoiceId(null)

@@ -7,26 +7,20 @@ import { QuestionDetailsContext } from '../context';
 
 const Question = () =>{
 
-    const [ questionFields, setQuestionFields ] = useState(
-        {
+    const INITIAL_QUESTION_STATE = {
             question_type: "",
             question_text: ""
-        }
-    );
+        };
+
+    const [ questionFields, setQuestionFields ] = useState(INITIAL_QUESTION_STATE);
+    const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
+    const [ validationErrors, setValidationErrors ] = useState([]);
 
     const handleQuestionText = (field, newValue) =>{
         setQuestionFields( {...questionFields, [field]: newValue });
+
+        if (field === 'question_text') setValidationErrors([]);
     }
-
-
-
-    const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
-
-    // useEffect(()=>{
-    //     console.log(questionFields);
-    // }, [questionFields] );
-
-    
 
 
     useEffect(()=>{
@@ -39,19 +33,23 @@ const Question = () =>{
     }, [questionFields.question_type] );
 
 
-    // const receiveOptions = (options) =>{
-    //     validateAndSubmitQuestion(options);
-    // }
-
     const submitQuestion = (options) =>{
-        // TODO Validate top question fields 
-        const question = {
-            question_id: "algo",
-            ...questionFields,
-            options
+        // Question text validation
+        const errorMessages = [];
+        if (questionFields.question_text === '') errorMessages.push("Please enter a question");
+        setValidationErrors(errorMessages);
+
+        // Successful validation
+        if (errorMessages.length === 0 ){
+            const question = {
+                question_id: "algo",
+                ...questionFields,
+                options
+            }
+            console.log(question);
+            setQuestionFields(INITIAL_QUESTION_STATE);
+            // TODO dispatch action 
         }
-        console.log(question);
-        // TODO dispatch action 
     }
 
 
@@ -65,11 +63,18 @@ const Question = () =>{
                 <div className="ten wide column">
                     <h3>Question</h3>
                     <div className="ui form">
-                    <div className="field">
-                        <textarea rows="4" name="question_text" 
-                        value={questionFields.question_text}
-                        onChange={(event )=>handleQuestionText(event.target.name, event.target.value)}></textarea>
-                    </div>
+                        <div className="field">
+                            <textarea rows="4" name="question_text" 
+                            value={questionFields.question_text}
+                            onChange={(event )=>handleQuestionText(event.target.name, event.target.value)}></textarea>
+                        </div>
+                        {
+                            validationErrors.length > 0 ?
+                            <div className="ui pointing red basic label">
+                                {validationErrors.map((message, i)=><p key={i}>{message}</p>)}
+                            </div>
+                            :''
+                        }
                     </div>
                 </div>
             </div>
