@@ -23,6 +23,7 @@ const QuestionBIN = ()=> {
     const [ choiceList, setChoiceList ] = useState([]);
     const [ rightChoiceId, setRightChoiceId ] = useState(null);
     const [ selectedType, setSelectedType ] = useState('TRUE_FALSE');
+    const [ validationErrors, setValidationErrors ] = useState([]);
     const submitDetails = useContext(QuestionDetailsContext);
 
 
@@ -42,6 +43,12 @@ const QuestionBIN = ()=> {
         setRightChoiceId(null)
     }, [selectedType])
 
+    
+    const selectRightChoice = (choiceId) =>{
+        setRightChoiceId(choiceId);
+        setValidationErrors([]);
+    }
+
 
     const displayChoiceRow = (choice) =>{
         if (choice.choiceId === rightChoiceId) {
@@ -50,7 +57,7 @@ const QuestionBIN = ()=> {
             return (
                 <td>
                     <div className="ui fitted checkbox">
-                        <input type="checkbox" onClick={()=>setRightChoiceId(choice.choiceId)} /> <label></label>
+                        <input type="checkbox" onClick={()=>selectRightChoice(choice.choiceId)} /> <label></label>
                     </div>
                 </td>
             )
@@ -58,13 +65,20 @@ const QuestionBIN = ()=> {
     }
 
     const handleSaveOptions = () =>{
-        // TODO Validate input
-        const questionOptions = {
-            options: [choiceList],
-            valid_answer: rightChoiceId
-        }
+        // Choice list Validations
+        const errorMessages = [];
+        if (!rightChoiceId) errorMessages.push("Please determine the correct choice");
+        setValidationErrors(errorMessages);
 
-        submitDetails(questionOptions);
+        // Successful validation
+        if (errorMessages.length === 0 ){
+            const questionOptions = {
+                options: [choiceList],
+                valid_answer: rightChoiceId
+            }
+    
+            submitDetails(questionOptions);
+        }
     }
 
 
@@ -124,6 +138,13 @@ const QuestionBIN = ()=> {
 
                 <div className="six wide column">
                     <h4>Select the choice that is correct</h4>
+                    {
+                        validationErrors.length > 0 ?
+                        <div className="ui pointing below red basic label">
+                            {validationErrors.map((message, i)=><p key={i}>{message}</p>)}
+                        </div>
+                        :''
+                    }
 
                     <table className="ui table">
                         <thead>
