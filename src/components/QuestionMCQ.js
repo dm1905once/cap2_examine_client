@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import uniqid from 'uniqid';
 
-const QuestionMCQ = ()=> {
+const QuestionMCQ = ( {submitOptions} )=> {
 
     const [ choiceList, setChoiceList ] = useState([]);
     const [ newChoice, setNewChoice ] = useState('');
@@ -43,11 +43,26 @@ const QuestionMCQ = ()=> {
         }
     }
 
+    const handleSaveOptions = () =>{
+        // TODO Validate input
+        const questionOptions = {
+            options: [choiceList],
+            valid_answer: rightChoiceId
+        }
+
+        submitOptions(questionOptions);
+    }
+
     return (
         <div className="ui relaxed grid">
             <div className="row centered">
                 <div className="fourteen wide column">
-                    <p className="ui blue large label">Multiple choice question</p>
+                    <p className="ui blue basic large label">Multiple choice question</p>
+                    <button onClick={handleSaveOptions}
+                        className="ui primary right floated right labeled icon button">
+                        Save and continue
+                        <i className="arrow circle right icon"></i>
+                    </button>
                 </div>
             </div>
             <div className="row">

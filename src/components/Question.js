@@ -25,14 +25,32 @@ const Question = () =>{
     //     console.log(questionFields);
     // }, [questionFields] );
 
+
     useEffect(()=>{
         switch (questionFields.question_type) {
-            case "MCQ": setShowQuestionOptions(<QuestionMCQ />) ; return;
-            case "BIN": setShowQuestionOptions(<QuestionBIN />) ; return;
-            case "FIB": setShowQuestionOptions(<QuestionFIB />) ; return;
+            case "MCQ": setShowQuestionOptions(<QuestionMCQ submitOptions={receiveOptions} />) ; return;
+            case "BIN": setShowQuestionOptions(<QuestionBIN submitOptions={receiveOptions} />) ; return;
+            case "FIB": setShowQuestionOptions(<QuestionFIB submitOptions={receiveOptions} />) ; return;
             default: setShowQuestionOptions(null)
         }
     }, [questionFields.question_type] );
+
+
+    const receiveOptions = (options) =>{
+        validateAndSubmitQuestion(options);
+    }
+
+    const validateAndSubmitQuestion = (options) =>{
+        // TODO Validate top question fields 
+        const question = {
+            question_id: "algo",
+            ...questionFields,
+            options
+        }
+        console.log(question);
+        // TODO dispatch action 
+    }
+
 
     return (
         <div className="ui centered grid">
@@ -55,6 +73,7 @@ const Question = () =>{
             <div className="row">
                 <div className="fourteen wide column">
                     {showQuestionOptions}
+                    {/* <QuestionMCQ /> */}
                 </div>
             </div>
 

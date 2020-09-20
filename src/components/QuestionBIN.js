@@ -17,7 +17,7 @@ const binaryOptions = {
     };
 
 
-const QuestionBIN = ()=> {
+const QuestionBIN = ( {submitOptions} )=> {
 
     const [ choiceList, setChoiceList ] = useState([]);
     const [ rightChoiceId, setRightChoiceId ] = useState(null);
