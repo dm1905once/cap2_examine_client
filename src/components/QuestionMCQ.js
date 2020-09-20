@@ -7,6 +7,16 @@ const QuestionMCQ = ()=> {
     const [ newChoice, setNewChoice ] = useState('');
     const [ rightChoiceId, setRightChoiceId ] = useState('');
 
+      /*  To be sent to State...
+    
+    choiceList returns this:
+    0: {choiceId: "kfake82a", choice: "uno"}
+    1: {choiceId: "kfakeadu", choice: "dos"}
+
+    rightChoiceId returns:
+    "kfake82a"
+    */
+
     const addChoice = () =>{
         setChoiceList([...choiceList, {
             choiceId: uniqid.process(),
@@ -21,42 +31,25 @@ const QuestionMCQ = ()=> {
 
     const displayChoiceRow = (choice) =>{
         if (choice.choiceId === rightChoiceId) {
-            return (
-                <tr className="positive" key={choice.choiceId} >
-                    <td><i className="check large green icon"></i></td>
-                    <td>{choice.choice}</td>
-                    <td className="right aligned">
-                        <div className="ui circular basic white icon button" 
-                            data-tooltip="Remove choice"
-                            onClick={()=>removeChoice(choice.choiceId)}
-                        ><i className="close red icon"></i>
-                        </div>
-                    </td>
-                </tr>
-            )
+            return <td><i className="check large green icon"></i></td>
         } else {
             return (
-                <tr className="negative" key={choice.choiceId}>
-                    <td>
-                        <div className="ui fitted checkbox">
-                            <input type="checkbox" onClick={()=>setRightChoiceId(choice.choiceId)} /> <label></label>
-                        </div>
-                    </td>
-                    <td>{choice.choice}</td>
-                    <td className="right aligned">
-                        <div className="ui circular basic white icon button" 
-                                data-tooltip="Remove choice"
-                                onClick={()=>removeChoice(choice.choiceId)}
-                        ><i className="close red icon"></i>
-                        </div>
-                    </td>
-                </tr>
+                <td>
+                    <div className="ui fitted checkbox">
+                        <input type="checkbox" onClick={()=>setRightChoiceId(choice.choiceId)} /> <label></label>
+                    </div>
+                </td>
             )
         }
     }
 
     return (
         <div className="ui relaxed grid">
+            <div className="row centered">
+                <div className="fourteen wide column">
+                    <p className="ui blue large label">Multiple choice question</p>
+                </div>
+            </div>
             <div className="row">
                 <div className="one wide column"></div>
                 <div className="six wide column">
@@ -78,18 +71,30 @@ const QuestionMCQ = ()=> {
                 <div className="two wide column"></div>
 
                 <div className="six wide column">
-                    <h4>Current choices</h4>
+                    <h4>Current choices. Select the choice that is correct.</h4>
 
                     <table className="ui table">
                         <thead>
                             <tr>
-                                <th>Right?</th>
+                                <th>Correct?</th>
                                 <th>Choice</th>
                                 <th className="right aligned">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {choiceList.map(choiceItem =>displayChoiceRow(choiceItem))}
+                            {choiceList.map(choiceItem => (
+                                <tr className={choiceItem.choiceId === rightChoiceId? "positive" : "negative"} key={choiceItem.choiceId} >
+                                    {displayChoiceRow(choiceItem)}
+                                    <td>{choiceItem.choice}</td>
+                                    <td className="right aligned">
+                                        <div className="ui circular basic white icon button" 
+                                            data-tooltip="Remove choice"
+                                            onClick={()=>removeChoice(choiceItem.choiceId)}
+                                        ><i className="close red icon"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -98,5 +103,4 @@ const QuestionMCQ = ()=> {
         </div>
     )
 }
-
 export default QuestionMCQ;

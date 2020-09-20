@@ -54,8 +54,7 @@ const Question = () =>{
             </div>
             <div className="row">
                 <div className="fourteen wide column">
-                    {/* {showQuestionOptions} */}
-                    <QuestionMCQ />
+                    {showQuestionOptions}
                 </div>
             </div>
 
