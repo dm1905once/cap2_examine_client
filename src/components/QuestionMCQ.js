@@ -6,7 +6,8 @@ const QuestionMCQ = ( {submitOptions} )=> {
 
     const [ choiceList, setChoiceList ] = useState([]);
     const [ newChoice, setNewChoice ] = useState('');
-    const [ rightChoiceId, setRightChoiceId ] = useState('');
+    const [ rightChoiceId, setRightChoiceId ] = useState(null);
+    const [ validationErrors, setValidationErrors ] = useState([]);
     const submitDetails = useContext(QuestionDetailsContext);
 
       /*  To be sent to State...
@@ -20,6 +21,8 @@ const QuestionMCQ = ( {submitOptions} )=> {
     */
 
     const addChoice = () =>{
+        setValidationErrors([]);
+
         setChoiceList([...choiceList, {
             choiceId: uniqid.process(),
             choice: newChoice
@@ -45,14 +48,23 @@ const QuestionMCQ = ( {submitOptions} )=> {
         }
     }
 
-    const handleSaveOptions = () =>{
-        // TODO Validate input
-        const questionOptions = {
-            options: [choiceList],
-            valid_answer: rightChoiceId
-        }
 
-        submitDetails(questionOptions);
+    const handleSaveOptions = () =>{
+        // Choice list Validations
+        const errorMessages = [];
+        if (choiceList.length < 2) errorMessages.push("Please enter at least 2 choices");
+        if (!rightChoiceId) errorMessages.push("Please determine the correct choice");
+        setValidationErrors(errorMessages);
+
+        // Successful validation
+        if (errorMessages.length === 0 ){
+            const questionOptions = {
+                options: [choiceList],
+                valid_answer: rightChoiceId
+            }
+            submitDetails(questionOptions);
+        }
+        
     }
 
     return (
@@ -76,7 +88,7 @@ const QuestionMCQ = ( {submitOptions} )=> {
                                 placeholder="Enter one choice at a time"
                                 value={newChoice}
                                 onChange={(e)=>setNewChoice(e.target.value)}/>
-                        <button className="ui icon basic button" 
+                        <button className={`ui icon basic ${newChoice.length === 0? 'disabled' : ''} button`}
                                 data-tooltip="Add choice"
                                 onClick={addChoice}
                                 >
@@ -89,7 +101,13 @@ const QuestionMCQ = ( {submitOptions} )=> {
 
                 <div className="six wide column">
                     <h4>Current choices. Select the choice that is correct.</h4>
-
+                    {
+                        validationErrors.length > 0 ?
+                        <div className="ui pointing below red basic label">
+                            {validationErrors.map((message, i)=><p key={i}>{message}</p>)}
+                        </div>
+                        :''
+                    }
                     <table className="ui table">
                         <thead>
                             <tr>
