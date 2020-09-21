@@ -49,7 +49,7 @@ const Question = () =>{
             const question = {
                 question_id: uniqid.process('Q_'),
                 ...questionFields,
-                options
+                ...options
             }
             console.log(question);
             setQuestionFields(INITIAL_QUESTION_STATE);
