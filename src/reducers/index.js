@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
+import createExam from './createExam';
 
 export default combineReducers({
-    dummy: ()=> 2
+    newExam: createExam
 });

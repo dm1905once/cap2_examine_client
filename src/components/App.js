@@ -1,10 +1,10 @@
 import React from 'react';
-import Question from './Question';
+import ExamCreate from './ExamCreate';
 
 const App = () => {
     return (
         <div className="ui container">
-            <Question />
+            <ExamCreate />
         </div>
     )
 }

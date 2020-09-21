@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from "react-redux";
+import uniqid from 'uniqid';
 import QuestionTypes from './QuestionTypes';
 import QuestionMCQ from './QuestionMCQ';
 import QuestionBIN from './QuestionBIN';
 import QuestionFIB from './QuestionFIB';
 import { QuestionDetailsContext } from '../context';
+import { addNewQuestion } from '../actions';
 
 const Question = () =>{
 
     const INITIAL_QUESTION_STATE = {
             question_type: "",
-            question_text: ""
+            question_text: "",
+            question_seq: 1
         };
+    const dispatch = useDispatch();
 
     const [ questionFields, setQuestionFields ] = useState(INITIAL_QUESTION_STATE);
     const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
@@ -42,13 +47,15 @@ const Question = () =>{
         // Successful validation
         if (errorMessages.length === 0 ){
             const question = {
-                question_id: "algo",
+                question_id: uniqid.process('Q_'),
                 ...questionFields,
                 options
             }
             console.log(question);
             setQuestionFields(INITIAL_QUESTION_STATE);
+            
             // TODO dispatch action 
+            dispatch(addNewQuestion(question));
         }
     }
 
