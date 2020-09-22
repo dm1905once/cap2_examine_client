@@ -51,10 +51,7 @@ const Question = () =>{
                 ...questionFields,
                 ...options
             }
-            console.log(question);
             setQuestionFields(INITIAL_QUESTION_STATE);
-            
-            // TODO dispatch action 
             dispatch(addNewQuestion(question));
         }
     }
