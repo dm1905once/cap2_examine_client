@@ -1,17 +1,17 @@
 import React from 'react';
 
 
-const ExamHeader = () => {
+const ExamHeader = ( {examName} ) => {
     return (
-        <div class="ui raised horizontal segments">
-            <div class="ui segment">
+        <div className="ui raised horizontal segments">
+            <div className="ui segment">
                 <h2 className="ui header">
-                    <i class="file alternate blue icon"></i>
-                    <div class="content">Exam name here</div>
+                    <i className="file alternate blue icon"></i>
+                    <div className="content">{examName}</div>
                 </h2>
             </div>
-            <div class="ui right aligned segment">
-                <p>Owner</p>
+            <div className="ui right aligned segment">
+                <p>Add new questions</p>
             </div>
         </div>
 
