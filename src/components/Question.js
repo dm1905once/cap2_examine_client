@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 import uniqid from 'uniqid';
 import QuestionTypes from './QuestionTypes';
 import QuestionMCQ from './QuestionMCQ';
@@ -8,14 +9,16 @@ import QuestionFIB from './QuestionFIB';
 import { QuestionDetailsContext } from '../context';
 import { addNewQuestion } from '../actions';
 
-const Question = () =>{
+const Question = ( {nextSeq} ) =>{
+    console.log("Next is: ", nextSeq);
 
     const INITIAL_QUESTION_STATE = {
             question_type: "",
             question_text: "",
-            question_seq: 1
+            question_seq: nextSeq
         };
     const dispatch = useDispatch();
+    const history = useHistory();
 
     const [ questionFields, setQuestionFields ] = useState(INITIAL_QUESTION_STATE);
     const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
@@ -39,6 +42,7 @@ const Question = () =>{
 
 
     const submitQuestion = (options) =>{
+        console.log("Question fields: ", questionFields)
         // Question text validation
         const errorMessages = [];
         if (questionFields.question_text === '') errorMessages.push("Please enter a question");
@@ -49,16 +53,19 @@ const Question = () =>{
             const question = {
                 question_id: uniqid.process('Q_'),
                 ...questionFields,
+                question_seq: nextSeq,
                 ...options
             }
-            setQuestionFields(INITIAL_QUESTION_STATE);
             dispatch(addNewQuestion(question));
+            setQuestionFields(INITIAL_QUESTION_STATE);
+            history.push('/exams/new');
         }
     }
 
 
     return (
         <div className="ui centered grid">
+            <div className="row"></div>
             <div className="row">
                 <div className="four wide column">
                     <h3>Question Type</h3>

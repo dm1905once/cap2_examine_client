@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect  } from 'react-router-dom';
 import ExamHeader from './ExamHeader'
+import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
 
 
@@ -15,7 +16,8 @@ const ExamEdit = () => {
         return (
             <div>
                 <ExamHeader examName={exam.exam_name} />
-                <Question />
+                <ExamCrumbs questions={exam.questions} />
+                <Question nextSeq={exam.questions.length + 1} />
             </div>
         );
     };
