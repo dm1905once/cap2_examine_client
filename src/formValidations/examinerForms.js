@@ -12,6 +12,8 @@ export const validateRegistration = values => {
       errors.password = "'Password' is a required field";
     } else if (values.password.length < 4 || values.password.length > 20) {
       errors.password = "'Password' must be between 4 and 20 characters";
+    } else if (values.password !== values.password2){
+      errors.password = "'Password' must match in both password fields";
     }
 
     if (!values.firstName) {
