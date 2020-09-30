@@ -16,10 +16,10 @@ export const validateRegistration = values => {
       errors.password = "'Password' must match in both password fields";
     }
 
-    if (!values.firstName) {
-      errors.firstName = "'First name' is a required field";
-    } else if (values.firstName.length < 2) {
-      errors.firstName = "'First name' must be at least 2 characters long";
+    if (!values.first_name) {
+      errors.first_name = "'First name' is a required field";
+    } else if (values.first_name.length < 2) {
+      errors.first_name = "'First name' must be at least 2 characters long";
     }
   
     if (!values.email) {

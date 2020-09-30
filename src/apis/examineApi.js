@@ -28,6 +28,11 @@ class examineApi {
         let res = await this.request('post', 'examiners/login', credentials);
         return res.token;
     }
+
+    static async registerExaminer(fields) {
+        let res = await this.request('post', 'examiners/register', fields);
+        return res.token;
+    }
 }
 
 

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validateLogin as validate } from '../formValidations/examinerForms';
 import examineApi from '../apis/examineApi';
+import { ExaminerContext } from "../context";
 
 
 const OrgsLogin = () => {
+    const history = useHistory();
     const [ formError, setFormError ] = useState(false);
+    const {doAuthenticateExaminer} = React.useContext(ExaminerContext);
 
     const formik = useFormik({
         initialValues: {
@@ -17,6 +21,8 @@ const OrgsLogin = () => {
             try {
                 const token = await examineApi.authenticateExaminer(values);
                 localStorage.setItem("_token", token);
+                doAuthenticateExaminer(values);
+                history.push(`/orgs/${values.username}/exams`)
             } catch(e) {
                 setFormError(true);
                 formik.errors.username=e;
