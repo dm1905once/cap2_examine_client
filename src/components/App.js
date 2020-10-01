@@ -10,7 +10,6 @@ import { ExaminerContext } from "../context";
 
 const App = () => {
     const [ examinerAuthenticated, setExaminerAuthenticated ] = useState(false);
-    // const [ examinerInfo, setExaminerInfo ] = useState('');
 
     React.useEffect(()=> {
         if (localStorage.getItem("_token")){
@@ -22,12 +21,10 @@ const App = () => {
 
     function doAuthenticateExaminer(values){
         setExaminerAuthenticated(true);
-        // setExaminerInfo(values);
     }
 
     function undoAuthenticateExaminer(){
         setExaminerAuthenticated(false);
-        // setExaminerInfo('');
     }
 
 
@@ -57,7 +54,6 @@ const App = () => {
                                 ? <ExamEdit />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
-                        {/* <Route path="/orgs/:examiner/exams/new" exact component={ExamEdit} /> */}
                     </ExaminerContext.Provider>
 
                     <Route><h2>404 Not found</h2></Route>
