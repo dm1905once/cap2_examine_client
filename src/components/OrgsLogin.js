@@ -10,8 +10,7 @@ import jwt from 'jsonwebtoken';
 const OrgsLogin = () => {
     const history = useHistory();
     const [ formError, setFormError ] = useState(false);
-    // const { doAuthenticateExaminer } = React.useContext(ExaminerContext);
-    const { userInfo } = React.useContext(ExaminerContext);
+    const { doAuthenticateExaminer } = React.useContext(ExaminerContext);
 
     const formik = useFormik({
         initialValues: {
@@ -23,8 +22,8 @@ const OrgsLogin = () => {
             try {
                 const token = await examineApi.authenticateExaminer(values);
                 localStorage.setItem("_token", token);
-                // const userInfo = jwt.decode(token);
-                // doAuthenticateExaminer(userInfo);
+                const userInfo = jwt.decode(token);
+                doAuthenticateExaminer(userInfo);
                 history.push(`/orgs/${values.username}/exams`)
             } catch(e) {
                 setFormError(true);
