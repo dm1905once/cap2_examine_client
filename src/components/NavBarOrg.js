@@ -1,24 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import jwt from 'jsonwebtoken';
+import { ExaminerContext } from "../context";
 
 const NavBarOrg = ()=> {
     const history = useHistory();
-    const [ authToken, setAuthToken ] = useState('');
-    const [ userInfo, setUserInfo ] = useState('');
-
-    useEffect(()=>{
-        setAuthToken(localStorage.getItem("_token") || '');
-    });
-
-    useEffect(()=>{
-        setUserInfo(JSON.parse(JSON.stringify(jwt.decode(authToken)))); 
-    },[authToken]);
+    const { userInfo, undoAuthenticate } = React.useContext(ExaminerContext);
 
     const handleLogout = () =>{
         localStorage.removeItem("_token");
-        setAuthToken('');
+        undoAuthenticate();
         history.push('/orgs');
     };
 

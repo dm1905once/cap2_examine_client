@@ -4,13 +4,12 @@ import { useFormik } from 'formik';
 import { validateLogin as validate } from '../formValidations/examinerForms';
 import examineApi from '../apis/examineApi';
 import { ExaminerContext } from "../context";
-import jwt from 'jsonwebtoken';
 
 
 const OrgsLogin = () => {
     const history = useHistory();
     const [ formError, setFormError ] = useState(false);
-    const { doAuthenticateExaminer } = React.useContext(ExaminerContext);
+    const { doAuthenticate } = React.useContext(ExaminerContext);
 
     const formik = useFormik({
         initialValues: {
@@ -22,8 +21,7 @@ const OrgsLogin = () => {
             try {
                 const token = await examineApi.authenticateExaminer(values);
                 localStorage.setItem("_token", token);
-                const userInfo = jwt.decode(token);
-                doAuthenticateExaminer(userInfo);
+                doAuthenticate();
                 history.push(`/orgs/${values.username}/exams`)
             } catch(e) {
                 setFormError(true);

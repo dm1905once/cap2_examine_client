@@ -7,27 +7,29 @@ import NavBarOrg from './NavBarOrg';
 import ExamEdit from './ExamEdit';
 import ExamList from './ExamList';
 import { ExaminerContext } from "../context";
+import { getTokenFromLS } from '../helpers';
 
 const App = () => {
-    const [ examinerAuthenticated, setExaminerAuthenticated ] = useState(false);
+    const [ authenticated, setAuthenticated ] = useState(false);
+    const [ userInfo, setUserInfo ] = useState();
 
     React.useEffect(()=> {
         if (localStorage.getItem("_token")){
-            setExaminerAuthenticated(true);
+            setAuthenticated(true);
+            setUserInfo(getTokenFromLS());
         } else {
-            setExaminerAuthenticated(false);
+            setAuthenticated(false);
+            setUserInfo();
         }
-      }, [examinerAuthenticated]);
+      }, [authenticated]);
 
-    function doAuthenticateExaminer(values){
-        setExaminerAuthenticated(true);
+    function doAuthenticate(){
+        setAuthenticated(true);
     }
 
-    function undoAuthenticateExaminer(){
-        setExaminerAuthenticated(false);
+    function undoAuthenticate(){
+        setAuthenticated(false);
     }
-
-
 
     return (
         <div className="ui container">
@@ -36,21 +38,21 @@ const App = () => {
                     <Route path="/" exact component={Home} />
                     <Route path="/applicants" exact component={HomeApplicants} />
 
-                    <ExaminerContext.Provider value={ {doAuthenticateExaminer } }>
+                    <ExaminerContext.Provider value={ { userInfo, doAuthenticate, undoAuthenticate } }>
                         <NavBarOrg />
                         <Route path="/orgs" exact component={HomeOrgs} />
                         <Route path="/orgs/:examiner" exact render={()=>(
-                            examinerAuthenticated
+                            authenticated
                                 ? <ExamList />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
                         <Route path="/orgs/:examiner/exams" exact render={()=>(
-                            examinerAuthenticated
+                            authenticated
                                 ? <ExamList />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
                         <Route path="/orgs/:examiner/exams/new" exact render={()=>(
-                            examinerAuthenticated
+                            authenticated
                                 ? <ExamEdit />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
