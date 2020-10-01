@@ -4,14 +4,19 @@ import { Redirect  } from 'react-router-dom';
 import ExamHeader from './ExamHeader'
 import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
+import { decodeItemFromLS } from '../helpers';
 
 
 const ExamEdit = () => {
-
     const exam = useSelector(store => store.newExam);
 
     if (!exam.exam_id){
-        return <Redirect to="/exams" />
+        const userInfo = decodeItemFromLS("_token");
+        if (userInfo) {
+            return <Redirect to={ {pathname: `/orgs/${userInfo.username}/exams`}} />
+        } else {
+            return <Redirect to="/orgs" />
+        }
     } else {
         return (
             <div>

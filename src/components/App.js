@@ -10,7 +10,7 @@ import { ExaminerContext } from "../context";
 
 const App = () => {
     const [ examinerAuthenticated, setExaminerAuthenticated ] = useState(false);
-    const [ examinerInfo, setExaminerInfo ] = useState('');
+    // const [ examinerInfo, setExaminerInfo ] = useState('');
 
     React.useEffect(()=> {
         if (localStorage.getItem("_token")){
@@ -22,12 +22,12 @@ const App = () => {
 
     function doAuthenticateExaminer(values){
         setExaminerAuthenticated(true);
-        setExaminerInfo(values);
+        // setExaminerInfo(values);
     }
 
     function undoAuthenticateExaminer(){
         setExaminerAuthenticated(false);
-        setExaminerInfo('');
+        // setExaminerInfo('');
     }
 
 
@@ -39,15 +39,25 @@ const App = () => {
                     <Route path="/" exact component={Home} />
                     <Route path="/applicants" exact component={HomeApplicants} />
 
-                    <ExaminerContext.Provider value={ {doAuthenticateExaminer, undoAuthenticateExaminer, examinerInfo} }>
+                    <ExaminerContext.Provider value={ {doAuthenticateExaminer } }>
                         <NavBarOrg />
                         <Route path="/orgs" exact component={HomeOrgs} />
+                        <Route path="/orgs/:examiner" exact render={()=>(
+                            examinerAuthenticated
+                                ? <ExamList />
+                                : <HomeOrgs topMessage="Please authenticate first" />
+                        )}/>
                         <Route path="/orgs/:examiner/exams" exact render={()=>(
                             examinerAuthenticated
                                 ? <ExamList />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
-                        <Route path="/exams/new" exact component={ExamEdit} />
+                        <Route path="/orgs/:examiner/exams/new" exact render={()=>(
+                            examinerAuthenticated
+                                ? <ExamEdit />
+                                : <HomeOrgs topMessage="Please authenticate first" />
+                        )}/>
+                        {/* <Route path="/orgs/:examiner/exams/new" exact component={ExamEdit} /> */}
                     </ExaminerContext.Provider>
 
                     <Route><h2>404 Not found</h2></Route>

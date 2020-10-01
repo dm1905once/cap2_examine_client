@@ -1,24 +1,33 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { ExaminerContext } from "../context";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import jwt from 'jsonwebtoken';
 
 const NavBarOrg = ()=> {
-    const {examinerInfo, undoAuthenticateExaminer} = React.useContext(ExaminerContext);
     const history = useHistory();
+    const [ authToken, setAuthToken ] = useState('');
+    const [ userInfo, setUserInfo ] = useState('');
+
+    useEffect(()=>{
+        setAuthToken(localStorage.getItem("_token") || '');
+    });
+
+    useEffect(()=>{
+        setUserInfo(JSON.parse(JSON.stringify(jwt.decode(authToken)))); 
+    },[authToken]);
 
     const handleLogout = () =>{
-        undoAuthenticateExaminer();
         localStorage.removeItem("_token");
+        setAuthToken('');
         history.push('/orgs');
     };
 
 
     return (
         <div className="ui secondary pointing menu">
-            <Link to="/orgs" className="item">Home</Link>
+            <Link to="/" className="item">Home</Link>
 
-            {examinerInfo?
+            {userInfo?
                 <div className="right menu">
                     <div className="item">
                         <div className="ui primary button" onClick={handleLogout}>Logout</div>

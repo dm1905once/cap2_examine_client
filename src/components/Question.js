@@ -8,9 +8,9 @@ import QuestionBIN from './QuestionBIN';
 import QuestionFIB from './QuestionFIB';
 import { QuestionDetailsContext } from '../context';
 import { addNewQuestion } from '../actions';
+import { decodeItemFromLS } from '../helpers';
 
 const Question = ( {nextSeq} ) =>{
-    console.log("Next is: ", nextSeq);
 
     const INITIAL_QUESTION_STATE = {
             question_type: "",
@@ -19,6 +19,7 @@ const Question = ( {nextSeq} ) =>{
         };
     const dispatch = useDispatch();
     const history = useHistory();
+    const userInfo = decodeItemFromLS("_token");
 
     const [ questionFields, setQuestionFields ] = useState(INITIAL_QUESTION_STATE);
     const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
@@ -42,7 +43,7 @@ const Question = ( {nextSeq} ) =>{
 
 
     const submitQuestion = (options) =>{
-        console.log("Question fields: ", questionFields)
+
         // Question text validation
         const errorMessages = [];
         if (questionFields.question_text === '') errorMessages.push("Please enter a question");
@@ -58,7 +59,7 @@ const Question = ( {nextSeq} ) =>{
             }
             dispatch(addNewQuestion(question));
             setQuestionFields(INITIAL_QUESTION_STATE);
-            history.push('/exams/new');
+            history.push(`/orgs/${userInfo.username}/exams/new`);
         }
     }
 

@@ -3,6 +3,7 @@ import OrgsLogin from './OrgsLogin';
 import OrgsRegister from './OrgsRegister';
 
 const HomeOrgs = ( {topMessage=''})=> {
+
     return (
         <div>
             {topMessage?<div className="ui warning message">{topMessage}</div>:''}

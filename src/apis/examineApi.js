@@ -33,6 +33,11 @@ class examineApi {
         let res = await this.request('post', 'examiners/register', fields);
         return res.token;
     }
+
+    static async getExaminerInfo(username) {
+      let res = await this.request('get', `examiners/${username}`);
+      return res;
+  }
 }
 
 
