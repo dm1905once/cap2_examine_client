@@ -7,10 +7,16 @@ import NavBarOrg from './NavBarOrg';
 import ExamEdit from './ExamEdit';
 import ExamList from './ExamList';
 import { ExaminerContext } from "../context";
+import { getTokenFromLS } from '../helpers';
 
 const App = () => {
     const [ examinerAuthenticated, setExaminerAuthenticated ] = useState(false);
-    // const [ examinerInfo, setExaminerInfo ] = useState('');
+    const [ userInfo, setUserInfo ] = useState('');
+
+    React.useEffect(()=>{
+        setUserInfo(getTokenFromLS("_token"));
+        console.log("cargue");
+    })
 
     React.useEffect(()=> {
         if (localStorage.getItem("_token")){
@@ -39,21 +45,21 @@ const App = () => {
                     <Route path="/" exact component={Home} />
                     <Route path="/applicants" exact component={HomeApplicants} />
 
-                    <ExaminerContext.Provider value={ {doAuthenticateExaminer } }>
+                    <ExaminerContext.Provider value={ { userInfo } }>
                         <NavBarOrg />
                         <Route path="/orgs" exact component={HomeOrgs} />
                         <Route path="/orgs/:examiner" exact render={()=>(
-                            examinerAuthenticated
+                            userInfo
                                 ? <ExamList />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
                         <Route path="/orgs/:examiner/exams" exact render={()=>(
-                            examinerAuthenticated
+                            userInfo
                                 ? <ExamList />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
                         <Route path="/orgs/:examiner/exams/new" exact render={()=>(
-                            examinerAuthenticated
+                            userInfo
                                 ? <ExamEdit />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>

@@ -9,6 +9,7 @@ import QuestionFIB from './QuestionFIB';
 import { QuestionDetailsContext } from '../context';
 import { addNewQuestion } from '../actions';
 import { decodeItemFromLS } from '../helpers';
+import { ExaminerContext } from "../context";
 
 const Question = ( {nextSeq} ) =>{
 
@@ -19,7 +20,8 @@ const Question = ( {nextSeq} ) =>{
         };
     const dispatch = useDispatch();
     const history = useHistory();
-    const userInfo = decodeItemFromLS("_token");
+    // const userInfo = decodeItemFromLS("_token");
+    const { userInfo } = React.useContext(ExaminerContext);
 
     const [ questionFields, setQuestionFields ] = useState(INITIAL_QUESTION_STATE);
     const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
