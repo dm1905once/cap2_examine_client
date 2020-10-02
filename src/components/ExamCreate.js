@@ -1,63 +1,98 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { createNewExam } from '../actions';
 import uniqid from 'uniqid';
 import { ExaminerContext } from "../context";
+import { validateExamCreate as validate } from '../formValidations/examinerForms';
 
 const ExamCreate = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [ examName, setExamName ] = useState('');
-    const [ validationErrors, setValidationErrors ] = useState([]);
     const { userInfo } = React.useContext(ExaminerContext);
 
-    const handleNameChange = (e) =>{
-        setExamName(e.target.value)
-        setValidationErrors('');
-    }
-
-    const submitCreateExam = () =>{
-
-        const errorMessages = [];
-        if (examName === '') errorMessages.push("Please enter a name");
-        setValidationErrors(errorMessages);
-
-        if (errorMessages.length === 0 ){
+    const formik = useFormik({
+        initialValues: {
+            exam_id: uniqid.process('E_'),
+            exam_owner: userInfo.username,
+            exam_name: '',
+            exam_pass_score: '',
+            exam_fee:''
+        },
+        validate,
+        onSubmit: async (values) => {
             const examDetails = {
                 exam_id: uniqid.process('E_'),
-                exam_name: examName,
-                exam_owner: userInfo.username
+                exam_owner: userInfo.username,
+                exam_name: values.examName,
+                exam_pass_score: values.examPassScore,
+                exam_fee: values.examFee
             }
             dispatch(createNewExam(examDetails));
             history.push(`/orgs/${userInfo.username}/exams/new`);
-        }
-
-    }
+        },
+    });
 
     return (
-            <div className="ui relaxed grid">
-                <div className="row">
-                    <div className="eight wide column">
-                        <div className="ui fluid action input">
-                            <input type="text" 
-                                placeholder="Enter exam name and click Create"
-                                value={examName} 
-                                onChange={(handleNameChange)} />
-                            <div className="ui blue button" onClick={submitCreateExam} >Create</div>
+        <div className="">
+            <form className="ui form" onSubmit={formik.handleSubmit}>
+                <div className="fields">
+                    <div className="four wide field required">
+                        <label>Exam identifier</label>
+                        <input type="text" placeholder="Enter a name for the exam" name="examName"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.examName}/>
+                    </div>
+                    <div className="four wide field required">
+                        <label>Passing score</label>
+                        <input type="text" placeholder="Number between 0 and 100" name="examPassScore"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.examPassScore}/>
+                    </div>
+                    <div className="four wide field required">
+                        <label htmlFor="examFee" >Exam fee ($)</label>
+                        <div className="ui right labeled input">
+                            <input type="text" placeholder="Amount" name="examFee"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.examFee}/>
+                            <div className="ui basic label">.00</div>
                         </div>
                     </div>
-                    <div className="four wide column">
-                        {
-                            validationErrors.length > 0 ?
-                            <div className="ui left pointing red basic label">
-                                {validationErrors.map((message, i)=><p key={i}>{message}</p>)}
-                            </div>
-                            :''
-                        }
+                    <div className="four wide field">
+                        <label>&nbsp;</label>
+                        <button className="ui right labeled icon green right floated button">
+                            <i className="right arrow icon"></i>
+                            Create New Exam
+                        </button>
                     </div>
                 </div>
-            </div>        
+                <div className="fields">
+                    <div className="four wide field">
+                        {   formik.errors.examName?
+                                <div className="ui pointing red basic label">{formik.errors.examName}</div>
+                            :   <p>&nbsp;</p>
+                        }   
+                    </div>
+                    <div className="four wide field">
+                        {   formik.errors.examPassScore?
+                                <div className="ui pointing red basic label">{formik.errors.examPassScore}</div>
+                            :   <p>&nbsp;</p>
+                        }   
+                    </div>
+                    <div className="four wide field">
+                        {   formik.errors.examFee?
+                                <div className="ui pointing red basic label">{formik.errors.examFee}</div>
+                            :   <p>&nbsp;</p>
+                        }   
+                    </div>
+                </div>
+                
+            </form>
+        </div>
     )
 };
 

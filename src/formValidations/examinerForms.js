@@ -46,3 +46,25 @@ export const validateLogin = values => {
     }
     return errors;
 }
+
+export const validateExamCreate = values => {
+    const errors = {};
+    if (!values.examName) {
+      errors.examName = "The exam must have an identifier/name.";
+    } else if (values.examName.length < 8 || values.examName.length > 30) {
+      errors.examName = "The name must be between 8 and 30 characters";
+    }
+
+    if (!values.examPassScore) {
+      errors.examPassScore = "You must enter a passing score (e.g.: 70)";
+    } else if (isNaN(values.examPassScore) || values.examPassScore < 0 || values.examPassScore > 100) {
+      errors.examPassScore = "The passing score must be an integer number between 0 and 100";
+    }
+
+    if (!values.examFee) {
+      errors.examFee = "You must enter a fee for the exam";
+    } else if (isNaN(values.examFee) || values.examFee < 0 || values.examFee > 1000) {
+      errors.examFee = "The exam fee be an integer number between 0 and 1000";
+    }
+    return errors;
+}
