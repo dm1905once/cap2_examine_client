@@ -15,7 +15,7 @@ const ExamCreate = () => {
     const formik = useFormik({
         initialValues: {
             exam_id: uniqid.process('E_'),
-            exam_owner: userInfo.username,
+            exam_owner: '',
             exam_name: '',
             exam_pass_score: '',
             exam_fee:''

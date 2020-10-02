@@ -9,12 +9,12 @@ import { ExaminerContext } from "../context";
 const OrgsRegister = () => {
     const history = useHistory();
     const [ formError, setFormError ] = useState(false);
-    const {doAuthenticateExaminer} = React.useContext(ExaminerContext);
+    const { doAuthenticate } = React.useContext(ExaminerContext);
 
     const formik = useFormik({
         initialValues: {
         org_handle: 'ORG1',
-        org_key: 'ORG1',
+        org_key: 'org1',
         username: '',
         password: '',
         password2: '',
@@ -28,8 +28,8 @@ const OrgsRegister = () => {
             try {
                 const token = await examineApi.registerExaminer(values);
                 localStorage.setItem("_token", token);
-                doAuthenticateExaminer(values);
-                history.push(`/orgs/${values.username}/exams`)
+                doAuthenticate();
+                history.push(`/orgs/${values.username}/exams`);
             } catch(e) {
                 setFormError(true);
                 formik.errors.username=e;
