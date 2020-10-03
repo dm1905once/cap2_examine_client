@@ -17,6 +17,7 @@ const ExamCreate = () => {
             exam_id: uniqid.process('E_'),
             exam_owner: '',
             exam_name: '',
+            exam_description: '',
             exam_pass_score: '',
             exam_fee:''
         },
@@ -26,8 +27,9 @@ const ExamCreate = () => {
                 exam_id: uniqid.process('E_'),
                 exam_owner: userInfo.username,
                 exam_name: values.examName,
-                exam_pass_score: values.examPassScore,
-                exam_fee: values.examFee
+                exam_description: values.examDescription,
+                exam_pass_score: parseInt(values.examPassScore),
+                exam_fee: parseFloat(values.examFee)
             }
             dispatch(createNewExam(examDetails));
             history.push(`/orgs/${userInfo.username}/exams/new`);
@@ -37,6 +39,26 @@ const ExamCreate = () => {
     return (
         <div className="">
             <form className="ui form" onSubmit={formik.handleSubmit}>
+                <div className="fields">
+                    <div className="four wide field">
+                        {   formik.errors.examName?
+                                <div className="ui pointing below red basic label">{formik.errors.examName}</div>
+                            :   <p>&nbsp;</p>
+                        }   
+                    </div>
+                    <div className="four wide field">
+                        {   formik.errors.examPassScore?
+                                <div className="ui pointing below red basic label">{formik.errors.examPassScore}</div>
+                            :   <p>&nbsp;</p>
+                        }   
+                    </div>
+                    <div className="four wide field">
+                        {   formik.errors.examFee?
+                                <div className="ui pointing below red basic label">{formik.errors.examFee}</div>
+                            :   <p>&nbsp;</p>
+                        }   
+                    </div>
+                </div>
                 <div className="fields">
                     <div className="four wide field required">
                         <label>Exam identifier</label>
@@ -53,41 +75,30 @@ const ExamCreate = () => {
                         value={formik.values.examPassScore}/>
                     </div>
                     <div className="four wide field required">
-                        <label htmlFor="examFee" >Exam fee ($)</label>
-                        <div className="ui right labeled input">
+                        <label htmlFor="examFee" >Exam fee</label>
+                        <div className="ui left labeled input">
+                        <div className="ui label">$</div>
                             <input type="text" placeholder="Amount" name="examFee"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.examFee}/>
-                            <div className="ui basic label">.00</div>
                         </div>
                     </div>
                     <div className="four wide field">
                         <label>&nbsp;</label>
-                        <button className="ui right labeled icon green right floated button">
+                        <button type="submit" className="ui right labeled icon green right floated button">
                             <i className="right arrow icon"></i>
                             Create New Exam
                         </button>
                     </div>
                 </div>
                 <div className="fields">
-                    <div className="four wide field">
-                        {   formik.errors.examName?
-                                <div className="ui pointing red basic label">{formik.errors.examName}</div>
-                            :   <p>&nbsp;</p>
-                        }   
-                    </div>
-                    <div className="four wide field">
-                        {   formik.errors.examPassScore?
-                                <div className="ui pointing red basic label">{formik.errors.examPassScore}</div>
-                            :   <p>&nbsp;</p>
-                        }   
-                    </div>
-                    <div className="four wide field">
-                        {   formik.errors.examFee?
-                                <div className="ui pointing red basic label">{formik.errors.examFee}</div>
-                            :   <p>&nbsp;</p>
-                        }   
+                    <div className="twelve wide field">
+                        <label htmlFor="examDescription" >Exam Description</label>
+                        <input type="text" placeholder="Enter a brief description" name="examDescription"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.examDescription}/>
                     </div>
                 </div>
                 

@@ -14,24 +14,24 @@ const QuestionMCQ = ( {submitOptions} )=> {
         setValidationErrors([]);
 
         setChoiceList([...choiceList, {
-            choiceId: uniqid.process(),
-            choice: newChoice
+            choice_id: uniqid.process(),
+            choice_text: newChoice
         }]);
         setNewChoice('');
     }
 
     const removeChoice = choiceId =>{
-        setChoiceList(choiceList.filter(choice=> choice.choiceId !== choiceId ))
+        setChoiceList(choiceList.filter(choice=> choice.choice_id !== choiceId ))
     }
 
     const displayChoiceRow = (choice) =>{
-        if (choice.choiceId === rightChoiceId) {
+        if (choice.choice_id === rightChoiceId) {
             return <td><i className="check large green icon"></i></td>
         } else {
             return (
                 <td>
                     <div className="ui fitted checkbox">
-                        <input type="checkbox" onClick={()=>setRightChoiceId(choice.choiceId)} /> <label></label>
+                        <input type="checkbox" onClick={()=>setRightChoiceId(choice.choice_id)} /> <label></label>
                     </div>
                 </td>
             )
@@ -108,13 +108,13 @@ const QuestionMCQ = ( {submitOptions} )=> {
                         </thead>
                         <tbody>
                             {choiceList.map(choiceItem => (
-                                <tr className={choiceItem.choiceId === rightChoiceId? "positive" : "negative"} key={choiceItem.choiceId} >
+                                <tr className={choiceItem.choice_id === rightChoiceId? "positive" : "negative"} key={choiceItem.choice_id} >
                                     {displayChoiceRow(choiceItem)}
-                                    <td>{choiceItem.choice}</td>
+                                    <td>{choiceItem.choice_text}</td>
                                     <td className="right aligned">
                                         <div className="ui circular basic white icon button" 
                                             data-tooltip="Remove choice"
-                                            onClick={()=>removeChoice(choiceItem.choiceId)}
+                                            onClick={()=>removeChoice(choiceItem.choice_id)}
                                         ><i className="close red icon"></i>
                                         </div>
                                     </td>

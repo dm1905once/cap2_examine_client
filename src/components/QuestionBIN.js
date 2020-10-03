@@ -4,16 +4,16 @@ import { QuestionDetailsContext } from '../context';
 
 const binaryOptions = {
         "TRUE_FALSE" : [
-            {choiceId: uniqid.process(),choice: "True"},
-            {choiceId: uniqid.process(),choice: "False"}
+            {choice_id: uniqid.process(),choice_text: "True"},
+            {choice_id: uniqid.process(),choice_text: "False"}
         ],
         "YES_NO" : [
-            {choiceId: uniqid.process(),choice: "Yes"},
-            {choiceId: uniqid.process(),choice: "No"}
+            {choice_id: uniqid.process(),choice_text: "Yes"},
+            {choice_id: uniqid.process(),choice_text: "No"}
         ],
         "ZERO_ONE" : [
-            {choiceId: uniqid.process(),choice: 0},
-            {choiceId: uniqid.process(),choice: 1}
+            {choice_id: uniqid.process(),choice_text: "0"},
+            {choice_id: uniqid.process(),choice_text: "1"}
         ]
     };
 
@@ -40,13 +40,13 @@ const QuestionBIN = ()=> {
 
 
     const displayChoiceRow = (choice) =>{
-        if (choice.choiceId === rightChoiceId) {
+        if (choice.choice_id === rightChoiceId) {
             return <td><i className="check large green icon"></i></td>
         } else {
             return (
                 <td>
                     <div className="ui fitted checkbox">
-                        <input type="checkbox" onClick={()=>selectRightChoice(choice.choiceId)} /> <label></label>
+                        <input type="checkbox" onClick={()=>selectRightChoice(choice.choice_id)} /> <label></label>
                     </div>
                 </td>
             )
@@ -144,9 +144,9 @@ const QuestionBIN = ()=> {
                         </thead>
                         <tbody>
                             {choiceList.map(choiceItem => (
-                                <tr className={choiceItem.choiceId === rightChoiceId? "positive" : "negative"} key={choiceItem.choiceId} >
+                                <tr className={choiceItem.choice_id === rightChoiceId? "positive" : "negative"} key={choiceItem.choice_id} >
                                     {displayChoiceRow(choiceItem)}
-                                    <td>{choiceItem.choice}</td>
+                                    <td>{choiceItem.choice_text}</td>
                                 </tr>
                             ))}
                         </tbody>
