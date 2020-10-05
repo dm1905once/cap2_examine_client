@@ -14,7 +14,6 @@ const ExamHeader = ( {examName} ) => {
 
     const submitExam = async() =>{
         let redirectMessage = '';
-        console.log("This is the contents of the exam ", newExam);
         if (newExam.questions.length>0){
             const newExamId = await examineApi.createExam(newExam);
             if (newExamId){
@@ -29,7 +28,7 @@ const ExamHeader = ( {examName} ) => {
 
         history.push(
             {
-                pathname: `/orgs/${userInfo}/exams`, 
+                pathname: `/orgs/${userInfo.username}/exams`, 
                 state: {topMessage: redirectMessage }
             }
         )
