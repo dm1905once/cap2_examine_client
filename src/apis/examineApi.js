@@ -54,6 +54,11 @@ class examineApi {
       let res = await this.request('delete', `examiners/${username}/exams`, {exam_id: examId});
       return res;
     }
+
+    static async getEditableExam(username, examId) {
+      let res = await this.request('get', `examiners/${username}/exams/${examId}`);
+      return res;
+    }
 }
 
 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExamCard = ( {examInfo, deleteExam}) =>{
+const ExamCard = ( {examInfo, editExam, deleteExam}) =>{
     return (
         <div className="card">
             <div className="content">
@@ -64,7 +64,8 @@ const ExamCard = ( {examInfo, deleteExam}) =>{
             </div>
             <div className="extra content">
             <div className="ui two buttons" data-examid={examInfo.exam_id}>
-                <div className="ui basic blue button"><i className="edit alternate icon"></i>Edit</div>
+                <div className="ui basic blue button" onClick={editExam}>
+                    <i className="edit alternate icon"></i>Edit</div>
                 <div className="ui basic red button" onClick={deleteExam}>
                     <i className="trash alternate icon"></i>Delete
                 </div>

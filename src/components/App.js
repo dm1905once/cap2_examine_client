@@ -4,6 +4,7 @@ import Home from './Home';
 import HomeApplicants from './HomeApplicants';
 import HomeOrgs from './HomeOrgs';
 import NavBarOrg from './NavBarOrg';
+import ExamBuild from './ExamBuild';
 import ExamEdit from './ExamEdit';
 import ExamList from './ExamList';
 import { ExaminerContext } from "../context";
@@ -55,9 +56,18 @@ const App = () => {
                         )}/>
                         <Route path="/orgs/:examiner/exams/new" exact render={()=>(
                             authenticated
-                                ? <ExamEdit />
+                                ? <ExamBuild />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
+                        {/* <Route path="/orgs/:examiner/exams/:examid/edit/:seq" component={()=>(
+                            authenticated
+                                ? <ExamEdit />
+                                : <HomeOrgs topMessage="Please authenticate first" />
+                        )}/> */}
+                        <Route path="/orgs/:examiner/exams/:examId/edit/:seq" component={
+                            authenticated? ExamEdit: HomeOrgs
+                        } />
+
                     </ExaminerContext.Provider>
 
                     <Route><h2>404 Not found</h2></Route>

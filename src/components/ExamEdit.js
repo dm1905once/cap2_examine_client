@@ -1,31 +1,49 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { Redirect  } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { ExaminerContext } from "../context";
+import examineApi from '../apis/examineApi';
 import ExamHeader from './ExamHeader'
 import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
-import { ExaminerContext } from "../context";
 
-
-const ExamEdit = () => {
-    const exam = useSelector(store => store.newExam);
+const ExamEdit = ( props )=> {
+    const [ exam, setExam ] = useState({});
+    const { examiner, examId, seq } = props.match.params;
     const { userInfo } = React.useContext(ExaminerContext);
+    // const exam = useSelector(store => store.newExam);
 
-    if (!exam.exam_id){
-        if (userInfo) {
-            return <Redirect to={ {pathname: `/orgs/${userInfo.username}/exams`}} />
-        } else {
-            return <Redirect to="/orgs" />
+
+    useEffect(()=>{
+        // Retrieve exam details
+        async function loadExam(){
+            const exam = await examineApi.getEditableExam(examiner, examId);
+            setExam(exam);
+        };
+        loadExam();
+        if (!exam){
+            if (userInfo.username === examiner) {
+                return <Redirect to={ {pathname: `/orgs/${userInfo.username}/exams`}} />
+            } else {
+                return <Redirect to="/orgs" />
+            }
         }
-    } else {
-        return (
-            <div>
-                <ExamHeader examName={exam.exam_name} />
-                <ExamCrumbs questions={exam.questions} />
-                <Question nextSeq={exam.questions.length + 1} />
-            </div>
-        );
-    };
+        console.log(exam);
+    },[exam, examId, examiner, userInfo.username]);
+
+    return ( 
+        <div>
+            {
+            exam? 
+                <div>
+                    <ExamHeader examName={exam.exam_name} />
+                    <ExamCrumbs questions={exam.questions} />
+                    <Question nextSeq={seq} />
+                </div>
+            :
+                <h1> Loading ....</h1>
+            }
+        </div>
+    );
 }
 
 export default ExamEdit;

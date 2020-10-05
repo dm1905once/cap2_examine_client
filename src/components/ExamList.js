@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation  } from 'react-router-dom';
+import { useLocation, useHistory  } from 'react-router-dom';
 import { ExaminerContext } from "../context";
 import examineApi from '../apis/examineApi';
 import ExamCreate from './ExamCreate';
@@ -7,6 +7,7 @@ import ExamCard from './ExamCard';
 
 const ExamList = () => {
     const location = useLocation();
+    const history = useHistory();
     const { userInfo } = useContext(ExaminerContext);
     const [ examList, setExamList ] = useState([]);
     const [ refreshList, setRefreshList ] = useState(true);
@@ -34,7 +35,13 @@ const ExamList = () => {
         setTimeout(()=>{
             setRefreshList(true);
         }, 5000);
-    }
+    };
+
+    const handleEditExam = e =>{
+        const examId = e.target.parentNode.getAttribute('data-examid');
+        console.log("Redirecting to :", `/orgs/${userInfo.username}/exams/${examId}/edit/1`);
+        history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);
+    };
 
     return (
         <div className="ui container">
@@ -58,7 +65,8 @@ const ExamList = () => {
                         {examList.map(exam=> <ExamCard 
                             key={exam.exam_id} 
                             examInfo={exam}
-                            deleteExam={handleDeleteExam}/>)}
+                            deleteExam={handleDeleteExam}
+                            editExam={handleEditExam} />)}
                     </div>
             }
         </div>
