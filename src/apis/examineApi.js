@@ -39,9 +39,19 @@ class examineApi {
       return res;
     }
 
+    static async getExaminerExams(username) {
+      let res = await this.request('get', `examiners/${username}/exams`);
+      return res;
+    }
+
     static async createExam(newExam) {
       const username= newExam.exam_owner;
       let res = await this.request('post', `examiners/${username}/exams`, newExam);
+      return res;
+    }
+
+    static async deleteExam(username, examId) {
+      let res = await this.request('delete', `examiners/${username}/exams`, {exam_id: examId});
       return res;
     }
 }

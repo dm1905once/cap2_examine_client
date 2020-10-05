@@ -1,18 +1,17 @@
 import React from 'react';
 
-const ExamCard = () =>{
+const ExamCard = ( {examInfo, deleteExam}) =>{
     return (
         <div className="card">
             <div className="content">
-                {/* <img className="right floated mini ui image" src="/images/avatar/large/elliot.jpg"/> */}
                 <div className="header">
-                    Elliot Fu
+                    {examInfo.exam_name}
                 </div>
                 <div className="meta">
-                    Friends of Veronika
+                    {examInfo.exam_owner}
                 </div>
                 <div className="description">
-                    Elliot requested permission to view your contact details
+                    {examInfo.exam_description}
                 </div>
                 <table className="ui small table">
                     <thead>
@@ -23,8 +22,8 @@ const ExamCard = () =>{
                     </thead>
                     <tbody>
                         <tr>
-                        <td>70</td>
-                        <td>80.99</td>
+                        <td>{examInfo.exam_pass_score}</td>
+                        <td>{examInfo.exam_fee}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -64,9 +63,11 @@ const ExamCard = () =>{
 
             </div>
             <div className="extra content">
-            <div className="ui two buttons">
-                <div className="ui basic green button"><i className="edit alternate icon"></i>Edit</div>
-                <div className="ui basic red button"><i className="trash alternate icon"></i>Delete</div>
+            <div className="ui two buttons" data-examid={examInfo.exam_id}>
+                <div className="ui basic blue button"><i className="edit alternate icon"></i>Edit</div>
+                <div className="ui basic red button" onClick={deleteExam}>
+                    <i className="trash alternate icon"></i>Delete
+                </div>
             </div>
             </div>
         </div>

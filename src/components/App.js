@@ -25,10 +25,12 @@ const App = () => {
 
     function doAuthenticate(){
         setAuthenticated(true);
+        setUserInfo(getTokenFromLS());
     }
 
     function undoAuthenticate(){
         setAuthenticated(false);
+        setUserInfo();
     }
 
     return (
