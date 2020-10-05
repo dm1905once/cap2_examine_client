@@ -37,7 +37,13 @@ class examineApi {
     static async getExaminerInfo(username) {
       let res = await this.request('get', `examiners/${username}`);
       return res;
-  }
+    }
+
+    static async createExam(newExam) {
+      const username= newExam.exam_owner;
+      let res = await this.request('post', `examiners/${username}/exams`, newExam);
+      return res;
+    }
 }
 
 

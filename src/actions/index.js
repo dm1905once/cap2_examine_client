@@ -1,7 +1,7 @@
 
-export const createNewExam = (examDetails) =>{
+export const initializeNewExam = (examDetails) =>{
     return {
-        type: 'CREATE_EXAM',
+        type: 'INITIALIZE_EXAM',
         payload: examDetails
     };
 };
@@ -10,5 +10,12 @@ export const addNewQuestion = (newQuestion) =>{
     return {
         type: 'ADD_QUESTION',
         payload: newQuestion
+    };
+};
+
+
+export const clearExam = () =>{
+    return {
+        type: 'CLEAR_EXAM'
     };
 };

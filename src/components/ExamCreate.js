@@ -2,7 +2,7 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { createNewExam } from '../actions';
+import { initializeNewExam } from '../actions';
 import uniqid from 'uniqid';
 import { ExaminerContext } from "../context";
 import { validateExamCreate as validate } from '../formValidations/examinerForms';
@@ -31,7 +31,7 @@ const ExamCreate = () => {
                 exam_pass_score: parseInt(values.examPassScore),
                 exam_fee: parseFloat(values.examFee)
             }
-            dispatch(createNewExam(examDetails));
+            dispatch(initializeNewExam(examDetails));
             history.push(`/orgs/${userInfo.username}/exams/new`);
         },
     });

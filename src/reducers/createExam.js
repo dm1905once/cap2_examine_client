@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) =>{
     switch (action.type){
-        case 'CREATE_EXAM':
+        case 'INITIALIZE_EXAM':
             return { 
                 ...state, 
                 exam_id: action.payload.exam_id,
@@ -23,6 +23,9 @@ export default (state = INITIAL_STATE, action) =>{
         case 'ADD_QUESTION': {
             const updatedQuestions = [...state.questions, action.payload];
             return { ...state, questions: updatedQuestions};
+        }
+        case 'CLEAR_EXAM': {
+            return INITIAL_STATE;
         }
         default:
             return state;
