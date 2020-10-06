@@ -6,11 +6,13 @@ import { clearExam } from '../actions';
 import examineApi from '../apis/examineApi';
 
 
-const ExamHeader = ( {examName} ) => {
+const ExamHeader = ( {examName, operation} ) => {
     const history = useHistory();
     const dispatch = useDispatch();
     const { userInfo } = useContext(ExaminerContext);
-    const newExam = useSelector(store=> store.newExam);
+
+    // Retrieve a different store depending on the operation: create or edit
+    const newExam = useSelector(store=> (operation === "edit")? store.editExam: store.newExam);
 
     const submitExam = async() =>{
         let redirectMessage = '';
@@ -18,7 +20,7 @@ const ExamHeader = ( {examName} ) => {
             const newExamId = await examineApi.createExam(newExam);
             if (newExamId){
                 dispatch(clearExam());
-                redirectMessage = 'The exam has been created sucessfully';
+                redirectMessage = 'The exam has been added sucessfully';
             } else {
                 redirectMessage = 'An error occurred while attempting to submit the exam.';
             }

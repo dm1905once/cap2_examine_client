@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from 'react-router-dom';
 import uniqid from 'uniqid';
 import QuestionTypes from './QuestionTypes';
@@ -10,24 +10,36 @@ import { QuestionDetailsContext } from '../context';
 import { addNewQuestion } from '../actions';
 import { ExaminerContext } from "../context";
 
-const Question = ( {nextSeq} ) =>{
-
-    const INITIAL_QUESTION_STATE = {
-            question_type: "",
-            question_text: "",
-            question_seq: nextSeq
-        };
+const Question = ( {nextSeq, operation} ) =>{
     const dispatch = useDispatch();
     const history = useHistory();
     const { userInfo } = React.useContext(ExaminerContext);
+    const editExam = useSelector(store=> store.editExam);
+
+    let INITIAL_QUESTION_STATE = {
+        question_type: "",
+        question_text: "",
+        question_seq: nextSeq
+    };
 
     const [ questionFields, setQuestionFields ] = useState(INITIAL_QUESTION_STATE);
     const [ showQuestionOptions, setShowQuestionOptions ] = useState(null);
     const [ validationErrors, setValidationErrors ] = useState([]);
 
+    useEffect(()=>{
+        if (operation==="edit" && Object.keys(editExam).length > 0 ){        
+            const editQuestion = {
+                question_type: editExam.questions[nextSeq-1].question_type,
+                question_text: editExam.questions[nextSeq-1].question_text,
+                question_seq: editExam.questions[nextSeq-1].question_seq
+            };
+            setQuestionFields(editQuestion);
+        }
+    },[nextSeq, operation, editExam]);
+    
+
     const handleQuestionText = (field, newValue) =>{
         setQuestionFields( {...questionFields, [field]: newValue });
-
         if (field === 'question_text') setValidationErrors([]);
     }
 

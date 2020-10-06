@@ -38,9 +38,9 @@ const ExamEdit = ( props )=> {
             {
             exam? 
                 <div>
-                    <ExamHeader examName={exam.exam_name} />
+                    <ExamHeader examName={exam.exam_name} operation="edit" />
                     <ExamCrumbs questions={exam.questions} />
-                    <Question nextSeq={seq} />
+                    <Question nextSeq={seq} operation="edit"/>
                 </div>
             :
                 <h1> Loading ....</h1>

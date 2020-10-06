@@ -20,9 +20,9 @@ const ExamBuild = () => {
     } else {
         return (
             <div>
-                <ExamHeader examName={exam.exam_name} />
+                <ExamHeader examName={exam.exam_name} operation="create" />
                 <ExamCrumbs questions={exam.questions} />
-                <Question nextSeq={exam.questions.length + 1} />
+                <Question nextSeq={exam.questions.length + 1}  operation="create" />
             </div>
         );
     };
