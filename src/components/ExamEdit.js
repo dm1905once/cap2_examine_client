@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { ExaminerContext } from "../context";
+import { loadExam } from '../actions';
 import examineApi from '../apis/examineApi';
 import ExamHeader from './ExamHeader'
 import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
 
 const ExamEdit = ( props )=> {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [ exam, setExam ] = useState({});
     const { examiner, examId, seq } = props.match.params;
     const { userInfo } = React.useContext(ExaminerContext);
@@ -15,20 +19,19 @@ const ExamEdit = ( props )=> {
 
     useEffect(()=>{
         // Retrieve exam details
-        async function loadExam(){
+        async function retrieveExam(){
             const exam = await examineApi.getEditableExam(examiner, examId);
-            setExam(exam);
-        };
-        loadExam();
-        if (!exam){
-            if (userInfo.username === examiner) {
-                return <Redirect to={ {pathname: `/orgs/${userInfo.username}/exams`}} />
+            if (exam === null ) {
+                history.push("/orgs");
             } else {
-                return <Redirect to="/orgs" />
+                setExam(exam);
+                dispatch(loadExam(exam));
             }
+        };
+        if (Object.keys(exam).length === 0 ){
+            retrieveExam();
         }
-        console.log(exam);
-    },[exam, examId, examiner, userInfo.username]);
+    },[exam, examiner, examId]);
 
     return ( 
         <div>

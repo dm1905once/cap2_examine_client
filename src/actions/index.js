@@ -19,3 +19,11 @@ export const clearExam = () =>{
         type: 'CLEAR_EXAM'
     };
 };
+
+
+export const loadExam = (existingExam) =>{
+    return {
+        type: 'LOAD_EXAM',
+        payload: existingExam
+    };
+};

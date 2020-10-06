@@ -39,7 +39,6 @@ const ExamList = () => {
 
     const handleEditExam = e =>{
         const examId = e.target.parentNode.getAttribute('data-examid');
-        console.log("Redirecting to :", `/orgs/${userInfo.username}/exams/${examId}/edit/1`);
         history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);
     };
 

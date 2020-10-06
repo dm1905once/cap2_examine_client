@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ExamCrumbs = ( {questions} ) => {
+const ExamCrumbs = ( {questions=[]} ) => {
 
     if (questions.length === 0 ){
         return <div><p className="ui horizontal large orange label">Add your first question!</p></div>
