@@ -5,6 +5,19 @@ export default (state = INITIAL_STATE, action) =>{
         case 'LOAD_EXAM': {
             return action.payload;
         }
+        case 'REPLACE_QUESTION': {
+            const updatedQuestions = state.questions.map(question =>{
+                if (question.question_id !== action.payload.question_id){
+                    return question;
+                } else {
+                    return {
+                        ...question,
+                        ...action.payload
+                    }
+                }
+            });
+            return { ...state, questions: updatedQuestions};
+        }
         default:
             return state;
     }

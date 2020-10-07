@@ -21,7 +21,7 @@ const ExamBuild = () => {
         return (
             <div>
                 <ExamHeader examName={exam.exam_name} operation="create" />
-                <ExamCrumbs questions={exam.questions} />
+                <ExamCrumbs exam={exam}  operation="create" />
                 <Question nextSeq={exam.questions.length + 1}  operation="create" />
             </div>
         );

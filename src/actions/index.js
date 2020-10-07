@@ -13,6 +13,13 @@ export const addNewQuestion = (newQuestion) =>{
     };
 };
 
+export const replaceQuestion = (question) =>{
+    return {
+        type: 'REPLACE_QUESTION',
+        payload: question
+    };
+};
+
 
 export const clearExam = () =>{
     return {

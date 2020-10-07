@@ -49,8 +49,8 @@ const QuestionMCQ = ( {submitOptions} )=> {
         // Successful validation
         if (errorMessages.length === 0 ){
             const questionOptions = {
-                options: choiceList,
-                valid_answer: rightChoiceId
+                choices: choiceList,
+                valid_answer_id: rightChoiceId
             }
             submitDetails(questionOptions);
         }

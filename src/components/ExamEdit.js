@@ -14,12 +14,12 @@ const ExamEdit = ( props )=> {
     const [ exam, setExam ] = useState({});
     const { examiner, examId, seq } = props.match.params;
     const { userInfo } = React.useContext(ExaminerContext);
-    // const exam = useSelector(store => store.newExam);
 
 
     useEffect(()=>{
         // Retrieve exam details
         async function retrieveExam(){
+            console.log("Entre qui");
             const exam = await examineApi.getEditableExam(examiner, examId);
             if (exam === null ) {
                 history.push("/orgs");
@@ -39,7 +39,7 @@ const ExamEdit = ( props )=> {
             exam? 
                 <div>
                     <ExamHeader examName={exam.exam_name} operation="edit" />
-                    <ExamCrumbs questions={exam.questions} />
+                    <ExamCrumbs examOwner={exam.exam_owner} examId={exam.exam_id} questions={exam.questions}  operation="edit" />
                     <Question nextSeq={seq} operation="edit"/>
                 </div>
             :

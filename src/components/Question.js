@@ -7,7 +7,7 @@ import QuestionMCQ from './QuestionMCQ';
 import QuestionBIN from './QuestionBIN';
 import QuestionFIB from './QuestionFIB';
 import { QuestionDetailsContext } from '../context';
-import { addNewQuestion } from '../actions';
+import { addNewQuestion, replaceQuestion } from '../actions';
 import { ExaminerContext } from "../context";
 
 const Question = ( {nextSeq, operation} ) =>{
@@ -79,7 +79,7 @@ const Question = ( {nextSeq, operation} ) =>{
                 setQuestionFields(INITIAL_QUESTION_STATE);
                 history.push(`/orgs/${userInfo.username}/exams/new`);
             } else if (operation==="edit"){
-                // dispatch(replaceQuestion(question));
+                dispatch(replaceQuestion(question));
                 console.log('Heres where question gets updated as', question);
             }
         }

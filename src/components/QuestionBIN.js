@@ -80,7 +80,7 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
         // Successful validation
         if (errorMessages.length === 0 ){
             const questionOptions = {
-                options: choiceList,
+                choices: choiceList,
                 valid_answer_id: rightChoiceId
             }
             submitDetails(questionOptions);
