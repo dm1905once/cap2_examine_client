@@ -10,10 +10,10 @@ const ExamCrumbs = ( { examOwner="", examId="", questions=[], operation="" } ) =
     
     return (
         <div>
-            Questions: {
+            {
                 (operation === "edit")
                 ?
-                    <div className="ui circular olive labels">
+                    <div className="ui medium circular olive labels">
                         {questions.map(q=>(
                             <Link to={`/orgs/${examOwner}/exams/${examId}/edit/${q.question_seq}`} 
                                 className="ui label" 

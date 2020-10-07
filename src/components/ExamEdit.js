@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { ExaminerContext } from "../context";
+// import { ExaminerContext } from "../context";   Not used?
 import { loadExam } from '../actions';
 import examineApi from '../apis/examineApi';
 import ExamHeader from './ExamHeader'
 import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
 
-const ExamEdit = ( props )=> {
+const ExamEdit = ()=> {
     const history = useHistory();
     const dispatch = useDispatch();
+    const params = useParams();
     const [ exam, setExam ] = useState({});
-    const { examiner, examId, seq } = props.match.params;
-    const { userInfo } = React.useContext(ExaminerContext);
+    const { examiner, examId, seq } = params;
+    // const { userInfo } = React.useContext(ExaminerContext);  Not used?
 
 
     useEffect(()=>{
