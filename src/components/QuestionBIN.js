@@ -101,19 +101,20 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
         <div className="ui relaxed grid">
             <div className="row centered">
                 <div className="seven wide column">
-                    <p className="ui blue basic large label">Binary question (True/False)</p>
+                    <h2 className="ui blue  large header">Binary question (True/False)</h2>
                 </div>
-                <div className="right floated center aligned seven wide column"></div>
-                <div className="ui right close rail">
+                <div className="right aligned six wide column">
+                    {questionSaved?<div className="ui right green label">Saved!</div>:""}
+                </div>
+                <div className="right floated three wide column">
                     <div className="ui vertical labeled icon buttons">
-                        <button onClick={()=>alert("To be implemented")} className="ui button">
-                            <i className="trash red icon"></i>Delete
-                        </button>
                         <button onClick={handleSaveOptions}
                             className="ui icon button">Save
                             <i className="save blue circle right icon"></i>
                         </button>
-                        {questionSaved?<div className="ui pointing gray basic label">Saved!</div>:""}
+                        <button onClick={()=>alert("To be implemented")} className="ui button">
+                            <i className="trash red icon"></i>Delete
+                        </button>
                     </div>
                 </div>
             </div>
