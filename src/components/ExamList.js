@@ -38,8 +38,12 @@ const ExamList = () => {
     };
 
     const handleEditExam = e =>{
+        e.currentTarget.className += " loading";
         const examId = e.target.parentNode.getAttribute('data-examid');
-        history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);
+
+        setTimeout(()=>{
+            history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);
+        }, 5000);
     };
 
     return (
