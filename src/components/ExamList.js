@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useHistory  } from 'react-router-dom';
+import { useDispatch } from "react-redux";
 import { ExaminerContext } from "../context";
+import { loadExam } from '../actions';
 import examineApi from '../apis/examineApi';
 import ExamCreate from './ExamCreate';
 import ExamCard from './ExamCard';
@@ -8,6 +10,7 @@ import ExamCard from './ExamCard';
 const ExamList = () => {
     const location = useLocation();
     const history = useHistory();
+    const dispatch = useDispatch();
     const { userInfo } = useContext(ExaminerContext);
     const [ examList, setExamList ] = useState([]);
     const [ refreshList, setRefreshList ] = useState(true);
@@ -40,6 +43,16 @@ const ExamList = () => {
     const handleEditExam = e =>{
         e.currentTarget.className += " loading";
         const examId = e.target.parentNode.getAttribute('data-examid');
+
+        async function retrieveExam(){
+            const exam = await examineApi.getEditableExam(userInfo.username, examId);
+            if (exam === null ) {
+                history.push("/orgs");
+            } else {
+                dispatch(loadExam(exam));
+            }
+        };
+        retrieveExam();
 
         setTimeout(()=>{
             history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);

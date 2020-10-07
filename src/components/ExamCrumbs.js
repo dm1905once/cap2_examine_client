@@ -12,14 +12,14 @@ const ExamCrumbs = ( { examOwner="", examId="", questions=[], operation="" } ) =
 
     
     return (
-        <div>
+        <div className="ui raised segment">
             {
                 (operation === "edit")
                 ?
-                    <div className="">
+                    <div>
                         {questions.map((q, i)=>(
                             <Link to={`/orgs/${examOwner}/exams/${examId}/edit/${q.question_seq}`} 
-                                className={`ui ${(seq == i+1)? 'blue': 'olive'} large circular label`}
+                                className={`ui ${(parseInt(seq) === i+1)? 'blue': 'green'} large circular label`}
                                 key={q.question_seq}> 
                                     {q.question_seq}
                             </Link>
@@ -30,7 +30,7 @@ const ExamCrumbs = ( { examOwner="", examId="", questions=[], operation="" } ) =
                 :   
                 questions.map(q=>(
                     <div 
-                        className="ui olive basic button" 
+                        className="ui green circular label" 
                         key={q.question_seq}> 
                             {q.question_seq}
                     </div>

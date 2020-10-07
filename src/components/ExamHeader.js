@@ -49,11 +49,18 @@ const ExamHeader = ( {examName, operation} ) => {
                     <p>Add new questions</p>
                 </div>
             </div>
+            <div class="ui grid">
+                <div class="four column row">
+                    <div class="right floated column">
+                    <button className="ui right floated green large button"
+                            onClick={submitExam}>Finish and Submit Exam
+                        </button>
+                    </div>
+                </div>
+            </div>
             <h4 className="ui horizontal divider header">
                 Exam questions
             </h4>
-            <button className="ui right floated green large button"
-                onClick={submitExam}>Finish and Submit Exam</button>
         </div>
     )
 }

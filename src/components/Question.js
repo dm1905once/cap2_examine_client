@@ -80,7 +80,6 @@ const Question = ( {nextSeq, operation} ) =>{
                 history.push(`/orgs/${userInfo.username}/exams/new`);
             } else if (operation==="edit"){
                 dispatch(replaceQuestion(question));
-                console.log('Heres where question gets updated as', question);
             }
         }
     }

@@ -28,6 +28,14 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
     const [ editFieldsLoaded, setEditFieldsLoaded ] = useState(false);
     const [ questionSaved, setQuestionSaved ] = useState(false);
 
+
+    useEffect(() =>{
+        setRightChoiceId(validChoice);
+        setTimeout(()=>{
+            setQuestionSaved(false);
+        }, 5000);
+    },[validChoice]);
+
     useEffect(() =>{
         // Update these values only after they have been pre-populated the first time (edit question)
         if (!editFieldsLoaded){
@@ -95,24 +103,18 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
                 <div className="seven wide column">
                     <p className="ui blue basic large label">Binary question (True/False)</p>
                 </div>
-                <div className="seven wide column">
-                        <button onClick={()=>alert("To be implemented")} className="ui basic red button">
-                            <i className="trash icon"></i> Delete
+                <div className="right floated center aligned seven wide column"></div>
+                <div className="ui right close rail">
+                    <div className="ui vertical labeled icon buttons">
+                        <button onClick={()=>alert("To be implemented")} className="ui button">
+                            <i className="trash red icon"></i>Delete
                         </button>
-                        {questionSaved
-                        ?
-                            <div className="ui positive basic right floated right labeled icon button">
-                                Question Saved
-                                <i className="check right icon"></i>
-                            </div>
-                        :
-                            <button onClick={handleSaveOptions}
-                                className="ui primary right floated right labeled icon button">
-                                Save Question
-                                <i className="arrow circle right icon"></i>
-                            </button>
-                        }
-                    
+                        <button onClick={handleSaveOptions}
+                            className="ui icon button">Save
+                            <i className="save blue circle right icon"></i>
+                        </button>
+                        {questionSaved?<div className="ui pointing gray basic label">Saved!</div>:""}
+                    </div>
                 </div>
             </div>
             <div className="row">
