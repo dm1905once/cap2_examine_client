@@ -18,21 +18,39 @@ const binaryOptions = {
     };
 
 
-const QuestionBIN = ()=> {
-
+const QuestionBIN = ( { choices=[], validChoice=null } )=> {
+    
     const [ choiceList, setChoiceList ] = useState([]);
-    const [ rightChoiceId, setRightChoiceId ] = useState(null);
-    const [ selectedType, setSelectedType ] = useState('TRUE_FALSE');
     const [ validationErrors, setValidationErrors ] = useState([]);
     const submitDetails = useContext(QuestionDetailsContext);
-
+    const [ rightChoiceId, setRightChoiceId ] = useState(validChoice);
+    const [ selectedType, setSelectedType ] = useState('TRUE_FALSE');
+    const [ editFieldsLoaded, setEditFieldsLoaded ] = useState(false);
+    const [ questionSaved, setQuestionSaved ] = useState(false);
 
     useEffect(() =>{
-        setChoiceList(binaryOptions[selectedType]);
-        setRightChoiceId(null)
-    }, [selectedType])
-
+        // Update these values only after they have been pre-populated the first time (edit question)
+        if (!editFieldsLoaded){
+            setChoiceList(binaryOptions[selectedType]);
+            setRightChoiceId(validChoice);
+        }
+    }, [selectedType, editFieldsLoaded, validChoice])
     
+    useEffect(() =>{
+        // Pre-load choices if they came from parent component (edit question)
+        if (choices.length > 0){
+            const true_false = choices.some(v => v.choice_text === "True");
+            const yes_no = choices.some(v => v.choice_text === "Yes");
+            const zero_one = choices.some(v => v.choice_text === "0");
+            if (true_false) setSelectedType('TRUE_FALSE');
+            if (yes_no) setSelectedType('YES_NO');
+            if (zero_one) setSelectedType('ZERO_ONE');
+            setChoiceList(choices);
+            setEditFieldsLoaded(true);
+        }
+    }, [choices]);
+
+   
     const selectRightChoice = (choiceId) =>{
         setRightChoiceId(choiceId);
         setValidationErrors([]);
@@ -63,10 +81,10 @@ const QuestionBIN = ()=> {
         if (errorMessages.length === 0 ){
             const questionOptions = {
                 options: choiceList,
-                valid_answer: rightChoiceId
+                valid_answer_id: rightChoiceId
             }
-    
             submitDetails(questionOptions);
+            setQuestionSaved(true);
         }
     }
 
@@ -74,13 +92,27 @@ const QuestionBIN = ()=> {
     return (
         <div className="ui relaxed grid">
             <div className="row centered">
-                <div className="fourteen wide column">
+                <div className="seven wide column">
                     <p className="ui blue basic large label">Binary question (True/False)</p>
-                    <button onClick={handleSaveOptions}
-                        className="ui primary right floated right labeled icon button">
-                        Save and continue
-                        <i className="arrow circle right icon"></i>
-                    </button>
+                </div>
+                <div className="seven wide column">
+                        <button onClick={()=>alert("To be implemented")} className="ui basic red button">
+                            <i className="trash icon"></i> Delete
+                        </button>
+                        {questionSaved
+                        ?
+                            <div className="ui positive basic right floated right labeled icon button">
+                                Question Saved
+                                <i className="check right icon"></i>
+                            </div>
+                        :
+                            <button onClick={handleSaveOptions}
+                                className="ui primary right floated right labeled icon button">
+                                Save Question
+                                <i className="arrow circle right icon"></i>
+                            </button>
+                        }
+                    
                 </div>
             </div>
             <div className="row">

@@ -31,7 +31,7 @@ const ExamEdit = ( props )=> {
         if (Object.keys(exam).length === 0 ){
             retrieveExam();
         }
-    },[exam, examiner, examId]);
+    },[exam, examiner, examId, dispatch, history]);
 
     return ( 
         <div>

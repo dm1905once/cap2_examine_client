@@ -29,9 +29,12 @@ const Question = ( {nextSeq, operation} ) =>{
     useEffect(()=>{
         if (operation==="edit" && Object.keys(editExam).length > 0 ){        
             const editQuestion = {
+                question_id: editExam.questions[nextSeq-1].question_id,
                 question_type: editExam.questions[nextSeq-1].question_type,
                 question_text: editExam.questions[nextSeq-1].question_text,
-                question_seq: editExam.questions[nextSeq-1].question_seq
+                question_seq: editExam.questions[nextSeq-1].question_seq,
+                valid_answer_id: editExam.questions[nextSeq-1].valid_answer_id,
+                choices: editExam.questions[nextSeq-1].choices
             };
             setQuestionFields(editQuestion);
         }
@@ -47,11 +50,12 @@ const Question = ( {nextSeq, operation} ) =>{
     useEffect(()=>{
         switch (questionFields.question_type) {
             case "MCQ": setShowQuestionOptions(<QuestionMCQ />) ; return;
-            case "BIN": setShowQuestionOptions(<QuestionBIN />) ; return;
+            case "BIN": setShowQuestionOptions(
+                <QuestionBIN choices={questionFields.choices} validChoice={questionFields.valid_answer_id}/>) ; return;
             case "FIB": setShowQuestionOptions(<QuestionFIB />) ; return;
             default: setShowQuestionOptions(null)
         }
-    }, [questionFields.question_type] );
+    }, [questionFields] );
 
 
     const submitQuestion = (options) =>{
@@ -69,9 +73,15 @@ const Question = ( {nextSeq, operation} ) =>{
                 question_seq: nextSeq,
                 ...options
             }
-            dispatch(addNewQuestion(question));
-            setQuestionFields(INITIAL_QUESTION_STATE);
-            history.push(`/orgs/${userInfo.username}/exams/new`);
+
+            if (operation==="create"){
+                dispatch(addNewQuestion(question));
+                setQuestionFields(INITIAL_QUESTION_STATE);
+                history.push(`/orgs/${userInfo.username}/exams/new`);
+            } else if (operation==="edit"){
+                // dispatch(replaceQuestion(question));
+                console.log('Heres where question gets updated as', question);
+            }
         }
     }
 
