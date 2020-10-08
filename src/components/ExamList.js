@@ -49,6 +49,7 @@ const ExamList = () => {
             if (exam === null ) {
                 history.push("/orgs");
             } else {
+                // Remove question_id here?
                 dispatch(loadExam(exam));
             }
         };

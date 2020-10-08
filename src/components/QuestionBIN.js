@@ -87,14 +87,8 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
 
         // Successful validation
         if (errorMessages.length === 0 ){
-            const options = [];
-            choiceList.forEach(choice => {
-                delete choice.question_id;
-                options.push(choice);
-            });
             const questionOptions = {
-                // choices: choiceList,
-                choices: options,
+                choices: choiceList,
                 valid_answer_id: rightChoiceId
             }
             submitDetails(questionOptions);

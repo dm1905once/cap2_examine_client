@@ -18,6 +18,9 @@ export default (state = INITIAL_STATE, action) =>{
             });
             return { ...state, questions: updatedQuestions};
         }
+        case 'CLEAR_EDIT_EXAM': {
+            return INITIAL_STATE;
+        }
         default:
             return state;
     }

@@ -21,9 +21,15 @@ export const replaceQuestion = (question) =>{
 };
 
 
-export const clearExam = () =>{
+export const clearNewExam = () =>{
     return {
-        type: 'CLEAR_EXAM'
+        type: 'CLEAR_NEW_EXAM'
+    };
+};
+
+export const clearEditExam = () =>{
+    return {
+        type: 'CLEAR_EDIT_EXAM'
     };
 };
 

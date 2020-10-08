@@ -59,6 +59,12 @@ class examineApi {
       let res = await this.request('get', `examiners/${username}/exams/${examId}`);
       return res;
     }
+
+    static async editExamQuestions(editExam) {
+      const username = editExam.exam_owner;
+      let res = await this.request('patch', `examiners/${username}/exams`, editExam);
+      return res;
+    }
 }
 
 

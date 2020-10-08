@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useHistory  } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
 import { ExaminerContext } from "../context";
-import { clearExam } from '../actions';
+import { clearNewExam, clearEditExam } from '../actions';
 import examineApi from '../apis/examineApi';
 
 
@@ -16,17 +16,29 @@ const ExamHeader = ( {examName, operation} ) => {
 
     const submitExam = async() =>{
         let redirectMessage = '';
-        if (newExam.questions.length>0){
-            const newExamId = await examineApi.createExam(newExam);
+
+        if (operation === "edit"){
+            const newExamId = await examineApi.editExamQuestions(newExam);
             if (newExamId){
-                dispatch(clearExam());
-                redirectMessage = 'The exam has been added sucessfully';
+                dispatch(clearEditExam());
+                redirectMessage = 'The exam has been updated sucessfully';
             } else {
                 redirectMessage = 'An error occurred while attempting to submit the exam.';
             }
-        } else {
-            redirectMessage = 'The exam you submitted did not have any questions';
-        };
+        } else if (operation === "create"){
+            if (newExam.questions.length>0){
+                const newExamId = await examineApi.createExam(newExam);
+                if (newExamId){
+                    dispatch(clearNewExam());
+                    redirectMessage = 'The exam has been added sucessfully';
+                } else {
+                    redirectMessage = 'An error occurred while attempting to submit the exam.';
+                }
+            } else {
+                redirectMessage = 'The exam you submitted did not have any questions';
+            };
+        }
+
 
         history.push(
             {

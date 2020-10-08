@@ -24,7 +24,7 @@ export default (state = INITIAL_STATE, action) =>{
             const updatedQuestions = [...state.questions, action.payload];
             return { ...state, questions: updatedQuestions};
         }
-        case 'CLEAR_EXAM': {
+        case 'CLEAR_NEW_EXAM': {
             return INITIAL_STATE;
         }
         default:
