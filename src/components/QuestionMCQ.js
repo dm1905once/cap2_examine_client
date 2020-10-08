@@ -1,14 +1,31 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import uniqid from 'uniqid';
 import { QuestionDetailsContext } from '../context';
 
-const QuestionMCQ = ( {submitOptions} )=> {
+const QuestionMCQ = ( { choices=[], validChoice=null } )=> {
 
     const [ choiceList, setChoiceList ] = useState([]);
     const [ newChoice, setNewChoice ] = useState('');
     const [ rightChoiceId, setRightChoiceId ] = useState(null);
     const [ validationErrors, setValidationErrors ] = useState([]);
     const submitDetails = useContext(QuestionDetailsContext);
+    const [ editFieldsLoaded, setEditFieldsLoaded ] = useState(false);
+    const [ questionSaved, setQuestionSaved ] = useState(false);
+
+    useEffect(() =>{
+        setRightChoiceId(validChoice);
+        setTimeout(()=>{
+            setQuestionSaved(false);
+        }, 5000);
+    },[validChoice]);
+
+    useEffect(() =>{
+        // Pre-load choices if they came from parent component (edit question)
+        if (choices.length > 0){
+            setChoiceList(choices);
+            setEditFieldsLoaded(true);
+        }
+    }, [choices]);
 
     const addChoice = () =>{
         setValidationErrors([]);
@@ -53,6 +70,7 @@ const QuestionMCQ = ( {submitOptions} )=> {
                 valid_answer_id: rightChoiceId
             }
             submitDetails(questionOptions);
+            setQuestionSaved(true);
         }
         
     }
@@ -60,12 +78,16 @@ const QuestionMCQ = ( {submitOptions} )=> {
     return (
         <div className="ui relaxed grid">
             <div className="row centered">
-                <div className="fourteen wide column">
-                    <p className="ui blue basic large label">Multiple choice question</p>
+                <div className="seven wide column">
+                    <h2 className="ui blue  large header">Multiple choice question</h2>
+                </div>
+                <div className="right aligned six wide column">
+                    {questionSaved?<div className="ui right green label">Saved!</div>:""}
+                </div>
+                <div className="right floated three wide column">
                     <button onClick={handleSaveOptions}
-                        className="ui primary right floated right labeled icon button">
-                        Save and continue
-                        <i className="arrow circle right icon"></i>
+                        className="ui icon button">Save
+                        <i className="save blue circle right icon"></i>
                     </button>
                 </div>
             </div>

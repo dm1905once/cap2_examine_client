@@ -49,9 +49,12 @@ const Question = ( {nextSeq, operation} ) =>{
 
     useEffect(()=>{
         switch (questionFields.question_type) {
-            case "MCQ": setShowQuestionOptions(<QuestionMCQ />) ; return;
+            case "MCQ": setShowQuestionOptions(
+            <QuestionMCQ  choices={questionFields.choices} validChoice={questionFields.valid_answer_id} />) ; return;
+
             case "BIN": setShowQuestionOptions(
-                <QuestionBIN choices={questionFields.choices} validChoice={questionFields.valid_answer_id}/>) ; return;
+            <QuestionBIN choices={questionFields.choices} validChoice={questionFields.valid_answer_id}/>) ; return;
+            
             case "FIB": setShowQuestionOptions(<QuestionFIB />) ; return;
             default: setShowQuestionOptions(null)
         }
