@@ -70,7 +70,7 @@ const Question = ( {nextSeq, operation} ) =>{
             const question = {
                 question_id: uniqid.process('Q_'),
                 ...questionFields,
-                question_seq: nextSeq,
+                question_seq: parseInt(nextSeq),
                 ...options
             }
 

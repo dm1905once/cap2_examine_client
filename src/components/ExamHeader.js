@@ -49,9 +49,9 @@ const ExamHeader = ( {examName, operation} ) => {
                     <p>Add new questions</p>
                 </div>
             </div>
-            <div class="ui grid">
-                <div class="four column row">
-                    <div class="right floated column">
+            <div className="ui grid">
+                <div className="four column row">
+                    <div className="right floated column">
                     <button className="ui right floated green large button"
                             onClick={submitExam}>Finish and Submit Exam
                         </button>

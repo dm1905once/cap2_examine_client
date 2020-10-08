@@ -59,11 +59,6 @@ const App = () => {
                                 ? <ExamBuild />
                                 : <HomeOrgs topMessage="Please authenticate first" />
                         )}/>
-                        {/* <Route path="/orgs/:examiner/exams/:examid/edit/:seq" component={()=>(
-                            authenticated
-                                ? <ExamEdit />
-                                : <HomeOrgs topMessage="Please authenticate first" />
-                        )}/> */}
                         <Route path="/orgs/:examiner/exams/:examId/edit/:seq" component={
                             authenticated? ExamEdit: HomeOrgs
                         } />

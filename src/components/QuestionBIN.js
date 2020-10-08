@@ -87,8 +87,14 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
 
         // Successful validation
         if (errorMessages.length === 0 ){
+            const options = [];
+            choiceList.forEach(choice => {
+                delete choice.question_id;
+                options.push(choice);
+            });
             const questionOptions = {
-                choices: choiceList,
+                // choices: choiceList,
+                choices: options,
                 valid_answer_id: rightChoiceId
             }
             submitDetails(questionOptions);
@@ -112,9 +118,9 @@ const QuestionBIN = ( { choices=[], validChoice=null } )=> {
                             className="ui icon button">Save
                             <i className="save blue circle right icon"></i>
                         </button>
-                        <button onClick={()=>alert("To be implemented")} className="ui button">
+                        {/* <button onClick={()=>alert("To be implemented")} className="ui button">
                             <i className="trash red icon"></i>Delete
-                        </button>
+                        </button> */}
                     </div>
                 </div>
             </div>
