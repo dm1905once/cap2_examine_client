@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
-import HomeApplicants from './HomeApplicants';
+import HomeApps from './HomeApps';
 import HomeOrgs from './HomeOrgs';
 import NavBarOrg from './NavBarOrg';
 import ExamBuild from './ExamBuild';
 import ExamEdit from './ExamEdit';
 import ExamList from './ExamList';
-import { ExaminerContext } from "../context";
+import { ExaminerContext, ApplicantContext } from "../context";
 import { getTokenFromLS } from '../helpers';
 
 const App = () => {
@@ -39,7 +39,9 @@ const App = () => {
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <Route path="/applicants" exact component={HomeApplicants} />
+                    <ApplicantContext.Provider value={ { userInfo, doAuthenticate, undoAuthenticate } }>
+                        <Route path="/applicants" exact component={HomeApps} />
+                    </ApplicantContext.Provider>
 
                     <ExaminerContext.Provider value={ { userInfo, doAuthenticate, undoAuthenticate } }>
                         <NavBarOrg />

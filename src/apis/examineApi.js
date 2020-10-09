@@ -23,7 +23,7 @@ class examineApi {
       }
 
 
-    // Specific API calls
+    // ORG-Specific API calls
     static async authenticateExaminer(credentials) {
         let res = await this.request('post', 'examiners/login', credentials);
         return res.token;
@@ -63,6 +63,13 @@ class examineApi {
     static async editExamQuestions(editExam) {
       const username = editExam.exam_owner;
       let res = await this.request('patch', `examiners/${username}/exams`, editExam);
+      return res;
+    }
+
+
+    // APPLICANT-Specific API calls
+    static async getApplicableExams() {
+      let res = await this.request('get', `applicants/exams`);
       return res;
     }
 }
