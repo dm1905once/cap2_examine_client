@@ -1,15 +1,15 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 
 const NavBarOrg = ()=> {
     const history = useHistory();
-    const { userInfo, undoAuthenticate } = useContext(ExaminerContext);
+    const { userInfo, deauthExaminer } = useContext(AuthContext);
 
     const handleLogout = () =>{
         localStorage.removeItem("_token");
-        undoAuthenticate();
+        deauthExaminer();
         history.push('/orgs');
     };
 

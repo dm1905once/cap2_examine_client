@@ -8,12 +8,12 @@ import QuestionBIN from './QuestionBIN';
 import QuestionFIB from './QuestionFIB';
 import { QuestionDetailsContext } from '../context';
 import { addNewQuestion, replaceQuestion } from '../actions';
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 
 const Question = ( {nextSeq, operation} ) =>{
     const dispatch = useDispatch();
     const history = useHistory();
-    const { userInfo } = React.useContext(ExaminerContext);
+    const { userInfo } = React.useContext(AuthContext);
     const editExam = useSelector(store=> store.editExam);
 
     let INITIAL_QUESTION_STATE = {

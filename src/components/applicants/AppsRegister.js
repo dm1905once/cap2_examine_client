@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validateRegistration as validate } from '../../formValidations/applicantForms';
 import examineApi from '../../apis/examineApi';
-import { ApplicantContext } from "../../context";
+import { AuthContext } from "../../context";
 
 
 const AppsRegister = () => {
     const history = useHistory();
     const [ formError, setFormError ] = useState(false);
-    const { doAuthenticate } = React.useContext(ApplicantContext);
+    const { authApplicant } = React.useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {
@@ -23,7 +23,7 @@ const AppsRegister = () => {
             try {
                 const token = await examineApi.registerApplicant(values);
                 localStorage.setItem("_token", token);
-                doAuthenticate();
+                authApplicant();
             } catch(e) {
                 setFormError(true);
                 formik.errors.emailAddress=e;

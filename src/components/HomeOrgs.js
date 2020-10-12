@@ -2,11 +2,11 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import OrgsLogin from './OrgsLogin';
 import OrgsRegister from './OrgsRegister';
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 
 
 const HomeOrgs = ( {topMessage=''})=> {
-    const { userInfo } = React.useContext(ExaminerContext);
+    const { userInfo } = React.useContext(AuthContext);
 
     // const location = useLocation();
     // const usernameInUrl = location.pathname.split("/")[2];

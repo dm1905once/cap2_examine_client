@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useHistory  } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 import { loadExam } from '../actions';
 import examineApi from '../apis/examineApi';
 import ExamCreate from './ExamCreate';
@@ -11,7 +11,7 @@ const ExamList = () => {
     const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { userInfo } = useContext(ExaminerContext);
+    const { userInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
     const [ refreshList, setRefreshList ] = useState(true);
     let topMessage = location.state? location.state.topMessage : '';

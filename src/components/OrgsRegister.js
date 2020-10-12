@@ -3,13 +3,13 @@ import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validateRegistration as validate } from '../formValidations/examinerForms';
 import examineApi from '../apis/examineApi';
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 
 
 const OrgsRegister = () => {
     const history = useHistory();
     const [ formError, setFormError ] = useState(false);
-    const { doAuthenticate } = React.useContext(ExaminerContext);
+    const { authExaminer } = React.useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {
@@ -28,7 +28,7 @@ const OrgsRegister = () => {
             try {
                 const token = await examineApi.registerExaminer(values);
                 localStorage.setItem("_token", token);
-                doAuthenticate();
+                authExaminer();
                 history.push(`/orgs/${values.username}/exams`);
             } catch(e) {
                 setFormError(true);

@@ -4,13 +4,13 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { initializeNewExam } from '../actions';
 import uniqid from 'uniqid';
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 import { validateExamCreate as validate } from '../formValidations/examinerForms';
 
 const ExamCreate = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { userInfo } = React.useContext(ExaminerContext);
+    const { userInfo } = React.useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {

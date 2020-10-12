@@ -1,36 +1,52 @@
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
-import HomeApps from './HomeApps';
-import HomeOrgs from './HomeOrgs';
-import NavBarOrg from './NavBarOrg';
-import ExamBuild from './ExamBuild';
-import ExamEdit from './ExamEdit';
-import ExamList from './ExamList';
-import { ExaminerContext, ApplicantContext } from "../context";
+import RoutesApplicant from './RoutesApplicant';
+import RoutesExaminer from './RoutesExaminer';
+
+import { AuthContext } from "../context";
 import { getTokenFromLS } from '../helpers';
 
 const App = () => {
-    const [ authenticated, setAuthenticated ] = useState(false);
+
+    const [ isExaminerAuth, setExaminerAuth ] = useState(false);
+    const [ isApplicantAuth, setApplicantAuth ] = useState(false);
     const [ userInfo, setUserInfo ] = useState();
 
     React.useEffect(()=> {
-        if (localStorage.getItem("_token")){
-            setAuthenticated(true);
-            setUserInfo(getTokenFromLS());
+        const hasToken = localStorage.getItem("_token");
+        if (hasToken){
+            const tokenUserInfo = getTokenFromLS();
+            if (tokenUserInfo.role === "examiner"){
+                setExaminerAuth(true);
+                setUserInfo(tokenUserInfo);
+            } else if (tokenUserInfo.role === "applicant"){
+                setApplicantAuth(true);
+                setUserInfo(tokenUserInfo);
+            }
         } else {
-            setAuthenticated(false);
+            setExaminerAuth(false);
             setUserInfo();
         }
-      }, [authenticated]);
+      }, [isExaminerAuth, isApplicantAuth]);
 
-    function doAuthenticate(){
-        setAuthenticated(true);
+    function authExaminer(){
+        setExaminerAuth(true);
         setUserInfo(getTokenFromLS());
     }
 
-    function undoAuthenticate(){
-        setAuthenticated(false);
+    function authApplicant(){
+        setApplicantAuth(true);
+        setUserInfo(getTokenFromLS());
+    }
+
+    function deauthExaminer(){
+        setExaminerAuth(false);
+        setUserInfo();
+    }
+
+    function deauthApplicant(){
+        setApplicantAuth(false);
         setUserInfo();
     }
 
@@ -39,34 +55,23 @@ const App = () => {
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact component={Home} />
-                    <ApplicantContext.Provider value={ { userInfo, doAuthenticate, undoAuthenticate } }>
-                        <Route path="/applicants" exact component={HomeApps} />
-                    </ApplicantContext.Provider>
+                    <AuthContext.Provider value={ 
+                        { 
+                            userInfo, 
+                            isExaminerAuth, 
+                            authExaminer, 
+                            deauthExaminer, 
+                            isApplicantAuth, 
+                            authApplicant, 
+                            deauthApplicant 
+                        } 
+                    }>
+                        <RoutesApplicant />
+                        <RoutesExaminer />
+                    </AuthContext.Provider>
 
-                    <ExaminerContext.Provider value={ { userInfo, doAuthenticate, undoAuthenticate } }>
-                        <NavBarOrg />
-                        <Route path="/orgs" exact component={HomeOrgs} />
-                        <Route path="/orgs/:examiner" exact render={()=>(
-                            authenticated
-                                ? <ExamList />
-                                : <HomeOrgs topMessage="Please authenticate first" />
-                        )}/>
-                        <Route path="/orgs/:examiner/exams" exact render={()=>(
-                            authenticated
-                                ? <ExamList />
-                                : <HomeOrgs topMessage="Please authenticate first" />
-                        )}/>
-                        <Route path="/orgs/:examiner/exams/new" exact render={()=>(
-                            authenticated
-                                ? <ExamBuild />
-                                : <HomeOrgs topMessage="Please authenticate first" />
-                        )}/>
-                        <Route path="/orgs/:examiner/exams/:examId/edit/:seq" component={
-                            authenticated? ExamEdit: HomeOrgs
-                        } />
-
-                    </ExaminerContext.Provider>
-
+                    
+                        
                     <Route><h2>404 Not found</h2></Route>
                 </Switch>
             </BrowserRouter>

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useHistory  } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 import { clearNewExam, clearEditExam } from '../actions';
 import examineApi from '../apis/examineApi';
 
@@ -9,7 +9,7 @@ import examineApi from '../apis/examineApi';
 const ExamHeader = ( {examName, operation} ) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const { userInfo } = useContext(ExaminerContext);
+    const { userInfo } = useContext(AuthContext);
 
     // Retrieve a different store depending on the operation: create or edit
     const newExam = useSelector(store=> (operation === "edit")? store.editExam: store.newExam);

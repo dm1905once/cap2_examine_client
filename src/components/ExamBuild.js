@@ -4,12 +4,12 @@ import { Redirect  } from 'react-router-dom';
 import ExamHeader from './ExamHeader'
 import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
-import { ExaminerContext } from "../context";
+import { AuthContext } from "../context";
 
 
 const ExamBuild = () => {
     const exam = useSelector(store => store.newExam);
-    const { userInfo } = React.useContext(ExaminerContext);
+    const { userInfo } = React.useContext(AuthContext);
 
     if (!exam.exam_id){
         if (userInfo) {
