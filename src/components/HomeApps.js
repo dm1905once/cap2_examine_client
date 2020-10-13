@@ -11,7 +11,7 @@ const HomeApps = () => {
     const location = useLocation();
     // const history = useHistory();
     // const dispatch = useDispatch();
-    const { isApplicantAuth } = useContext(AuthContext);
+    const { isApplicantAuth, userInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
     // const [ refreshList, setRefreshList ] = useState(true);
     let topMessage = location.state? location.state.topMessage : '';
@@ -27,8 +27,16 @@ const HomeApps = () => {
     },[]);
 
 
-    const handleBuyExam = e =>{
-    //     e.currentTarget.className += " loading";
+    const handleBuyExam = (e, exam_id, application_id) =>{
+        if (!isApplicantAuth) {
+            e.currentTarget.className += " negative";
+            e.currentTarget.innerHTML = "<button class='ui red attached button'>Login or register</button>"
+            console.log(e.currentTarget);
+        } else {
+            console.log("examId: ", exam_id);
+            console.log("application Id: ", application_id);
+            e.currentTarget.className += " loading";
+        }
     //     const examId = e.target.parentNode.getAttribute('data-examid');
 
     //     async function retrieveExam(){

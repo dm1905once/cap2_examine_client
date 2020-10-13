@@ -1,4 +1,5 @@
 import React from 'react';
+import uniqid from 'uniqid';
 
 const ExamList = ( {exam, handleBuyExam} )=> {
     return (
@@ -18,7 +19,7 @@ const ExamList = ( {exam, handleBuyExam} )=> {
                     <i className="dollar icon"></i>{exam.exam_fee}
                 </div>
             </div>
-            <div className="ui blue animated attached button" onClick={handleBuyExam}>
+            <div className="ui blue animated attached button" onClick={e => handleBuyExam(e, exam.exam_id, uniqid.process('A_'))}>
                 <div className="visible content">
                     <i className="pencil alternate icon"></i>Take exam
                 </div>
