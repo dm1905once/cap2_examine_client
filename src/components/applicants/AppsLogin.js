@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validateLogin as validate } from '../../formValidations/applicantForms';
 import examineApi from '../../apis/examineApi';
-// import { ApplicantContext } from "../../context";
+import { AuthContext } from "../../context";
 
 
 const AppsLogin = () => {
-    const history = useHistory();
     const [ formError, setFormError ] = useState(false);
-    // const { doAuthenticate } = React.useContext(ApplicantContext);
+    const { authApplicant } = React.useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {
-        emailAddress: '',
+        email: '',
         password: ''
         },
         validate,
@@ -21,11 +19,10 @@ const AppsLogin = () => {
             try {
                 const token = await examineApi.authenticateApplicant(values);
                 localStorage.setItem("_token", token);
-                // doAuthenticate();
-                // history.push(`/orgs/${values.username}/exams`)
+                authApplicant();
             } catch(e) {
                 setFormError(true);
-                formik.errors.emailAddress=e;
+                formik.errors.email=e;
             }
         },
     });
@@ -42,7 +39,7 @@ const AppsLogin = () => {
     const showErrorBox = (
         <div className="ui error message ">
                 <div className="header">Login Form errors:</div><p>&nbsp;</p>
-                {formik.errors.emailAddress? (<p>{formik.errors.emailAddress}</p>) : null}
+                {formik.errors.email? (<p>{formik.errors.email}</p>) : null}
                 {formik.errors.password? (<p>{formik.errors.password}</p>) : null}
             </div>
         );
@@ -58,10 +55,10 @@ const AppsLogin = () => {
             <div className="fields">
                 <div className="field required">
                     <label>Email Address</label>
-                    <input type="text" placeholder="" name="emailAddress"
+                    <input type="text" placeholder="" name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.emailAddress}/>
+                        value={formik.values.email}/>
                 </div>
             </div>
             <div className="fields">

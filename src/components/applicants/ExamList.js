@@ -4,10 +4,10 @@ const ExamList = ( {exam, handleBuyExam} )=> {
     return (
         <div className="ui card">
             <div className="image">
-                <img src={exam.examiners.organizations.logo_url}/>
+                <img src={exam.examiners.organizations.logo_url} alt="org_logo"/>
             </div>
             <div className="content">
-                <a className="header">{exam.exam_name}</a>
+                <div className="header">{exam.exam_name}</div>
                 <div className="meta">
                     <span>{exam.examiners.organizations.name}</span>
                 </div>

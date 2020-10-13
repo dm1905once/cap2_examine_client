@@ -1,23 +1,23 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
-import { AuthContext } from "../context";
-import { getTokenFromLS } from '../helpers';
+import { AuthContext } from "../../context";
+import { getTokenFromLS } from '../../helpers';
 
-const NavBarOrg = ()=> {
+const NavBarApp = ()=> {
     const history = useHistory();
-    const { userInfo, deauthExaminer } = useContext(AuthContext);
+    const { userInfo, deauthApplicant } = useContext(AuthContext);
 
     const handleLogout = () =>{
         const hasToken = localStorage.getItem("_token");
         if (hasToken){
             const tokenUserInfo = getTokenFromLS();
-            if (tokenUserInfo.role === "examiner"){
+            if (tokenUserInfo.role === "applicant"){
                 localStorage.removeItem("_token");
             }
         }
-        deauthExaminer();
-        history.push('/orgs');
+        deauthApplicant();
+        history.push('/applicants');
     };
 
 
@@ -28,13 +28,13 @@ const NavBarOrg = ()=> {
             {userInfo?
                 <div className="right menu">
                     <div className="item">
-                        <div className="ui primary button" onClick={handleLogout}>Logout Examiner</div>
+                        <div className="ui primary button" onClick={handleLogout}>Logout Applicant</div>
                     </div>
                 </div>
                 :
                 <div className="right menu">
                     <div className="item">
-                    <Link to="/orgs" className="ui primary button">Login</Link>
+                    <Link to="/applicants" className="ui primary button">Login</Link>
                     </div>
                 </div>
             }
@@ -42,4 +42,4 @@ const NavBarOrg = ()=> {
     )
 }
 
-export default NavBarOrg;
+export default NavBarApp;

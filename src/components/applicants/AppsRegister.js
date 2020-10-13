@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validateRegistration as validate } from '../../formValidations/applicantForms';
 import examineApi from '../../apis/examineApi';
@@ -7,13 +6,12 @@ import { AuthContext } from "../../context";
 
 
 const AppsRegister = () => {
-    const history = useHistory();
     const [ formError, setFormError ] = useState(false);
     const { authApplicant } = React.useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {
-        emailAddress: '',
+        email: '',
         password: '',
         password2: '',
         full_name: ''
@@ -26,7 +24,7 @@ const AppsRegister = () => {
                 authApplicant();
             } catch(e) {
                 setFormError(true);
-                formik.errors.emailAddress=e;
+                formik.errors.email=e;
             }
         },
     });
@@ -34,7 +32,6 @@ const AppsRegister = () => {
     useEffect(()=>{
         if (Object.keys(formik.errors).length > 0 ) {
             setFormError(true);
-            console.log("HArr errores");
         } else {
             setFormError(false);
         };
@@ -43,7 +40,7 @@ const AppsRegister = () => {
     const showErrorBox = (
         <div className="ui error message ">
             <div className="header">Registration Form errors:</div><p>&nbsp;</p>
-            {formik.errors.emailAddress? (<p>{formik.errors.emailAddress}</p>) : null}
+            {formik.errors.email? (<p>{formik.errors.email}</p>) : null}
             {formik.errors.password? (<p>{formik.errors.password}</p>) : null}
             {formik.errors.full_name? (<p>{formik.errors.full_name}</p>) : null}
         </div>
@@ -76,10 +73,10 @@ const AppsRegister = () => {
             <div className="fields">
                 <div className="field required">
                     <label>Email Address</label>
-                    <input type="text" placeholder="" name="emailAddress"
+                    <input type="text" placeholder="" name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        value={formik.values.emailAddress}/>
+                        value={formik.values.email}/>
                 </div>
                 <div className="field required">
                     <label>Re-enter password</label>

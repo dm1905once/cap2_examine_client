@@ -72,6 +72,16 @@ class examineApi {
       let res = await this.request('get', `applicants/exams`);
       return res;
     }
+
+    static async registerApplicant(fields) {
+      let res = await this.request('post', 'applicants/register', fields);
+      return res.token;
+    }
+
+    static async authenticateApplicant(credentials) {
+      let res = await this.request('post', 'applicants/login', credentials);
+      return res.token;
+    }
 }
 
 

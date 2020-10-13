@@ -2,10 +2,10 @@
 
 export const validateRegistration = values => {
     const errors = {};
-    if (!values.emailAddress) {
-      errors.emailAddress = "'Email Address' is a required field";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailAddress)) {
-      errors.emailAddress = 'Invalid email address';
+    if (!values.email) {
+      errors.email = "'Email Address' is a required field";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = 'Invalid email address';
     }
 
     if (!values.password) {
@@ -28,10 +28,10 @@ export const validateRegistration = values => {
 
 export const validateLogin = values => {
     const errors = {};
-    if (!values.emailAddress) {
-      errors.emailAddress = "'Email Address' is a required field";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.emailAddress)) {
-      errors.emailAddress = "Invalid email address";
+    if (!values.email) {
+      errors.email = "'Email Address' is a required field";
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      errors.email = "Invalid email address";
     }
 
     if (!values.password) {

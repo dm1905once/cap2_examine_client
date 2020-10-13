@@ -41,7 +41,7 @@ const RoutesExaminer = () =>{
 
     return (
         <>
-            <NavBarOrg />
+            <Route path="/orgs"  component={NavBarOrg} />
             <Route path="/orgs" exact component={HomeOrgs} />
             <Route path="/orgs/:examiner" exact render={()=>(
                 isExaminerAuth
