@@ -73,6 +73,11 @@ class examineApi {
       return res;
     }
 
+    static async applicantEmail(applicantEmail) {
+      let res = await this.request('get', `applicants/purchased`, applicantEmail);
+      return res;
+    }
+
     static async registerApplicant(fields) {
       let res = await this.request('post', 'applicants/register', fields);
       return res.token;
@@ -80,6 +85,11 @@ class examineApi {
 
     static async authenticateApplicant(credentials) {
       let res = await this.request('post', 'applicants/login', credentials);
+      return res.token;
+    }
+
+    static async acquireExam(examDetails) {
+      let res = await this.request('post', 'applicants/acquireExam', examDetails);
       return res.token;
     }
 }

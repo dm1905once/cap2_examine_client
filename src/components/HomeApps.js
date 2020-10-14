@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 // import { useDispatch } from "react-redux";
 import { AuthContext } from "../context";
 import examineApi from '../apis/examineApi';
@@ -9,7 +9,7 @@ import AppRecords from './applicants/AppRecords';
 
 const HomeApps = () => {
     const location = useLocation();
-    // const history = useHistory();
+    const history = useHistory();
     // const dispatch = useDispatch();
     const { isApplicantAuth, userInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
@@ -29,29 +29,29 @@ const HomeApps = () => {
 
     const handleBuyExam = (e, exam_id, application_id) =>{
         if (!isApplicantAuth) {
-            e.currentTarget.className += " negative";
-            e.currentTarget.innerHTML = "<button class='ui red attached button'>Login or register</button>"
-            console.log(e.currentTarget);
+            alert("Please login or register first");
         } else {
-            console.log("examId: ", exam_id);
-            console.log("application Id: ", application_id);
             e.currentTarget.className += " loading";
+            const applicationDetails = {
+                application_id,
+                applicant_email: userInfo.email,
+                exam_id
+            }
+
+            async function registerPurchasedExam(){
+                const newApplication = await examineApi.acquireExam(applicationDetails);
+                
+                if (newApplication === null ) {
+                    history.push("/applicants");
+                } else {
+                    // dispatch(loadExam(exam));
+                    console.log("nada");
+                }
+            };
+            registerPurchasedExam();
+
         }
-    //     const examId = e.target.parentNode.getAttribute('data-examid');
 
-    //     async function retrieveExam(){
-    //         const exam = await examineApi.getEditableExam(userInfo.username, examId);
-    //         if (exam === null ) {
-    //             history.push("/orgs");
-    //         } else {
-    //             dispatch(loadExam(exam));
-    //         }
-    //     };
-    //     retrieveExam();
-
-        // setTimeout(()=>{
-            // history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);
-        // }, 5000);
     };
 
     return (

@@ -1,5 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { AuthContext } from "../context";
+
 const AppRecords = () =>{
+
+    const { userInfo } = useContext(AuthContext);
+
     return (
         <div>
             <h2 className="ui block header">
