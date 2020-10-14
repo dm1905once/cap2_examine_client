@@ -1,57 +1,95 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useHistory } from 'react-router-dom';
-// import { useDispatch } from "react-redux";
+import { loadStripe } from "@stripe/stripe-js";
 import { AuthContext } from "../context";
 import examineApi from '../apis/examineApi';
 import ExamList from './applicants/ExamList';
 import AppAccess from './applicants/AppAccess';
 import AppRecords from './applicants/AppRecords';
+const stripePromise = loadStripe("pk_test_51HcDauJMaHZnra3gtM9N5ZNXiYqFIkSYKKWs5GxoG3sAtyxIUJFKaXWpbLvl37OcSa2bd03rYBlP2J0Yc8a5ZkvV00clsLscYO");
 
 const HomeApps = () => {
     const location = useLocation();
     const history = useHistory();
-    // const dispatch = useDispatch();
     const { isApplicantAuth, userInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
-    // const [ refreshList, setRefreshList ] = useState(true);
+    const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
+    const [ stripeSession, setStripeSession ] = useState(null);
     let topMessage = location.state? location.state.topMessage : '';
 
+
+    useEffect(() => {
+        // Check to see if this is a redirect back from Checkout
+        const query = new URLSearchParams(window.location.search);
     
+        if (query.get("success")) {
+          console.log("Order placed! You will receive an email confirmation.");
+          registerPurchasedExam();
+        }
+    
+        if (query.get("canceled")) {
+          console.log("Order canceled -- continue to shop around and checkout when you're ready.");
+        }
+      }, []);
+
+
+    useEffect(()=>{
+        async function loadStripeSession(){
+            const stripe = await stripePromise;
+            const result = await stripe.redirectToCheckout({
+                sessionId: stripeSession.id,
+            });
+
+            if (result.error) {
+                console.log("result.error:", result.error.message);
+            } 
+        };
+        if (stripeSession) loadStripeSession();
+    }, [stripeSession]);
+
+
     useEffect(()=>{
         async function retrieveExamList(){
             const applicableExams = await examineApi.getApplicableExams();
             setExamList(applicableExams);
         };
         retrieveExamList();
-        // setRefreshList(false);
     },[]);
 
 
-    const handleBuyExam = (e, exam_id, application_id) =>{
+    async function registerPurchasedExam(){
+        console.log("This are the app details: ", applicationDetails);
+        const newApplication = await examineApi.acquireExam(applicationDetails);
+        
+        if (newApplication === null ) {
+            history.push("/applicants");
+        } else {
+            // dispatch(loadExam(exam));
+            console.log("nada");
+        }
+    };
+
+
+    const handleBuyExam = async (e, exam_id, application_id, exam_name, org_logo) =>{
         if (!isApplicantAuth) {
             alert("Please login or register first");
         } else {
             e.currentTarget.className += " loading";
-            const applicationDetails = {
+            const appDetails = {
                 application_id,
                 applicant_email: userInfo.email,
-                exam_id
-            }
-
-            async function registerPurchasedExam(){
-                const newApplication = await examineApi.acquireExam(applicationDetails);
-                
-                if (newApplication === null ) {
-                    history.push("/applicants");
-                } else {
-                    // dispatch(loadExam(exam));
-                    console.log("nada");
-                }
+                exam_id,
+                exam_name,
+                org_logo
             };
-            registerPurchasedExam();
 
+            setApplicationDetails(appDetails);
+
+            async function createStripeSession(){
+                setStripeSession(await examineApi.createStripeSession(appDetails));
+            };
+            createStripeSession();
         }
-
     };
 
     return (

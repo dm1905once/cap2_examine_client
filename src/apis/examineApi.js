@@ -97,6 +97,12 @@ class examineApi {
       let res = await this.request('post', 'applicants/acquireExam', examDetails);
       return res.token;
     }
+
+    // STRIPE client APIs
+    static async createStripeSession(examDetails) {
+      let res = await this.request('post', 'applicants/stripe/create-session', examDetails);
+      return res;
+    }
 }
 
 

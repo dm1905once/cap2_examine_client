@@ -19,7 +19,14 @@ const ExamList = ( {exam, handleBuyExam} )=> {
                     <i className="dollar icon"></i>{exam.exam_fee}
                 </div>
             </div>
-            <div className="ui blue animated attached button" onClick={e => handleBuyExam(e, exam.exam_id, uniqid.process('A_'))}>
+            <div className="ui blue animated attached button" 
+                onClick={e => 
+                    handleBuyExam(e, 
+                    exam.exam_id, 
+                    uniqid.process('A_'), 
+                    exam.exam_name,
+                    exam.examiners.organizations.logo_url
+                )}>
                 <div className="visible content">
                     <i className="pencil alternate icon"></i>Take exam
                 </div>
