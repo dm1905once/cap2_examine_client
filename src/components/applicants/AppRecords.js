@@ -12,8 +12,15 @@ const AppRecords = () =>{
             const purchased = await examineApi.getPurchasedExams(userInfo.email);
             setPurchasedExams(purchased);
         };
-        retrievePurchasedExams();
-    }, [])
+        async function retrieveCompletedExams(){
+            const completed = await examineApi.getCompletedExams(userInfo.email);
+            setCompletedExams(completed);
+        };
+        if (userInfo) {
+            retrievePurchasedExams();
+            retrieveCompletedExams();
+        }
+    }, [userInfo])
 
     return (
         <div>
@@ -33,8 +40,8 @@ const AppRecords = () =>{
                         </tr>
                     </thead>
                     <tbody>
-                        {purchasedExams.map(exam =>
-                        <tr>
+                        {purchasedExams.map(exam => 
+                        <tr key={exam.application_id}>
                             <td>{exam.exams.exam_name}</td>
                             <td>{exam.exams.exam_pass_score}</td>
                             <td>{exam.status}</td>
@@ -49,6 +56,29 @@ const AppRecords = () =>{
                 <i className="certificate icon"></i>
                 <div className="content">Completed exams</div>
             </h2>
+
+            {completedExams.length > 0 ?
+                <table className="ui single line table">
+                    <thead>
+                        <tr>
+                            <th>Exam Name</th>
+                            <th># Questions</th>
+                            <th>Passing Score (%)</th>
+                            <th>Your Score (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {completedExams.map(exam => 
+                        <tr key={exam.application_id}>
+                            <td>{exam.exams.exam_name}</td>
+                            <td>{exam.questions_total}</td>
+                            <td>{exam.exams.exam_pass_score}</td>
+                            <td>{exam.eval_pct}</td>
+                        </tr>
+                        )}
+                    </tbody>
+                </table>
+            :<p>No completed exams</p>}
         </div>
     )
 }

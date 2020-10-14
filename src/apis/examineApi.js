@@ -77,6 +77,11 @@ class examineApi {
       let res = await this.request('get', `applicants/${applicantEmail}/purchased`);
       return res;
     }
+    
+    static async getCompletedExams(applicantEmail) {
+      let res = await this.request('get', `applicants/${applicantEmail}/completed`);
+      return res;
+    }
 
     static async registerApplicant(fields) {
       let res = await this.request('post', 'applicants/register', fields);
