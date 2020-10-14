@@ -24,7 +24,10 @@ const HomeApps = () => {
     
         if (query.get("success")) {
           console.log("Order placed! You will receive an email confirmation.");
-          registerPurchasedExam();
+          const application_id=query.get("application_id");
+          const exam_id=query.get("exam_id");
+          const applicant_email=query.get("applicant_email");
+          registerPurchasedExam({application_id, exam_id, applicant_email});
         }
     
         if (query.get("canceled")) {
@@ -57,9 +60,8 @@ const HomeApps = () => {
     },[]);
 
 
-    async function registerPurchasedExam(){
-        console.log("This are the app details: ", applicationDetails);
-        const newApplication = await examineApi.acquireExam(applicationDetails);
+    async function registerPurchasedExam(appDetails){
+        const newApplication = await examineApi.acquireExam(appDetails);
         
         if (newApplication === null ) {
             history.push("/applicants");
