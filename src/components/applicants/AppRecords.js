@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context";
 import examineApi from '../../apis/examineApi';
 
@@ -45,7 +46,9 @@ const AppRecords = () =>{
                             <td>{exam.exams.exam_name}</td>
                             <td>{exam.exams.exam_pass_score}</td>
                             <td>{exam.status}</td>
-                            <td><button className="ui button">Take Exam Now</button></td>
+                            <td>
+                                <Link  to={`/applicants/takeExam/${exam.application_id}`}>Take Exam Now</Link>
+                            </td>
                         </tr>
                         )}
                     </tbody>

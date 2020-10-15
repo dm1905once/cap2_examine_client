@@ -95,7 +95,17 @@ class examineApi {
 
     static async acquireExam(examDetails) {
       let res = await this.request('post', 'applicants/acquireExam', examDetails);
-      return res.token;
+      return res;
+    }
+
+    static async validateApplication(appDetails) {
+      let res = await this.request('get', 'applicants/validateApplication', appDetails);
+      return res;
+    }
+
+    static async applyExam(examId) {
+      let res = await this.request('get', 'applicants/applyExam', examId);
+      return res;
     }
 
     // STRIPE client APIs

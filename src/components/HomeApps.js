@@ -15,7 +15,8 @@ const HomeApps = () => {
     const [ examList, setExamList ] = useState([]);
     const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
     const [ stripeSession, setStripeSession ] = useState(null);
-    let topMessage = location.state? location.state.topMessage : '';
+    const [ topMessage, setTopMessage ] = useState('');
+    // let topMessage = location.state? location.state.topMessage : '';
 
 
     useEffect(() => {
@@ -65,9 +66,10 @@ const HomeApps = () => {
         
         if (newApplication === null ) {
             history.push("/applicants");
+            setTopMessage("A problem occurred while attempting to acquire the exam");
         } else {
             // dispatch(loadExam(exam));
-            console.log("nada");
+            setTopMessage("Exam acquired successfully");
         }
     };
 
