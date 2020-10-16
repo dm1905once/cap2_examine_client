@@ -40,3 +40,29 @@ export const loadExam = (existingExam) =>{
         payload: existingExam
     };
 };
+
+export const storeActiveExam = (activeExam) =>{
+    return {
+        type: 'LOAD_ACTIVE_EXAM',
+        payload: activeExam
+    };
+};
+
+export const initializeResponses = (examId) =>{
+    return {
+        type: 'INITIALIZE_SUBMISSION',
+        payload: {exam_id: examId}
+    };
+};
+
+export const addResponse = (questionId, selectedChoiceId) =>{
+    return {
+        type: 'ADD_RESPONSE',
+        payload: {
+            newResponse: {
+                question_id: questionId,
+                selected_choice_id: selectedChoiceId
+            }
+        }
+    };
+};

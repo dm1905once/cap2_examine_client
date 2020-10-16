@@ -1,34 +1,38 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context";
 import examineApi from '../../apis/examineApi';
+import { storeActiveExam, initializeResponses } from '../../actions';
 
 const TakeExam = () =>{
+    const dispatch = useDispatch();
     const { appId } = useParams();
     const { isApplicantAuth, userInfo } = useContext(AuthContext);
     const [ isValidExam, setIsValidExam ] = useState(false);
     const [ examInStore, setExamInStore ] = useState(false);
     const [ currentQuestion, setCurrentQuestion ] = useState(1);
+    // const [ validExamId, setValidExamId ] = useState(null);
 
     useEffect(()=>{
-        async function preValidateExam(){
-            const applicantEmail = userInfo.email;
-            const validExamId = await examineApi.validateApplication({appId, applicantEmail});
-            if (validExamId) {
+        async function validateAndGetExam(){
+            const applicant_email = userInfo.email;
+            const application_id = appId;
+            const { validExamId } = await examineApi.validateApplication({application_id, applicant_email});
+            if (validExamId){
                 setIsValidExam(true);
                 const activeExam = await examineApi.applyExam(validExamId);
                 if (activeExam) {
-                    // Load exam into store
+                    dispatch(storeActiveExam(activeExam.exam));
+                    dispatch(initializeResponses(validExamId));
                     setExamInStore(true);
                 }
             }
         };
-        if (isApplicantAuth) {
-            preValidateExam();
-        } else {
-
+        if (isApplicantAuth && userInfo && appId) {
+            validateAndGetExam();
         }
-    },[]);
+    },[appId, isApplicantAuth, userInfo]);
 
     return (
         <div>

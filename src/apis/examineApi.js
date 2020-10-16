@@ -99,12 +99,13 @@ class examineApi {
     }
 
     static async validateApplication(appDetails) {
-      let res = await this.request('get', 'applicants/validateApplication', appDetails);
+      const { application_id, applicant_email } = appDetails;
+      let res = await this.request('get', `applicants/validateApplication?application_id=${application_id}&applicant_email=${applicant_email}`);
       return res;
     }
 
     static async applyExam(examId) {
-      let res = await this.request('get', 'applicants/applyExam', examId);
+      let res = await this.request('get', `applicants/applyExam?exam_id=${examId}`);
       return res;
     }
 
