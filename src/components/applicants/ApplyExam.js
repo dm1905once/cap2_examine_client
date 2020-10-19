@@ -48,6 +48,10 @@ const ApplyExam = () =>{
             {(isApplicantAuth && isValidExam) ? (
                 <div>
                     <h1>Question navigator</h1>
+                    <ShowCrumbs 
+                        examReady={examInStore} 
+                        currentQuestion={currentQuestion} 
+                        activeExam={activeExam}/>
                     <ShowQuestion 
                         examReady={examInStore} 
                         currentQuestion={currentQuestion} 
@@ -80,6 +84,23 @@ function ShowQuestion( {examReady, currentQuestion, activeExam, handlePrev, hand
     )
     } else {
         return <h3>Retrieving Exam...</h3>
+    }
+}
+
+function ShowCrumbs( {examReady, currentQuestion, activeExam} ){
+    if (examReady){
+        return (
+            <div className="ui raised segment">
+                {activeExam.questions.map((q,i)=>
+                    <div 
+                        className={`ui ${(parseInt(currentQuestion) === i+1)? 'green': 'gray'} circular label`}
+                        key={i+i}>{i+1}
+                    </div>)
+                }
+            </div>
+        );
+    }else {
+        return <h3>Retrieving Questions...</h3>
     }
 }
 
