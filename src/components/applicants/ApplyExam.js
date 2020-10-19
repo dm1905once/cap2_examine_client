@@ -5,13 +5,14 @@ import { AuthContext } from "../../context";
 import examineApi from '../../apis/examineApi';
 import { storeActiveExam, initializeResponses } from '../../actions';
 
-const TakeExam = () =>{
+const ApplyExam = () =>{
     const dispatch = useDispatch();
     const { appId } = useParams();
     const { isApplicantAuth, userInfo } = useContext(AuthContext);
     const [ isValidExam, setIsValidExam ] = useState(false);
     const [ examInStore, setExamInStore ] = useState(false);
     const [ currentQuestion, setCurrentQuestion ] = useState(1);
+    const activeExam = useSelector(store=> store.activeExam);
     // const [ validExamId, setValidExamId ] = useState(null);
 
     useEffect(()=>{
@@ -34,13 +35,25 @@ const TakeExam = () =>{
         }
     },[appId, isApplicantAuth, userInfo]);
 
+    const handlePrev = () =>{
+        setCurrentQuestion(currentQuestion-1);
+    }
+
+    const handleNext = () =>{
+        setCurrentQuestion(currentQuestion+1);
+    }
+
     return (
         <div>
             {(isApplicantAuth && isValidExam) ? (
                 <div>
                     <h1>Question navigator</h1>
-                    <ShowQuestion examReady={examInStore} currentQuestion={currentQuestion} />
-                    <h1>Question footer</h1>
+                    <ShowQuestion 
+                        examReady={examInStore} 
+                        currentQuestion={currentQuestion} 
+                        activeExam={activeExam}
+                        handlePrev={handlePrev}
+                        handleNext={handleNext}/>
                 </div>
             ) : <h3>Invalid exam request. Make sure you are logged in and the exam ID is valid</h3>
             }
@@ -48,12 +61,26 @@ const TakeExam = () =>{
     )
 };
 
-function ShowQuestion( {examReady, currentQuestion} ){
+function ShowQuestion( {examReady, currentQuestion, activeExam, handlePrev, handleNext} ){
     if (examReady){
-        return <h3>Showing questions here. Current question is: {currentQuestion}</h3>
+    return (
+        <div>
+            <p>Showing questions here. Total # questions: {activeExam.questions.length} Current question is: {currentQuestion}</p>
+            <button 
+                onClick={handlePrev}
+                className={'ui labeled icon gray button ' + (currentQuestion===1?'disabled':'')}>
+                <i className="left arrow icon"></i>Previous
+            </button>
+            <button 
+                onClick={handleNext}
+                className={'ui right labeled icon blue button ' + (currentQuestion===activeExam.questions.length?'disabled':'')}>
+                <i className="right arrow icon"></i>Next
+            </button>
+        </div>
+    )
     } else {
         return <h3>Retrieving Exam...</h3>
     }
 }
 
-export default TakeExam;
+export default ApplyExam;

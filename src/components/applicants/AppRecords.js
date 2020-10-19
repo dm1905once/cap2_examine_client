@@ -47,7 +47,7 @@ const AppRecords = () =>{
                             <td>{exam.exams.exam_pass_score}</td>
                             <td>{exam.status}</td>
                             <td>
-                                <Link  to={`/applicants/takeExam/${exam.application_id}`}>Take Exam Now</Link>
+                                <Link  to={`/applicants/applyExam/${exam.application_id}`}>Take Exam Now</Link>
                             </td>
                         </tr>
                         )}
