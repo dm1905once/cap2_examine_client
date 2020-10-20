@@ -9,6 +9,7 @@ const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, hand
     if (examReady){
         function handleSelectedChoice(e){
             dispatch(addResponse(activeExam.questions[currentQuestion-1].question_id, e.target.value));
+            // console.log(e.target.value);
         }
 
     return (
@@ -24,7 +25,11 @@ const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, hand
                                 {activeExam.questions[currentQuestion-1].choices.map(ch=>
                                     <div className="field" key={ch.choice_id}>
                                         <div className="ui radio checkbox">
-                                            <input type="radio" name="choices" tabIndex="0" value={ch.choice_id}/>
+                                            <input  type="radio" 
+                                                    name="choices" 
+                                                    tabIndex="0" 
+                                                    value={ch.choice_id} 
+                                                    checked={submitExam.responses.find(r=>r.selected_choice_id ===ch.choice_id)}/>
                                             <label>{ch.choice_text}</label>
                                         </div>
                                     </div>
