@@ -11,12 +11,13 @@ export default (state = INITIAL_STATE, action) =>{
             };
         }
         case 'ADD_RESPONSE': {
-            const newResponses = state.responses;
-            newResponses.push(action.payload.newResponse)
-            return {
-                ...state, 
-                newResponses
-            };
+            const updatedResponses = state.responses.filter(response =>{
+                if (response.question_id !== action.payload.question_id){
+                    return response;
+                } 
+            });
+            updatedResponses.push(action.payload);
+            return { ...state, responses: updatedResponses};
         }
         default:
             return state;

@@ -59,10 +59,8 @@ export const addResponse = (questionId, selectedChoiceId) =>{
     return {
         type: 'ADD_RESPONSE',
         payload: {
-            newResponse: {
-                question_id: questionId,
-                selected_choice_id: selectedChoiceId
-            }
+            question_id: questionId,
+            selected_choice_id: selectedChoiceId
         }
     };
 };

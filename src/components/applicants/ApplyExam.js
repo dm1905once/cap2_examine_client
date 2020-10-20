@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context";
 import examineApi from '../../apis/examineApi';
 import { storeActiveExam, initializeResponses } from '../../actions';
+import ShowQuestion from './ShowQuestion'
 
 const ApplyExam = () =>{
     const dispatch = useDispatch();
@@ -32,7 +33,7 @@ const ApplyExam = () =>{
         if (isApplicantAuth && userInfo && appId) {
             validateAndGetExam();
         }
-    },[appId, isApplicantAuth, userInfo]);
+    },[appId, isApplicantAuth, userInfo, dispatch]);
 
     const handlePrev = () =>{
         setCurrentQuestion(currentQuestion-1);
@@ -63,61 +64,6 @@ const ApplyExam = () =>{
         </div>
     )
 };
-
-function ShowQuestion( {examReady, currentQuestion, activeExam, handlePrev, handleNext} ){
-    if (examReady){
-
-        function handleSelectedChoice(e){
-            console.log(e.target.value);
-        }
-    return (
-        <div>
-            <h3>Select the choice that best answers the question:</h3>
-            <div className="ui blue raised padded segment">{activeExam.questions[currentQuestion-1].question_text}</div>
-            <div className="ui grid">
-                <div className="ui row">
-                    <div className="ui twelve wide column">
-                        <div className="ui form" onChange={handleSelectedChoice}>
-                            <div className="grouped fields">
-                            <label htmlFor="fruit">Select one choice:</label>
-                                <div className="field">
-                                    <div className="ui radio checkbox">
-                                        <input type="radio" name="fruit" tabIndex="0" value="algo"/>
-                                        <label>Apples</label>
-                                    </div>
-                                </div>
-                                <div className="field">
-                                    <div className="ui radio checkbox">
-                                        <input type="radio" name="fruit" tabIndex="0" value="nada" />
-                                        <label>Oranges</label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="ui four wide column">
-                    <button 
-                        onClick={handlePrev}
-                        className={'ui labeled icon gray button ' + (currentQuestion===1?'disabled':'')}>
-                        <i className="left arrow icon"></i>Previous
-                    </button>
-                    <button 
-                        onClick={handleNext}
-                        className={'ui right labeled icon blue button ' + (currentQuestion===activeExam.questions.length?'disabled':'')}>
-                        <i className="right arrow icon"></i>Next
-                    </button>
-                    </div>
-                </div>
-                <div className="ui row">
-                    <button className="fluid ui button">Finish and Submit Exam</button>
-                </div>
-            </div>
-        </div>
-    )
-    } else {
-        return <h3>Retrieving Exam...</h3>
-    }
-}
 
 function ShowCrumbs( {examReady, currentQuestion, activeExam} ){
     if (examReady){
