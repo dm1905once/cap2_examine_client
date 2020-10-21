@@ -19,6 +19,9 @@ export default (state = INITIAL_STATE, action) =>{
             updatedResponses.push(action.payload);
             return { ...state, responses: updatedResponses};
         }
+        case 'RESET_SUBMISSION': {
+            return INITIAL_STATE;
+        }
         default:
             return state;
     }

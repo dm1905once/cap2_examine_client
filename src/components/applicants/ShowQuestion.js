@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-import { Prompt } from "react-router";
-import { addResponse } from '../../actions';
+import { useHistory } from "react-router-dom";
+import { addResponse, resetResponses, clearActiveExam } from '../../actions';
+import examineApi from '../../apis/examineApi';
 
 const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, handleNext} ) =>{
     const dispatch = useDispatch();
+    const history = useHistory();
     const submitExam = useSelector(store=> store.submitExam);
     const [ submitStatus, setSubmitStatus ] = useState("initial");
 
@@ -17,8 +19,18 @@ const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, hand
         function promptSubmitConfirmation(){
             if (submitStatus === "initial") setSubmitStatus("confirm");
             if (submitStatus === "confirm") {
-                console.log("submitting");
+                
+                uploadExam(submitExam);
+
+                history.push("/applicants");
+                dispatch(resetResponses());
+                dispatch(clearActiveExam());
             };
+        }
+
+        async function uploadExam(submitExam){
+            const examResults = await examineApi.submitExam(submitExam);
+            console.log("Resultados", examResults);
         }
 
         return (

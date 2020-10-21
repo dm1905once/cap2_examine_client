@@ -27,6 +27,7 @@ export const clearNewExam = () =>{
     };
 };
 
+
 export const clearEditExam = () =>{
     return {
         type: 'CLEAR_EDIT_EXAM'
@@ -48,6 +49,12 @@ export const storeActiveExam = (activeExam) =>{
     };
 };
 
+export const clearActiveExam = () =>{
+    return {
+        type: 'CLEAR_ACTIVE_EXAM'
+    };
+};
+
 export const initializeResponses = (examId) =>{
     return {
         type: 'INITIALIZE_SUBMISSION',
@@ -62,5 +69,11 @@ export const addResponse = (questionId, selectedChoiceId) =>{
             question_id: questionId,
             selected_choice_id: selectedChoiceId
         }
+    };
+};
+
+export const resetResponses = () =>{
+    return {
+        type: 'RESET_SUBMISSION'
     };
 };
