@@ -54,6 +54,7 @@ const ApplyExam = () =>{
                         activeExam={activeExam}/>
                     <ShowQuestion 
                         examReady={examInStore} 
+                        application_id={appId}
                         currentQuestion={currentQuestion} 
                         activeExam={activeExam}
                         handlePrev={handlePrev}

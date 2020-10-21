@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 import { addResponse, resetResponses, clearActiveExam } from '../../actions';
 import examineApi from '../../apis/examineApi';
 
-const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, handleNext} ) =>{
+const ShowQuestion = ( {examReady, application_id, currentQuestion, activeExam, handlePrev, handleNext} ) =>{
     const dispatch = useDispatch();
     const history = useHistory();
     const submitExam = useSelector(store=> store.submitExam);
@@ -19,18 +19,25 @@ const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, hand
         function promptSubmitConfirmation(){
             if (submitStatus === "initial") setSubmitStatus("confirm");
             if (submitStatus === "confirm") {
-                
-                uploadExam(submitExam);
+                setSubmitStatus("uploading");
 
-                history.push("/applicants");
-                dispatch(resetResponses());
-                dispatch(clearActiveExam());
+                const submitExamDetails = {
+                    ...submitExam,
+                    application_id
+                };
+                
+                uploadExam(submitExamDetails);
+
+                setTimeout(()=>{
+                    history.push("/applicants");
+                    dispatch(resetResponses());
+                    dispatch(clearActiveExam());
+                }, 5000);
             };
         }
 
-        async function uploadExam(submitExam){
-            const examResults = await examineApi.submitExam(submitExam);
-            console.log("Resultados", examResults);
+        async function uploadExam(submitExamDetails){
+            const examResults = await examineApi.submitExam(submitExamDetails);
         }
 
         return (
@@ -73,7 +80,7 @@ const ShowQuestion = ( {examReady, currentQuestion, activeExam, handlePrev, hand
                     </div>
                     <div className="ui row">
                         <button 
-                            className={'fluid ui button '+ (submitStatus==='confirm'?'red':'basic orange')}
+                            className={'fluid ui button '+ (submitStatus==='confirm'?'red':'basic orange') + (submitStatus==='uploading'?' loading':'')}
                             onClick={promptSubmitConfirmation}>
                                 {submitStatus==='confirm'?'Click once more to confirm submission':'Finish and Submit Exam'}
                         </button>
