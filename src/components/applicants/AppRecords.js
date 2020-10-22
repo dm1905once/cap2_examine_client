@@ -68,15 +68,20 @@ const AppRecords = () =>{
                             <th># Questions</th>
                             <th>Passing Score (%)</th>
                             <th>Your Score (%)</th>
+                            <th>Results</th>
                         </tr>
                     </thead>
                     <tbody>
                         {completedExams.map(exam => 
-                        <tr key={exam.application_id}>
+                        <tr key={exam.application_id} className="positive">
                             <td>{exam.exams.exam_name}</td>
                             <td>{exam.questions_total}</td>
                             <td>{exam.exams.exam_pass_score}</td>
                             <td>{exam.eval_pct}</td>
+                            {(exam.eval_pct>=exam.exams.exam_pass_score)
+                                ?<td className="positive"><i className="yellow icon star"></i>Passed</td>
+                                :<td className="negative"><i className="attention icon"></i>Failed</td>
+                            }
                         </tr>
                         )}
                     </tbody>
