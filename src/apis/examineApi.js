@@ -120,7 +120,6 @@ class examineApi {
         let res = await this.request('post', 'applicants/stripe/create-session', examDetails);
         return res;
       } catch(e){
-        console.log("el error aqui es", e);
         throw e;
       }
     }

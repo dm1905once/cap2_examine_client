@@ -16,14 +16,6 @@ const HomeApps = () => {
     const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
     const [ stripeSession, setStripeSession ] = useState(null);
     const [ topMessage, setTopMessage ] = useState();
-    // let topMessage = location.state? location.state.topMessage : '';
-    const [ pageStatus, setPageStatus ] = useState('');
-
-
-    // useEffect(()=>{
-    //     setTopMessage({type: 'Error', message: pageStatus});
-    // },[pageStatus]);
-
 
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
@@ -50,7 +42,8 @@ const HomeApps = () => {
             });
 
             if (result.error) {
-                console.log("result.error:", result.error.message);
+                setTopMessage({type: 'Error', message: "A problem occurred while attempting to acquire the exam"});
+                window.scrollTo(0,0);
             } 
         };
         if (stripeSession) loadStripeSession();
@@ -73,7 +66,6 @@ const HomeApps = () => {
             history.push("/applicants");
             setTopMessage({type: 'Error', message: "A problem occurred while attempting to acquire the exam"});
         } else {
-            // dispatch(loadExam(exam));
             setTopMessage({type: 'Success', message: "Thank you! The exam has been added to your list of Purchased Exams. Good Luck!"});
         }
     };
@@ -81,7 +73,8 @@ const HomeApps = () => {
 
     const handleBuyExam = async (e, exam_id, application_id, exam_name, org_logo) =>{
         if (!isApplicantAuth) {
-            alert("Please login or register first");
+            setTopMessage({type: 'Warning', message: "Please login or register first"});
+            window.scrollTo(0,0);
         } else {
             const buyExamButton = e.currentTarget;
             buyExamButton.classList.toggle("loading");
@@ -101,8 +94,8 @@ const HomeApps = () => {
                     setStripeSession(await examineApi.createStripeSession(appDetails));
                 } catch(e){
                     buyExamButton.classList.toggle("loading");
-                    // setPageStatus(e);
                     setTopMessage({type: 'Error', message: "We're sorry! An error occurred while trying to acquire the exam."});
+                    window.scrollTo(0,0);
                 }
             };
             createStripeSession();
@@ -151,6 +144,7 @@ const HomeApps = () => {
             case 'Success': color = 'green'; break;
             case 'Error': color = 'red'; break;
             case 'Info': color = 'blue'; break;
+            case 'Warning': color = 'yellow'; break;
             default: color = 'yellow';
         };
 
@@ -164,7 +158,7 @@ const HomeApps = () => {
                 </div>
             )
         }else {
-            return (<div className={`ui message ${color}`}>{content.message}</div>)
+            return (<div className={`ui warning message ${color}`}>{content.message}</div>)
         }
     };
 
