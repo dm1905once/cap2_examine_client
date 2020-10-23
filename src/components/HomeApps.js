@@ -6,6 +6,7 @@ import examineApi from '../apis/examineApi';
 import ExamList from './applicants/ExamList';
 import AppAccess from './applicants/AppAccess';
 import AppRecords from './applicants/AppRecords';
+import TopMessage from './TopMessage';
 const stripePromise = loadStripe("pk_test_51HcDauJMaHZnra3gtM9N5ZNXiYqFIkSYKKWs5GxoG3sAtyxIUJFKaXWpbLvl37OcSa2bd03rYBlP2J0Yc8a5ZkvV00clsLscYO");
 
 const HomeApps = () => {
@@ -136,31 +137,7 @@ const HomeApps = () => {
                     </div>
             }
         </div>
-    )
-
-    function TopMessage({content}){
-        let color;
-        switch (content.type) {
-            case 'Success': color = 'green'; break;
-            case 'Error': color = 'red'; break;
-            case 'Info': color = 'blue'; break;
-            case 'Warning': color = 'yellow'; break;
-            default: color = 'yellow';
-        };
-
-        if (Array.isArray(content.message)){
-            return (
-                <div className={`ui message ${color}`}>
-                    <div className="header">{content.type} message</div>
-                    <ul className="list">
-                        {content.message.map((msg,i)=><li key={i}>{msg}</li>)}
-                    </ul>
-                </div>
-            )
-        }else {
-            return (<div className={`ui warning message ${color}`}>{content.message}</div>)
-        }
-    };
+    );
 
 }
 
