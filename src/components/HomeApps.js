@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Redirect } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
 import { AuthContext } from "../context";
 import examineApi from '../apis/examineApi';
@@ -15,8 +15,14 @@ const HomeApps = () => {
     const [ examList, setExamList ] = useState([]);
     const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
     const [ stripeSession, setStripeSession ] = useState(null);
-    const [ topMessage, setTopMessage ] = useState('');
+    const [ topMessage, setTopMessage ] = useState();
     // let topMessage = location.state? location.state.topMessage : '';
+    const [ pageStatus, setPageStatus ] = useState('');
+
+
+    // useEffect(()=>{
+    //     setTopMessage({type: 'Error', message: pageStatus});
+    // },[pageStatus]);
 
 
     useEffect(() => {
@@ -24,7 +30,6 @@ const HomeApps = () => {
         const query = new URLSearchParams(window.location.search);
     
         if (query.get("success")) {
-          console.log("Order placed! You will receive an email confirmation.");
           const application_id=query.get("application_id");
           const exam_id=query.get("exam_id");
           const applicant_email=query.get("applicant_email");
@@ -32,7 +37,7 @@ const HomeApps = () => {
         }
     
         if (query.get("canceled")) {
-          console.log("Order canceled -- continue to shop around and checkout when you're ready.");
+            setTopMessage({type: 'Info', message: "Order canceled -- continue to look around and take exam when you're ready."});
         }
       }, []);
 
@@ -66,10 +71,10 @@ const HomeApps = () => {
         
         if (newApplication === null ) {
             history.push("/applicants");
-            setTopMessage("A problem occurred while attempting to acquire the exam");
+            setTopMessage({type: 'Error', message: "A problem occurred while attempting to acquire the exam"});
         } else {
             // dispatch(loadExam(exam));
-            setTopMessage("Exam acquired successfully");
+            setTopMessage({type: 'Success', message: "Thank you! The exam has been added to your list of Purchased Exams. Good Luck!"});
         }
     };
 
@@ -78,7 +83,9 @@ const HomeApps = () => {
         if (!isApplicantAuth) {
             alert("Please login or register first");
         } else {
-            e.currentTarget.className += " loading";
+            const buyExamButton = e.currentTarget;
+            buyExamButton.classList.toggle("loading");
+
             const appDetails = {
                 application_id,
                 applicant_email: userInfo.email,
@@ -90,7 +97,13 @@ const HomeApps = () => {
             setApplicationDetails(appDetails);
 
             async function createStripeSession(){
-                setStripeSession(await examineApi.createStripeSession(appDetails));
+                try {
+                    setStripeSession(await examineApi.createStripeSession(appDetails));
+                } catch(e){
+                    buyExamButton.classList.toggle("loading");
+                    // setPageStatus(e);
+                    setTopMessage({type: 'Error', message: "We're sorry! An error occurred while trying to acquire the exam."});
+                }
             };
             createStripeSession();
         }
@@ -98,7 +111,7 @@ const HomeApps = () => {
 
     return (
         <div className="ui container">
-            {topMessage?<div className={`ui  message`}>{topMessage}</div>:''}
+            {topMessage?<TopMessage content={topMessage}/>:''}
 
             {isApplicantAuth? <AppRecords /> : <AppAccess />}
 
@@ -131,6 +144,30 @@ const HomeApps = () => {
             }
         </div>
     )
+
+    function TopMessage({content}){
+        let color;
+        switch (content.type) {
+            case 'Success': color = 'green'; break;
+            case 'Error': color = 'red'; break;
+            case 'Info': color = 'blue'; break;
+            default: color = 'yellow';
+        };
+
+        if (Array.isArray(content.message)){
+            return (
+                <div className={`ui message ${color}`}>
+                    <div className="header">{content.type} message</div>
+                    <ul className="list">
+                        {content.message.map((msg,i)=><li key={i}>{msg}</li>)}
+                    </ul>
+                </div>
+            )
+        }else {
+            return (<div className={`ui message ${color}`}>{content.message}</div>)
+        }
+    };
+
 }
 
 export default HomeApps;

@@ -116,8 +116,13 @@ class examineApi {
 
     // STRIPE client APIs
     static async createStripeSession(examDetails) {
-      let res = await this.request('post', 'applicants/stripe/create-session', examDetails);
-      return res;
+      try {
+        let res = await this.request('post', 'applicants/stripe/create-session', examDetails);
+        return res;
+      } catch(e){
+        console.log("el error aqui es", e);
+        throw e;
+      }
     }
 }
 
