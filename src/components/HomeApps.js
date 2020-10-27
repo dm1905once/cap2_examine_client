@@ -63,8 +63,12 @@ const HomeApps = () => {
 
     useEffect(()=>{
         async function retrieveExamList(){
-            const applicableExams = await appApi.getApplicableExams();
-            setExamList(applicableExams);
+            try {
+                const applicableExams = await appApi.getApplicableExams();
+                setExamList(applicableExams);
+            } catch (e){
+                setTopMessage({type: 'Warning', message: "Sorry! We are unable to retrieve list of active exams."});
+            }
         };
         retrieveExamList();
     },[]);
@@ -117,6 +121,8 @@ const HomeApps = () => {
             {
                 examList.length === 0
                 ?   <div>
+                        <h3>No exams are available</h3>
+                        {/* 
                         <h2 className="ui blue header">Loading exam list</h2>
                         {[1,2,3,4,5,6,7,8,9,0].map(x=>
                             <div className="ui placeholder" key={x}>
@@ -126,7 +132,8 @@ const HomeApps = () => {
                                     <div className="line"></div>
                                 </div>
                             </div>
-                        )}
+                        )} 
+                        */}
  
                     </div>
                 :   

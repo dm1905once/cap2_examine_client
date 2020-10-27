@@ -14,14 +14,20 @@ const ExamList = () => {
     const { examinerInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
     const [ refreshList, setRefreshList ] = useState(true);
-    let topMessage = location.state? location.state.topMessage : '';
+    // let topMessage = location.state? location.state.topMessage : '';
+    const [ topMessage, setTopMessage ] = useState(location.state? location.state.topMessage:'');
 
     
     useEffect(()=>{
         async function retrieveExamList(){
-            const userExams = await orgApi.getExaminerExams(examinerInfo.username);
-            setExamList(userExams);
-            return userExams;
+            try {
+                const userExams = await orgApi.getExaminerExams(examinerInfo.username);
+                setExamList(userExams);
+                return userExams;
+
+            } catch(e){
+                setTopMessage("Unable to retrieve the list of available exams");
+            };
         };
         if (examinerInfo.username){
             retrieveExamList();
