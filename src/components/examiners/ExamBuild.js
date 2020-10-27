@@ -4,7 +4,7 @@ import { Redirect  } from 'react-router-dom';
 import ExamHeader from './ExamHeader'
 import ExamCrumbs from './ExamCrumbs'
 import Question from './Question'
-import { AuthContext } from "../context";
+import { AuthContext } from "../../context";
 
 
 const ExamBuild = () => {

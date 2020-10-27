@@ -2,10 +2,10 @@ import React from 'react';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { initializeNewExam } from '../actions';
+import { initializeNewExam } from '../../actions';
 import uniqid from 'uniqid';
-import { AuthContext } from "../context";
-import { validateExamCreate as validate } from '../formValidations/examinerForms';
+import { AuthContext } from "../../context";
+import { validateExamCreate as validate } from '../../formValidations/examinerForms';
 
 const ExamCreate = () => {
     const dispatch = useDispatch();

@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useLocation, useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { loadStripe } from "@stripe/stripe-js";
 import { AuthContext } from "../context";
-import examineApi from '../apis/examineApi';
+import appApi from '../apis/appApi';
 import ExamList from './applicants/ExamList';
 import AppAccess from './applicants/AppAccess';
 import AppRecords from './applicants/AppRecords';
@@ -10,17 +10,27 @@ import TopMessage from './TopMessage';
 const stripePromise = loadStripe("pk_test_51HcDauJMaHZnra3gtM9N5ZNXiYqFIkSYKKWs5GxoG3sAtyxIUJFKaXWpbLvl37OcSa2bd03rYBlP2J0Yc8a5ZkvV00clsLscYO");
 
 const HomeApps = () => {
-    const location = useLocation();
     const history = useHistory();
     const { isApplicantAuth, userInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
-    const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
+    // const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
     const [ stripeSession, setStripeSession ] = useState(null);
     const [ topMessage, setTopMessage ] = useState();
 
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
         const query = new URLSearchParams(window.location.search);
+
+        async function registerPurchasedExam(appDetails){
+            const newApplication = await appApi.acquireExam(appDetails);
+            
+            if (newApplication === null ) {
+                history.push("/applicants");
+                setTopMessage({type: 'Error', message: "A problem occurred while attempting to acquire the exam"});
+            } else {
+                setTopMessage({type: 'Success', message: "Thank you! The exam has been added to your list of Purchased Exams. Good Luck!"});
+            }
+        };
     
         if (query.get("success")) {
           const application_id=query.get("application_id");
@@ -32,7 +42,7 @@ const HomeApps = () => {
         if (query.get("canceled")) {
             setTopMessage({type: 'Info', message: "Order canceled -- continue to look around and take exam when you're ready."});
         }
-      }, []);
+      }, [history]);
 
 
     useEffect(()=>{
@@ -53,23 +63,14 @@ const HomeApps = () => {
 
     useEffect(()=>{
         async function retrieveExamList(){
-            const applicableExams = await examineApi.getApplicableExams();
+            const applicableExams = await appApi.getApplicableExams();
             setExamList(applicableExams);
         };
         retrieveExamList();
     },[]);
 
 
-    async function registerPurchasedExam(appDetails){
-        const newApplication = await examineApi.acquireExam(appDetails);
-        
-        if (newApplication === null ) {
-            history.push("/applicants");
-            setTopMessage({type: 'Error', message: "A problem occurred while attempting to acquire the exam"});
-        } else {
-            setTopMessage({type: 'Success', message: "Thank you! The exam has been added to your list of Purchased Exams. Good Luck!"});
-        }
-    };
+
 
 
     const handleBuyExam = async (e, exam_id, application_id, exam_name, org_logo) =>{
@@ -88,11 +89,11 @@ const HomeApps = () => {
                 org_logo
             };
 
-            setApplicationDetails(appDetails);
+            // setApplicationDetails(appDetails);
 
             async function createStripeSession(){
                 try {
-                    setStripeSession(await examineApi.createStripeSession(appDetails));
+                    setStripeSession(await appApi.createStripeSession(appDetails));
                 } catch(e){
                     buyExamButton.classList.toggle("loading");
                     setTopMessage({type: 'Error', message: "We're sorry! An error occurred while trying to acquire the exam."});

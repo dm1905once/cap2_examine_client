@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import { validateRegistration as validate } from '../../formValidations/applicantForms';
-import examineApi from '../../apis/examineApi';
+import appApi from '../../apis/appApi';
 import { AuthContext } from "../../context";
 
 
@@ -19,7 +19,7 @@ const AppsRegister = () => {
         validate,
         onSubmit: async (values) => {
             try {
-                const token = await examineApi.registerApplicant(values);
+                const token = await appApi.registerApplicant(values);
                 localStorage.setItem("_token", token);
                 authApplicant();
             } catch(e) {

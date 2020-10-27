@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addResponse, resetResponses, clearActiveExam } from '../../actions';
-import examineApi from '../../apis/examineApi';
+import appApi from '../../apis/appApi';
 
 const ShowQuestion = ( {examReady, application_id, currentQuestion, activeExam, handlePrev, handleNext} ) =>{
     const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const ShowQuestion = ( {examReady, application_id, currentQuestion, activeExam, 
         }
 
         async function uploadExam(submitExamDetails){
-            const examResults = await examineApi.submitExam(submitExamDetails);
+            const examResults = await appApi.submitExam(submitExamDetails);
         }
 
         return (

@@ -6,9 +6,9 @@ import QuestionTypes from './QuestionTypes';
 import QuestionMCQ from './QuestionMCQ';
 import QuestionBIN from './QuestionBIN';
 import QuestionFIB from './QuestionFIB';
-import { QuestionDetailsContext } from '../context';
-import { addNewQuestion, replaceQuestion } from '../actions';
-import { AuthContext } from "../context";
+import { QuestionDetailsContext } from '../../context';
+import { addNewQuestion, replaceQuestion } from '../../actions';
+import { AuthContext } from "../../context";
 
 const Question = ( {nextSeq, operation} ) =>{
     const dispatch = useDispatch();

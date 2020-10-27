@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import uniqid from 'uniqid';
-import { QuestionDetailsContext } from '../context';
+import { QuestionDetailsContext } from '../../context';
 
 const QuestionMCQ = ( { choices=[], validChoice=null } )=> {
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../../context";
-import examineApi from '../../apis/examineApi';
+import appApi from '../../apis/appApi';
 import { storeActiveExam, initializeResponses } from '../../actions';
 import ShowQuestion from './ShowQuestion'
 
@@ -19,10 +19,10 @@ const ApplyExam = () =>{
         async function validateAndGetExam(){
             const applicant_email = userInfo.email;
             const application_id = appId;
-            const { validExamId } = await examineApi.validateApplication({application_id, applicant_email});
+            const { validExamId } = await appApi.validateApplication({application_id, applicant_email});
             if (validExamId){
                 setIsValidExam(true);
-                const activeExam = await examineApi.applyExam(validExamId);
+                const activeExam = await appApi.applyExam(validExamId);
                 if (activeExam) {
                     dispatch(storeActiveExam(activeExam.exam));
                     dispatch(initializeResponses(validExamId));

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { validateRegistration as validate } from '../formValidations/examinerForms';
-import examineApi from '../apis/examineApi';
+import orgApi from '../apis/orgApi';
 import { AuthContext } from "../context";
 
 
@@ -26,7 +26,7 @@ const OrgsRegister = () => {
         validate,
         onSubmit: async (values) => {
             try {
-                const token = await examineApi.registerExaminer(values);
+                const token = await orgApi.registerExaminer(values);
                 localStorage.setItem("_token", token);
                 authExaminer();
                 history.push(`/orgs/${values.username}/exams`);

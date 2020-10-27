@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useLocation, useHistory  } from 'react-router-dom';
 import { useDispatch } from "react-redux";
-import { AuthContext } from "../context";
-import { loadExam } from '../actions';
-import examineApi from '../apis/examineApi';
+import { AuthContext } from "../../context";
+import { loadExam } from '../../actions';
+import examineApi from '../../apis/orgApi';
 import ExamCreate from './ExamCreate';
 import ExamCard from './ExamCard';
 

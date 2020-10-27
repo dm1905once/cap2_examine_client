@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from "../../context";
-import examineApi from '../../apis/examineApi';
+import appApi from '../../apis/appApi';
 
 const AppRecords = () =>{
     const { userInfo } = useContext(AuthContext);
@@ -10,11 +10,11 @@ const AppRecords = () =>{
 
     useEffect(() =>{
         async function retrievePurchasedExams(){
-            const purchased = await examineApi.getPurchasedExams(userInfo.email);
+            const purchased = await appApi.getPurchasedExams(userInfo.email);
             setPurchasedExams(purchased);
         };
         async function retrieveCompletedExams(){
-            const completed = await examineApi.getCompletedExams(userInfo.email);
+            const completed = await appApi.getCompletedExams(userInfo.email);
             setCompletedExams(completed);
         };
         if (userInfo) {

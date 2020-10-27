@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { useHistory  } from 'react-router-dom';
 import { useSelector, useDispatch } from "react-redux";
-import { AuthContext } from "../context";
-import { clearNewExam, clearEditExam } from '../actions';
-import examineApi from '../apis/examineApi';
+import { AuthContext } from "../../context";
+import { clearNewExam, clearEditExam } from '../../actions';
+import examineApi from '../../apis/orgApi';
 
 
 const ExamHeader = ( {examName, operation} ) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 
 const TopMessage = ({content}) =>{
-    /* Content comes in as:
+    /* 'content' comes in as:
         { type: 'some_type', message: ''} or
         { type: 'some_type', message: ['a', 'b']}
     */
