@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { addResponse, resetResponses, clearActiveExam } from '../../actions';
 import appApi from '../../apis/appApi';
+import TopMessage from '../TopMessage';
 
 const ShowQuestion = ( {examReady, application_id, currentQuestion, activeExam, handlePrev, handleNext} ) =>{
     const dispatch = useDispatch();
     const history = useHistory();
     const submitExam = useSelector(store=> store.submitExam);
     const [ submitStatus, setSubmitStatus ] = useState("initial");
+    const [ topMessage, setTopMessage ] = useState();
 
     if (examReady){
         
@@ -37,11 +39,17 @@ const ShowQuestion = ( {examReady, application_id, currentQuestion, activeExam, 
         }
 
         async function uploadExam(submitExamDetails){
-            const examResults = await appApi.submitExam(submitExamDetails);
+            try {
+                await appApi.submitExam(submitExamDetails);
+            } catch(e){
+                setTopMessage({type: 'Error', message: "We're sorry! An error occurred while uploading the exam results."});
+                window.scrollTo(0,0);
+            }
         }
 
         return (
             <div>
+                {topMessage?<TopMessage content={topMessage}/>:''}
                 <h3>Select the choice that best answers the question:</h3>
                 <div className="ui blue raised padded segment">{activeExam.questions[currentQuestion-1].question_text}</div>
                 <div className="ui grid">

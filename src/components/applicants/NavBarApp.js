@@ -2,7 +2,6 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from "../../context";
-import { getTokenFromLS } from '../../helpers';
 
 const NavBarApp = ()=> {
     const history = useHistory();

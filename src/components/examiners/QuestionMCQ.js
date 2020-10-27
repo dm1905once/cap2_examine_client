@@ -9,7 +9,7 @@ const QuestionMCQ = ( { choices=[], validChoice=null } )=> {
     const [ rightChoiceId, setRightChoiceId ] = useState(null);
     const [ validationErrors, setValidationErrors ] = useState([]);
     const submitDetails = useContext(QuestionDetailsContext);
-    const [ editFieldsLoaded, setEditFieldsLoaded ] = useState(false);
+    // const [ editFieldsLoaded, setEditFieldsLoaded ] = useState(false);
     const [ questionSaved, setQuestionSaved ] = useState(false);
 
     useEffect(() =>{
@@ -23,7 +23,7 @@ const QuestionMCQ = ( { choices=[], validChoice=null } )=> {
         // Pre-load choices if they came from parent component (edit question)
         if (choices.length > 0){
             setChoiceList(choices);
-            setEditFieldsLoaded(true);
+            // setEditFieldsLoaded(true);
         }
     }, [choices]);
 

@@ -14,7 +14,7 @@ export default (state = INITIAL_STATE, action) =>{
             const updatedResponses = state.responses.filter(response =>{
                 if (response.question_id !== action.payload.question_id){
                     return response;
-                } 
+                } else return null;
             });
             updatedResponses.push(action.payload);
             return { ...state, responses: updatedResponses};
