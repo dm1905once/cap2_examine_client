@@ -9,7 +9,7 @@ import ShowQuestion from './ShowQuestion'
 const ApplyExam = () =>{
     const dispatch = useDispatch();
     const { appId } = useParams();
-    const { isApplicantAuth, userInfo } = useContext(AuthContext);
+    const { isApplicantAuth, applicantInfo } = useContext(AuthContext);
     const [ isValidExam, setIsValidExam ] = useState(false);
     const [ examInStore, setExamInStore ] = useState(false);
     const [ currentQuestion, setCurrentQuestion ] = useState(1);
@@ -17,7 +17,7 @@ const ApplyExam = () =>{
 
     useEffect(()=>{
         async function validateAndGetExam(){
-            const applicant_email = userInfo.email;
+            const applicant_email = applicantInfo.email;
             const application_id = appId;
             const { validExamId } = await appApi.validateApplication({application_id, applicant_email});
             if (validExamId){
@@ -30,10 +30,10 @@ const ApplyExam = () =>{
                 }
             }
         };
-        if (isApplicantAuth && userInfo && appId) {
+        if (isApplicantAuth && applicantInfo && appId) {
             validateAndGetExam();
         }
-    },[appId, isApplicantAuth, userInfo, dispatch]);
+    },[appId, isApplicantAuth, applicantInfo, dispatch]);
 
     const handlePrev = () =>{
         setCurrentQuestion(currentQuestion-1);

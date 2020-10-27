@@ -9,11 +9,11 @@ import { AuthContext } from "../../context";
 
 const ExamBuild = () => {
     const exam = useSelector(store => store.newExam);
-    const { userInfo } = React.useContext(AuthContext);
+    const { examinerInfo } = React.useContext(AuthContext);
 
     if (!exam.exam_id){
-        if (userInfo) {
-            return <Redirect to={ {pathname: `/orgs/${userInfo.username}/exams`}} />
+        if (examinerInfo) {
+            return <Redirect to={ {pathname: `/orgs/${examinerInfo.username}/exams`}} />
         } else {
             return <Redirect to="/orgs" />
         }

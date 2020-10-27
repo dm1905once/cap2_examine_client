@@ -13,7 +13,7 @@ import { AuthContext } from "../../context";
 const Question = ( {nextSeq, operation} ) =>{
     const dispatch = useDispatch();
     const history = useHistory();
-    const { userInfo } = React.useContext(AuthContext);
+    const { examinerInfo } = React.useContext(AuthContext);
     const editExam = useSelector(store=> store.editExam);
 
     let INITIAL_QUESTION_STATE = {
@@ -80,7 +80,7 @@ const Question = ( {nextSeq, operation} ) =>{
             if (operation==="create"){
                 dispatch(addNewQuestion(question));
                 setQuestionFields(INITIAL_QUESTION_STATE);
-                history.push(`/orgs/${userInfo.username}/exams/new`);
+                history.push(`/orgs/${examinerInfo.username}/exams/new`);
             } else if (operation==="edit"){
                 dispatch(replaceQuestion(question));
             }

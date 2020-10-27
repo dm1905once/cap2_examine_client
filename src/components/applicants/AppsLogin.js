@@ -18,7 +18,7 @@ const AppsLogin = () => {
         onSubmit: async (values) => {
             try {
                 const token = await appApi.authenticateApplicant(values);
-                localStorage.setItem("_token", token);
+                localStorage.setItem("_appToken", token);
                 authApplicant();
             } catch(e) {
                 setFormError(true);

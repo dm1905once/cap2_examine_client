@@ -4,24 +4,24 @@ import { AuthContext } from "../../context";
 import appApi from '../../apis/appApi';
 
 const AppRecords = () =>{
-    const { userInfo } = useContext(AuthContext);
+    const { applicantInfo } = useContext(AuthContext);
     const [ purchasedExams, setPurchasedExams ] = useState([]);
     const [ completedExams, setCompletedExams ] = useState([]);
 
     useEffect(() =>{
         async function retrievePurchasedExams(){
-            const purchased = await appApi.getPurchasedExams(userInfo.email);
+            const purchased = await appApi.getPurchasedExams(applicantInfo.email);
             setPurchasedExams(purchased);
         };
         async function retrieveCompletedExams(){
-            const completed = await appApi.getCompletedExams(userInfo.email);
+            const completed = await appApi.getCompletedExams(applicantInfo.email);
             setCompletedExams(completed);
         };
-        if (userInfo) {
+        if (applicantInfo) {
             retrievePurchasedExams();
             retrieveCompletedExams();
         }
-    }, [userInfo])
+    }, [applicantInfo])
 
     return (
         <div>

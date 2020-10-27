@@ -11,7 +11,7 @@ const stripePromise = loadStripe("pk_test_51HcDauJMaHZnra3gtM9N5ZNXiYqFIkSYKKWs5
 
 const HomeApps = () => {
     const history = useHistory();
-    const { isApplicantAuth, userInfo } = useContext(AuthContext);
+    const { isApplicantAuth, applicantInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
     // const [ applicationDetails, setApplicationDetails ] = useState({status: 'reloaded'});
     const [ stripeSession, setStripeSession ] = useState(null);
@@ -83,7 +83,7 @@ const HomeApps = () => {
 
             const appDetails = {
                 application_id,
-                applicant_email: userInfo.email,
+                applicant_email: applicantInfo.email,
                 exam_id,
                 exam_name,
                 org_logo

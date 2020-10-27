@@ -6,13 +6,10 @@ import { AuthContext } from "../context";
 
 
 const HomeOrgs = ( {topMessage=''})=> {
-    const { userInfo } = React.useContext(AuthContext);
+    const { isExaminerAuth, examinerInfo } = React.useContext(AuthContext);
 
-    // const location = useLocation();
-    // const usernameInUrl = location.pathname.split("/")[2];
-
-    if ( userInfo  ){
-        return <Redirect to={`/orgs/${userInfo.username}/exams`} />;
+    if ( examinerInfo && isExaminerAuth  ){
+        return <Redirect to={`/orgs/${examinerInfo.username}/exams`} />;
     } else {
         return (
             <div>

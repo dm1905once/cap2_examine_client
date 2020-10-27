@@ -2,19 +2,14 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from "../context";
-import { getTokenFromLS } from '../helpers';
 
 const NavBarOrg = ()=> {
     const history = useHistory();
-    const { userInfo, deauthExaminer } = useContext(AuthContext);
+    const { examinerInfo, deauthExaminer } = useContext(AuthContext);
 
     const handleLogout = () =>{
-        const hasToken = localStorage.getItem("_token");
-        if (hasToken){
-            const tokenUserInfo = getTokenFromLS();
-            if (tokenUserInfo.role === "examiner"){
-                localStorage.removeItem("_token");
-            }
+        if (localStorage.getItem("_orgToken")){
+            localStorage.removeItem("_orgToken");
         }
         deauthExaminer();
         history.push('/orgs');
@@ -25,7 +20,7 @@ const NavBarOrg = ()=> {
         <div className="ui secondary pointing menu">
             <Link to="/" className="item">Home</Link>
 
-            {userInfo?
+            {(examinerInfo && examinerInfo.role==="examiner")?
                 <div className="right menu">
                     <div className="item">
                         <div className="ui primary button" onClick={handleLogout}>Logout Examiner</div>

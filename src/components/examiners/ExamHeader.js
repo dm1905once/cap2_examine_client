@@ -9,7 +9,7 @@ import examineApi from '../../apis/orgApi';
 const ExamHeader = ( {examName, operation} ) => {
     const history = useHistory();
     const dispatch = useDispatch();
-    const { userInfo } = useContext(AuthContext);
+    const { examinerInfo } = useContext(AuthContext);
 
     // Retrieve a different store depending on the operation: create or edit
     const newExam = useSelector(store=> (operation === "edit")? store.editExam: store.newExam);
@@ -42,7 +42,7 @@ const ExamHeader = ( {examName, operation} ) => {
 
         history.push(
             {
-                pathname: `/orgs/${userInfo.username}/exams`, 
+                pathname: `/orgs/${examinerInfo.username}/exams`, 
                 state: {topMessage: redirectMessage }
             }
         )

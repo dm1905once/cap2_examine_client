@@ -3,7 +3,7 @@ import { useLocation, useHistory  } from 'react-router-dom';
 import { useDispatch } from "react-redux";
 import { AuthContext } from "../../context";
 import { loadExam } from '../../actions';
-import examineApi from '../../apis/orgApi';
+import orgApi from '../../apis/orgApi';
 import ExamCreate from './ExamCreate';
 import ExamCard from './ExamCard';
 
@@ -11,7 +11,7 @@ const ExamList = () => {
     const location = useLocation();
     const history = useHistory();
     const dispatch = useDispatch();
-    const { userInfo } = useContext(AuthContext);
+    const { examinerInfo } = useContext(AuthContext);
     const [ examList, setExamList ] = useState([]);
     const [ refreshList, setRefreshList ] = useState(true);
     let topMessage = location.state? location.state.topMessage : '';
@@ -19,19 +19,19 @@ const ExamList = () => {
     
     useEffect(()=>{
         async function retrieveExamList(){
-            const userExams = await examineApi.getExaminerExams(userInfo.username);
+            const userExams = await orgApi.getExaminerExams(examinerInfo.username);
             setExamList(userExams);
             return userExams;
         };
         retrieveExamList();
         setRefreshList(false);
-    },[userInfo.username, refreshList]);
+    },[examinerInfo.username, refreshList]);
 
     const handleDeleteExam = e =>{
         e.currentTarget.className += " loading";
         const examId = e.target.parentNode.getAttribute('data-examid');
         async function deleteExamById(examId){
-            const examDeleted = await examineApi.deleteExam(userInfo.username, examId);
+            const examDeleted = await orgApi.deleteExam(examinerInfo.username, examId);
             return examDeleted;
         }
         deleteExamById(examId);
@@ -45,7 +45,7 @@ const ExamList = () => {
         const examId = e.target.parentNode.getAttribute('data-examid');
 
         async function retrieveExam(){
-            const exam = await examineApi.getEditableExam(userInfo.username, examId);
+            const exam = await orgApi.getEditableExam(examinerInfo.username, examId);
             if (exam === null ) {
                 history.push("/orgs");
             } else {
@@ -55,7 +55,7 @@ const ExamList = () => {
         retrieveExam();
 
         setTimeout(()=>{
-            history.push(`/orgs/${userInfo.username}/exams/${examId}/edit/1`);
+            history.push(`/orgs/${examinerInfo.username}/exams/${examId}/edit/1`);
         }, 5000);
     };
 

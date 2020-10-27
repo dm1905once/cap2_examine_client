@@ -10,7 +10,7 @@ import { validateExamCreate as validate } from '../../formValidations/examinerFo
 const ExamCreate = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { userInfo } = React.useContext(AuthContext);
+    const { examinerInfo } = React.useContext(AuthContext);
 
     const formik = useFormik({
         initialValues: {
@@ -25,14 +25,14 @@ const ExamCreate = () => {
         onSubmit: async (values) => {
             const examDetails = {
                 exam_id: uniqid.process('E_'),
-                exam_owner: userInfo.username,
+                exam_owner: examinerInfo.username,
                 exam_name: values.examName,
                 exam_description: values.examDescription,
                 exam_pass_score: parseInt(values.examPassScore),
                 exam_fee: parseFloat(values.examFee)
             }
             dispatch(initializeNewExam(examDetails));
-            history.push(`/orgs/${userInfo.username}/exams/new`);
+            history.push(`/orgs/${examinerInfo.username}/exams/new`);
         },
     });
 

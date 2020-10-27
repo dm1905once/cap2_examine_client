@@ -20,7 +20,7 @@ const OrgsLogin = () => {
         onSubmit: async (values) => {
             try {
                 const token = await orgApi.authenticateExaminer(values);
-                localStorage.setItem("_token", token);
+                localStorage.setItem("_orgToken", token);
                 authExaminer();
                 history.push(`/orgs/${values.username}/exams`)
             } catch(e) {

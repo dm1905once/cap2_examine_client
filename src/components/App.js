@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import RoutesApplicant from './RoutesApplicant';
 import RoutesExaminer from './RoutesExaminer';
-
 import { AuthContext } from "../context";
 import { getTokenFromLS } from '../helpers';
 
@@ -11,43 +10,52 @@ const App = () => {
 
     const [ isExaminerAuth, setExaminerAuth ] = useState(false);
     const [ isApplicantAuth, setApplicantAuth ] = useState(false);
-    const [ userInfo, setUserInfo ] = useState();
+    const [ examinerInfo, setExaminerInfo ] = useState();
+    const [ applicantInfo, setApplicantInfo ] = useState();
 
     React.useEffect(()=> {
-        const hasToken = localStorage.getItem("_token");
-        if (hasToken){
-            const tokenUserInfo = getTokenFromLS();
-            if (tokenUserInfo.role === "examiner"){
-                setExaminerAuth(true);
-                setUserInfo(tokenUserInfo);
-            } else if (tokenUserInfo.role === "applicant"){
-                setApplicantAuth(true);
-                setUserInfo(tokenUserInfo);
-            }
-        } else {
+        let hasToken = false;
+
+        if (localStorage.getItem("_orgToken")){
+            setExaminerAuth(true);
+            setExaminerInfo(getTokenFromLS("_orgToken"));
+            hasToken = true;
+        } 
+        
+        if (localStorage.getItem("_appToken")){
+            setApplicantAuth(true);
+            setApplicantInfo(getTokenFromLS("_appToken"));
+            hasToken = true;
+        }
+
+        if (!hasToken) {
             setExaminerAuth(false);
-            setUserInfo();
+            setApplicantAuth(false)
+            setExaminerInfo();
+            setApplicantInfo();
         }
       }, [isExaminerAuth, isApplicantAuth]);
 
+
+
     function authExaminer(){
         setExaminerAuth(true);
-        setUserInfo(getTokenFromLS());
+        setExaminerInfo(getTokenFromLS("_orgToken"));
     }
 
     function authApplicant(){
         setApplicantAuth(true);
-        setUserInfo(getTokenFromLS());
+        setApplicantInfo(getTokenFromLS("_appToken"));
     }
 
     function deauthExaminer(){
         setExaminerAuth(false);
-        setUserInfo();
+        setExaminerInfo();
     }
 
     function deauthApplicant(){
         setApplicantAuth(false);
-        setUserInfo();
+        setApplicantInfo();
     }
 
     return (
@@ -57,7 +65,8 @@ const App = () => {
                     <Route path="/" exact component={Home} />
                     <AuthContext.Provider value={ 
                         { 
-                            userInfo, 
+                            examinerInfo, 
+                            applicantInfo,
                             isExaminerAuth, 
                             authExaminer, 
                             deauthExaminer, 
@@ -69,8 +78,6 @@ const App = () => {
                         <RoutesApplicant />
                         <RoutesExaminer />
                     </AuthContext.Provider>
-
-                    
                         
                     <Route><h2>404 Not found</h2></Route>
                 </Switch>
