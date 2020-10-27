@@ -23,8 +23,10 @@ const ExamList = () => {
             setExamList(userExams);
             return userExams;
         };
-        retrieveExamList();
-        setRefreshList(false);
+        if (examinerInfo.username){
+            retrieveExamList();
+            setRefreshList(false);
+        }
     },[examinerInfo.username, refreshList]);
 
     const handleDeleteExam = e =>{
