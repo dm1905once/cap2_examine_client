@@ -22,6 +22,7 @@ const NavBarApp = ()=> {
 
             {(applicantInfo && applicantInfo.role==="applicant")?
                 <div className="right menu">
+                    <div className="item">Hello <b>&nbsp;{applicantInfo.email}</b>, you are logged in as <b>&nbsp;{applicantInfo.role}</b></div>
                     <div className="item">
                         <div className="ui primary button" onClick={handleLogout}>Logout Applicant</div>
                     </div>

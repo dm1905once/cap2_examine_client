@@ -12,7 +12,7 @@ const HomeOrgs = ( {topMessage=''})=> {
         return <Redirect to={`/orgs/${examinerInfo.username}/exams`} />;
     } else {
         return (
-            <div>
+            <div className="ui container">
                 {topMessage?<div className="ui warning message">{topMessage}</div>:''}
                 <div className="ui placeholder segment">
                     <div className="ui two column very relaxed stackable grid">
