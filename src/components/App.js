@@ -59,7 +59,7 @@ const App = () => {
     }
 
     return (
-        <div className="ui container">
+        // <div className="ui container">
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact component={Home} />
@@ -82,7 +82,7 @@ const App = () => {
                     <Route><h2>404 Not found</h2></Route>
                 </Switch>
             </BrowserRouter>
-        </div>
+        // {/* </div> */}
     )
 }
 
