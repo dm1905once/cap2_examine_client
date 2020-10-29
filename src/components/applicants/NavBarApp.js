@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from "../../context";
+import '../NavBars.css';
 
 const NavBarApp = ()=> {
     const history = useHistory();
@@ -17,23 +18,27 @@ const NavBarApp = ()=> {
 
 
     return (
-        <div className="ui secondary pointing menu">
-            <Link to="/" className="item">Home</Link>
+        <div>
+            <div className="ui hidden divider"></div>
+            <div className="ui labeled icon menu nav_bar_app_menu_image">
+                <Link to="/" className="item"><i className="blue home icon"></i>Home</Link>
 
-            {(applicantInfo && applicantInfo.role==="applicant")?
-                <div className="right menu">
-                    <div className="item">Hello <b>&nbsp;{applicantInfo.email}</b>, you are logged in as <b>&nbsp;{applicantInfo.role}</b></div>
-                    <div className="item">
-                        <div className="ui primary button" onClick={handleLogout}>Logout Applicant</div>
+                {(applicantInfo && applicantInfo.role==="applicant")?
+                    <div className="right labeled blue icon menu ">
+                        <h4>
+                            <strong>{applicantInfo.email}</strong> logged in as <strong>Applicant</strong>
+                        </h4>
+                        <a className="blue item" onClick={handleLogout}>
+                            <i className="blue sign out alternate icon"></i>Logout
+                        </a>
                     </div>
-                </div>
-                :
-                <div className="right menu">
-                    <div className="item">
-                    <Link to="/applicants" className="ui primary button">Login</Link>
+                    :
+                    <div>
+                        <h2 className="ui header access_header">Examine for Applicants</h2>
                     </div>
-                </div>
-            }
+                }
+            </div>
+            <div className="ui hidden divider"></div>
         </div>
     )
 }

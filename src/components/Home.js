@@ -55,10 +55,11 @@ const Home = ()=> {
 			</section>
 
             <footer id="footer">
-				<div className="inner">Photos by:
-                <p><a href="https://unsplash.com/@nate_dumlao?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Nathan Dumlao</a> on Unsplash</p>
-                <p><a href="https://unsplash.com/@punttim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Tim Gouw</a> on Unsplash</p>
-                <p><a href="https://unsplash.com/@element5digital?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Element5 Digital</a> on Unsplash</p>
+				<div className="inner"><strong>Photos by: </strong>
+					<span><a href="https://unsplash.com/@nate_dumlao?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Nathan Dumlao</a> on Unsplash, </span>
+					<span><a href="https://unsplash.com/@punttim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Tim Gouw</a> on Unsplash, </span>
+					<span><a href="https://unsplash.com/@element5digital?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Element5 Digital</a> on Unsplash, </span>
+					<span><a href="https://unsplash.com/@jessbaileydesigns?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jess Bailey</a> on Unsplash</span>
                 </div>
             </footer>
 

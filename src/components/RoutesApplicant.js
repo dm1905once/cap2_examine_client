@@ -7,11 +7,11 @@ import HomeApps from './HomeApps';
 const RoutesApplicant = () =>{
 
     return (
-        <>
-            <Route path="/applicants"  component={NavBarApp} />
+        <div className="ui container">
+            <Route path="/applicants" component={NavBarApp} />
             <Route path="/applicants" exact component={HomeApps} />
             <Route path="/applicants/applyExam/:appId" exact component={ApplyExam} />
-        </>
+        </div>
     )
 }
 

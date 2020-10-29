@@ -17,26 +17,28 @@ const NavBarOrg = ()=> {
 
 
     return (
-        
-            <div className="ui blue fluid two item inverted menu">
-                <Link to="/" className="item">Home</Link>
+        <div>
+            <div className="ui hidden divider"></div>
+            <div className="ui labeled icon menu nav_bar_org_menu_image">
+                <Link to="/" className="item"><i className="blue home icon"></i>Home</Link>
 
                 {(examinerInfo && examinerInfo.role==="examiner")?
-                    <div className="right two item menu">
-                        <div className="item">Hello <strong>&nbsp;{examinerInfo.username}</strong>, you are logged in as <b>&nbsp;{examinerInfo.role}</b></div>
-                        <div className="item">
-                            <div className="ui primary button" onClick={handleLogout}>Logout Examiner</div>
-                        </div>
+                    <div className="right labeled blue icon menu">
+                        <h4>
+                            <strong>{examinerInfo.username}</strong> logged in as <strong>Examiner</strong>
+                        </h4>
+                        <a className="item" onClick={handleLogout}>
+                            <i className="blue sign out alternate icon"></i>Logout
+                        </a>
                     </div>
                     :
-                    <div className="right menu">
-                        <div className="item">
-                        <Link to="/orgs" className="ui primary button">Login</Link>
-                        </div>
+                    <div>
+                        <h2 className="ui header access_header">Examine for Organizations</h2>
                     </div>
                 }
-                <div class="ui hidden divider"></div>
             </div>
+            <div className="ui hidden divider"></div>
+        </div>
     )
 }
 

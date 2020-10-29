@@ -13,7 +13,7 @@ const RoutesExaminer = () =>{
     const { isExaminerAuth } = React.useContext(AuthContext);
 
     return (
-        <div class="ui container">
+        <div className="ui container">
             <Route path="/orgs"  component={NavBarOrg} />
             <Route path="/orgs" exact component={HomeOrgs} />
             <Route path="/orgs/:examiner" exact render={()=>(
