@@ -1,0 +1,246 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeOrgs matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ui container"
+  >
+    <div
+      class="ui placeholder segment"
+    >
+      <div
+        class="ui two column very relaxed stackable grid"
+      >
+        <div
+          class="middle aligned row"
+        >
+          <div
+            class="column"
+          >
+            <h1>
+              Login
+            </h1>
+            <div>
+              <form
+                class="ui equal width form "
+              >
+                <div
+                  class="fields"
+                >
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Username
+                    </label>
+                    <input
+                      name="username"
+                      placeholder="Username"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="fields"
+                >
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Password
+                    </label>
+                    <input
+                      name="password"
+                      type="password"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ui basic segment"
+                >
+                  <p>
+                     
+                  </p>
+                  <p>
+                     
+                  </p>
+                  <p>
+                     
+                  </p>
+                </div>
+                <button
+                  class="ui primary blue right floated right labeled icon button"
+                  type="submit"
+                >
+                  Login
+                  <i
+                    class="arrow circle right icon"
+                  />
+                </button>
+              </form>
+            </div>
+          </div>
+          <div
+            class="column"
+          >
+            <h1>
+              Register
+            </h1>
+            <div>
+              <form
+                class="ui equal width form "
+              >
+                <div
+                  class="fields"
+                >
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Org Handle
+                    </label>
+                    <input
+                      disabled=""
+                      name="org_handle"
+                      readonly=""
+                      type="text"
+                      value="ORG1"
+                    />
+                  </div>
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Org Key
+                    </label>
+                    <input
+                      disabled=""
+                      name="org_key"
+                      readonly=""
+                      type="text"
+                      value="org1"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="fields"
+                >
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Username
+                    </label>
+                    <input
+                      name="username"
+                      placeholder="Username"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Password
+                    </label>
+                    <input
+                      name="password"
+                      type="password"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Re-enter password
+                    </label>
+                    <input
+                      name="password2"
+                      type="password"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="fields"
+                >
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      First name
+                    </label>
+                    <input
+                      name="first_name"
+                      placeholder="First Name"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="field"
+                  >
+                    <label>
+                      Last name
+                    </label>
+                    <input
+                      name="last_name"
+                      placeholder="Last Name"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="field required"
+                  >
+                    <label>
+                      Email
+                    </label>
+                    <input
+                      name="email"
+                      placeholder="Email"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+                <div
+                  class="ui basic segment"
+                >
+                  <p>
+                     
+                  </p>
+                  <p>
+                     
+                  </p>
+                  <p>
+                     
+                  </p>
+                </div>
+                <button
+                  class="ui blue primary right floated right labeled icon button"
+                  type="submit"
+                >
+                  Register
+                  <i
+                    class="arrow circle right icon"
+                  />
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="ui vertical divider"
+      >
+        Or
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

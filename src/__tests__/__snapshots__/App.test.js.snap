@@ -1,0 +1,136 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <section
+      id="banner"
+    >
+      <div
+        class="inner"
+      >
+        <header>
+          <h1>
+            Welcome to Examine
+          </h1>
+        </header>
+        <div
+          class="flex"
+        >
+          <div>
+            <i
+              class="edit outline icon"
+            />
+            <h3>
+              The convenient online evaluation platform
+            </h3>
+            <p>
+              Educational organizations take advantage of the Examine platform to securely apply exams to thousands of candidates
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section
+      class="wrapper align-center"
+      id="three"
+    >
+      <div
+        class="inner"
+      >
+        <div
+          class="flex flex-2"
+        >
+          <article>
+            <div
+              class="image round"
+            >
+              <img
+                alt="Applicant access"
+                src="tim-gouw-ScWvHUtQca4-unsplash_190x190.jpg"
+              />
+            </div>
+            <header>
+              <a
+                class="access-link"
+                href="/applicants"
+              >
+                Access as an Applicant
+              </a>
+            </header>
+            <p>
+              Applicants are exam takers. Once they register for free they can browse, select and purchase the right to take an exam.
+            </p>
+            <footer />
+          </article>
+          <article>
+            <div
+              class="image round"
+            >
+              <img
+                alt="Org access"
+                src="element5-digital-EzYCojqgbgM-unsplash_190x190.jpg"
+              />
+            </div>
+            <header>
+              <a
+                class="access-link"
+                href="/orgs"
+              >
+                Access as Educational Organization
+              </a>
+            </header>
+            <p>
+              Educational Organizations are schools, colleges, universities or businesses that require applicants to take an exam to be admitted.
+            </p>
+            <footer />
+          </article>
+        </div>
+      </div>
+    </section>
+    <footer
+      id="footer"
+    >
+      <div
+        class="inner"
+      >
+        <strong>
+          Photos by: 
+        </strong>
+        <span>
+          <a
+            href="https://unsplash.com/@nate_dumlao?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          >
+            Nathan Dumlao
+          </a>
+           on Unsplash, 
+        </span>
+        <span>
+          <a
+            href="https://unsplash.com/@punttim?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          >
+            Tim Gouw
+          </a>
+           on Unsplash, 
+        </span>
+        <span>
+          <a
+            href="https://unsplash.com/@element5digital?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          >
+            Element5 Digital
+          </a>
+           on Unsplash, 
+        </span>
+        <span>
+          <a
+            href="https://unsplash.com/@jessbaileydesigns?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText"
+          >
+            Jess Bailey
+          </a>
+           on Unsplash
+        </span>
+      </div>
+    </footer>
+  </div>
+</DocumentFragment>
+`;
