@@ -79,14 +79,14 @@ const OrgsRegister = () => {
                 </div>
                 <div className="field required">
                     <label>Password</label>
-                    <input type="password" name="password"
+                    <input type="password" name="password" data-testid="registerpwd1"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.password}/>
                 </div>
                 <div className="field required">
                     <label>Re-enter password</label>
-                    <input type="password" name="password2"
+                    <input type="password" name="password2"  data-testid="registerpwd2"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.password2}/>

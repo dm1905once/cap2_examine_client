@@ -63,24 +63,24 @@ const AppsRegister = () => {
                         value={formik.values.full_name}/>
                 </div>
                 <div className="field required">
-                    <label>Password</label>
-                    <input type="password" name="password"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}/>
-                </div>
-            </div>
-            <div className="fields">
-                <div className="field required">
                     <label>Email Address</label>
-                    <input type="text" placeholder="" name="email"
+                    <input type="text" placeholder="Email Address" name="email"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.email}/>
                 </div>
+            </div>
+            <div className="fields">
+            <div className="field required">
+                    <label>Password</label>
+                    <input type="password" name="password" data-testid="loginpwd1"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.password}/>
+                </div>
                 <div className="field required">
                     <label>Re-enter password</label>
-                    <input type="password" name="password2"
+                    <input type="password" name="password2"  data-testid="loginpwd2"
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
                         value={formik.values.password2}/>

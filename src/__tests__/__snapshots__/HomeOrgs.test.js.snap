@@ -147,6 +147,7 @@ exports[`HomeOrgs matches snapshot 1`] = `
                       Password
                     </label>
                     <input
+                      data-testid="registerpwd1"
                       name="password"
                       type="password"
                       value=""
@@ -159,6 +160,7 @@ exports[`HomeOrgs matches snapshot 1`] = `
                       Re-enter password
                     </label>
                     <input
+                      data-testid="registerpwd2"
                       name="password2"
                       type="password"
                       value=""

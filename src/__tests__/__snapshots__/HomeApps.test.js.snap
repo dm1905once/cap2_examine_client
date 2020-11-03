@@ -1,0 +1,195 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HomeApps matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="ui container"
+  >
+    <div>
+      <h2
+        class="ui block header"
+      >
+        <i
+          class="address card outline icon"
+        />
+        <div
+          class="content"
+        >
+          Login or Register
+        </div>
+      </h2>
+      <div
+        class="ui placeholder segment"
+      >
+        <div
+          class="ui two column very relaxed stackable grid"
+        >
+          <div
+            class="middle aligned row"
+          >
+            <div
+              class="column"
+            >
+              <h1>
+                Applicant Login
+              </h1>
+              <div>
+                <form
+                  class="ui equal width form "
+                >
+                  <div
+                    class="fields"
+                  >
+                    <div
+                      class="field required"
+                    >
+                      <label>
+                        Email Address
+                      </label>
+                      <input
+                        name="email"
+                        placeholder=""
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="fields"
+                  >
+                    <div
+                      class="field required"
+                    >
+                      <label>
+                        Password
+                      </label>
+                      <input
+                        name="password"
+                        type="password"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <button
+                    class="ui primary blue right floated right labeled icon button"
+                    type="submit"
+                  >
+                    Login
+                    <i
+                      class="arrow circle right icon"
+                    />
+                  </button>
+                </form>
+              </div>
+            </div>
+            <div
+              class="column"
+            >
+              <h1>
+                Register
+              </h1>
+              <div>
+                <form
+                  class="ui equal width form "
+                >
+                  <div
+                    class="fields"
+                  >
+                    <div
+                      class="field required"
+                    >
+                      <label>
+                        Full name
+                      </label>
+                      <input
+                        name="full_name"
+                        placeholder="First and Last Name"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="field required"
+                    >
+                      <label>
+                        Email Address
+                      </label>
+                      <input
+                        name="email"
+                        placeholder="Email Address"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="fields"
+                  >
+                    <div
+                      class="field required"
+                    >
+                      <label>
+                        Password
+                      </label>
+                      <input
+                        data-testid="loginpwd1"
+                        name="password"
+                        type="password"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="field required"
+                    >
+                      <label>
+                        Re-enter password
+                      </label>
+                      <input
+                        data-testid="loginpwd2"
+                        name="password2"
+                        type="password"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <button
+                    class="ui blue primary right floated right labeled icon button"
+                    type="submit"
+                  >
+                    Register
+                    <i
+                      class="arrow circle right icon"
+                    />
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="ui vertical divider"
+        >
+          Or
+        </div>
+      </div>
+    </div>
+    <h2
+      class="ui block header"
+    >
+      <i
+        class="tasks icon"
+      />
+      <div
+        class="content"
+      >
+        Browse exams
+      </div>
+    </h2>
+    <div>
+      <h3>
+        No exams are available
+      </h3>
+    </div>
+  </div>
+</DocumentFragment>
+`;
