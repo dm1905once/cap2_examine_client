@@ -1,68 +1,94 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Examine
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `npm start`
+### Description
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Examine is an online exam platform that enables organizations (e.g. universities, etc.) to post exams online. Potential students would then acquire the right to take the exams and results would be stored in the platform.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Access is split by profile, depending on what side of the application process is accessing: organizations or applicants.
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+#### Access as Educational Organizations
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+College admission officers (i.e. "examiners") can subscribe to **Examine** and create, edit or delete exams. Every exam would have multiple questions. Currently, the only types of questions allowed are: *multiple-choice* or *binary* (i.e. true/false) questions. (In the future more complex question types can be developed; see Todo section). The examiner would also especify what would be the correct answer for each question so that the exam can be evaluated automatically by the tool.
 
-### `npm run eject`
+Once an exam is created, with it is made public and visible to potential applicants that register.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+#### Access as Applicant
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Potential applicants can register and acquire the right to take exams that have been made available by educational organizations. Once acquired, applicants would go through each exam question and eventually submittion the exam for evaluation. They would see the outcome in a few seconds after submitting the exam.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Website structure
+```tex
+-Home
+|-Access as Applicant
+ |_Login
+ |_Register
+  |_Available Exams
+    |_Take Exam
+     |_Submit Exam
+  |_Completed Exams
+  |_Browse Exams
+    |_Buy Exam
+     |_(Stripe Payment integration)
+|-Access as Educational Organization
+ |_Login
+ |_Register
+   |_Create a new Exam
+     |_Add questions
+       |_Submit Exams
+   |_Your Exams
+     |_Edit Exam
+     |_Delete Exam
+```
 
-### Code Splitting
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+### Technologies used
 
-### Making a Progressive Web App
+1. NodeJs/Express, 
+2. React/Redux,
+3. PostgreSQL, 
+4. Prisma, 
+5. Heroku, 
+6. Integration with Stripe Payment,
+7. RESTful APIs, 
+8. JavaScript, 
+9. HTML, 
+10. Semantic UI
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
 
-### Advanced Configuration
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+### How to run
 
-### Deployment
+1. Clone or download from Github
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+2. Install the required libraries from the requirements.txt file: `npm install` 
 
-### `npm run build` fails to minify
+3. Create a local postgres database named 'examine_test': `psql; create database examine_test; \q`
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+4. Generate the DB schema and basic seed data found in `db_dump.sql`
+
+5. Create the following environment variables:
+
+  5.1 `LOCALHOST` with the *client*  URL and port 
+  5.2 `SECRET_KEY` with the server app secret key
+  5.3 `STRIPE_SECRET` That you can get through Stripe https://dashboard.stripe.com/register 
+  5.4 `PORT` with the *server* port
+
+
+
+### Demo access
+
+*TBD*
+
+  
